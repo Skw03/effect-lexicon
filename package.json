@@ -7,9 +7,9 @@
     "dev": "vite --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run",
-    "build": "tsc --noEmit && vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "test": "vitest run && node --test scripts/release-config.check.mjs",
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "preview": "node scripts/serve.mjs"
   },
   "dependencies": {
     "fuse.js": "7.1.0",

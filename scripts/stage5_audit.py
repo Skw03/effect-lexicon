@@ -25,7 +25,8 @@ with sync_playwright() as p:
         if modal:
             page.get_by_role('button', name='打开对话框', exact=True).click()
             expect(page.get_by_role('dialog')).to_be_visible()
-        page.add_script_tag(path=AXE)
+        # DevTools evaluates the local audit tool without relaxing the served CSP.
+        page.evaluate(Path(AXE).read_text())
         result = page.evaluate("async () => await axe.run({rules: {'label-content-name-mismatch': {enabled: true}}})")
         name = ('library' if route == '/' else route.strip('/').replace('/', '-')) + ('-open' if modal else '')
         (OUT / (name + '.json')).write_text(json.dumps(result, ensure_ascii=False, indent=2))

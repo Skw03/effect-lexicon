@@ -1,6 +1,6 @@
 # 独立审查与修复复验规则
 
-本规则适用于 Effect Lexicon 整个项目生命周期，执行范围始终受当次明确授权限制。依据：[原始要求](REQUIREMENTS_SOURCE.md) A–H（尤其 G3、H6）、[产品规范](SPEC.md)、[阶段路线](ROADMAP.md)、[代理规则](../AGENTS.md)及已明确批准的修订。当前授权止于 Stage 5；本文件不启动任何后续阶段或部署。
+本规则适用于 Effect Lexicon 整个项目生命周期，执行范围始终受当次明确授权限制。依据：[原始要求](REQUIREMENTS_SOURCE.md) A–H（尤其 G3、H6）、[产品规范](SPEC.md)、[阶段路线](ROADMAP.md)、[代理规则](../AGENTS.md)及已明确批准的修订。2026-11-19 新指令已开放 Stage 6 开发与候选验证；生产仍须独立 PASS 后由 owner 单独发布，Stage 7 未授权。本文保留 Stage 0–5 历史授权，未授予新的推送、tag、集成激活或部署权限。
 
 ## 要求、阶段与批准
 
@@ -58,7 +58,11 @@
 - 复验不能只跑作者新加的测试；先核查根因修复和断言是否覆盖原步骤，再补充独立探针。真实 Lighthouse/axe 必须用真实工具数据，注明版本、页面和类别；SVG/动态颜色、混合输入等自动工具盲区须补运行证据。不能以分数或零严重违规替代具体要求。
 - 原始失败记录和历史 verdict 保留，不把旧报告改成新版本 PASS。新复验单独记录，PROGRESS 指向当前快照；矩阵的新版本须带新 SHA 和证据，不能无依据改绿。公开记录只保留项目技术摘要与可复跑入口，原始日志/截图/附件的保存或外发遵守单独授权，不附秘密或个人数据。
 
-## 当前基线与交接入口
+## Stage 6 当前交接
+
+远端 main 已核实为 `0dba59fb0a833d40f8e54da430f199c6ebe58dbc`（PR #5）。Stage 0–5 最终 PASS 依据保留于 [复验报告](reviews/rereview-stage-5-independent.md)。当前 `stage-6-launch` 未提交候选仅供开发自检与独立审查；宿主、正式素材/法律输入、外部预览、Actions 和生产均未完成。详见 [发布手册](RELEASE.md) 与 [当前进展](PROGRESS.md)。Stage 6 授权取代下列旧快照的 NOT DUE，仅限本次明确范围；历史 Stage 2–5 merge 授权不因此扩大。
+
+## 历史基线与交接入口
 
 历史产品基线：`59a2429fcf190a6b9d3cf48d487f166c518866a9`；历史审查记录提交：`608dd5da1082ae546ca6dd7b866e1e4222eba495`。保留[完整历史报告](reviews/baseline-0-5-59a2429.md)和[原矩阵及版本补记](REQUIREMENTS_CHECKLIST.md#rereview-6f596ae)，不改写基线 FAIL。
 
