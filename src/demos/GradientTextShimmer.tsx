@@ -4,10 +4,11 @@ import './GradientTextShimmer.css';
 export function GradientTextShimmer({ values, running, paused = false, reducedMotion, onComplete }: DemoProps) {
   const id = useId().replace(/:/g,'');
   const [done, setDone] = useState(false);
+  // Darker hues leave contrast headroom for the translucent white sweep.
   // SVG clipping keeps the glyphs fixed while only the highlight layer translates.
   return <svg className="text-shimmer" viewBox="0 0 600 140" role="img" aria-label="让灵感发光">
-    <defs><linearGradient id={`${id}-color`}><stop stopColor="#4f46e5"/><stop offset=".5" stopColor="#7c3aed"/><stop offset="1" stopColor="#db2777"/></linearGradient>
-      <linearGradient id={`${id}-band`}><stop stopColor="white" stopOpacity="0"/><stop offset=".5" stopColor="white" stopOpacity=".85"/><stop offset="1" stopColor="white" stopOpacity="0"/></linearGradient>
+    <defs><linearGradient id={`${id}-color`}><stop stopColor="#3730a3"/><stop offset=".5" stopColor="#5b21b6"/><stop offset="1" stopColor="#9d174d"/></linearGradient>
+      <linearGradient id={`${id}-band`}><stop stopColor="white" stopOpacity="0"/><stop offset=".5" stopColor="white" stopOpacity=".2"/><stop offset="1" stopColor="white" stopOpacity="0"/></linearGradient>
       <clipPath id={`${id}-clip`}><text x="300" y="90" textAnchor="middle">让灵感发光</text></clipPath>
     </defs>
     <text x="300" y="90" textAnchor="middle" fill={`url(#${id}-color)`} aria-hidden="true">让灵感发光</text>
