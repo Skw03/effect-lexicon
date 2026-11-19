@@ -2,7 +2,7 @@
 
 ## Current stage
 
-Stage 0：文档准备与 H1 理解审阅已核验，按用户确认的默认身份执行提交交付；尚未获得阶段批准。
+Stage 0：八个治理文件已提交并成功推送，远端交付已核验；等待人工审阅与阶段批准。
 分支：`stage-0-governance`。环境：指定 effect-lexicon-cloud checkout，路径 `/workspace/effect-lexicon`。
 唯一 origin：`https://github.com/Skw03/effect-lexicon.git`。
 远端 main 基底：`dfcff865aa74af520ab52a84b1a5f766156b4570`；开始时工作树干净，只有 README.md。
@@ -23,6 +23,16 @@ Stage 0：文档准备与 H1 理解审阅已核验，按用户确认的默认身
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 0 — 提交推送交付回执
+
+1. **Summary**：治理提交 `aaa15c299a1cae7aed0873c3c789d8cd6ef7138f` 已正常推送到 origin/stage-0-governance。此日志回执作为后续小提交保存，分支最终头以交付报告和远端为准，不改写历史。
+2. **Files changed**：治理提交恰好八个授权文件；回执仅更新 docs/PROGRESS.md。README、原文和 SPEC 未再修改。
+3. **Commands run and results**：显式 `git add --` 八路径；`git diff --cached --check` 无输出；`git diff --cached --stat` 显示八文件；`git commit -m "docs: establish Stage 0 governance and requirements archive"` 成功。`git show -s --format=fuller HEAD`、`git show --format=raw --no-patch HEAD` 确认 author/committer 均为环境已有的 kevin sun <sunkaiwen8@gmail.com>，父提交为原 main。`git push -u origin HEAD:refs/heads/stage-0-governance` 返回 0、新建远端分支成功。随后 `git ls-remote --heads origin main stage-0-governance` 确认任务分支等于该完整 SHA，main 仍为 `dfcff865aa74af520ab52a84b1a5f766156b4570`；`git status --short --branch` 无改动；基底至 HEAD 的 `git diff --check` 无输出。
+4. **Acceptance checklist**：治理内容复核通过，默认身份符合用户新授权，提交/推送成功且已核验。typecheck/lint/test/build 仍为不适用、未运行；没有应用、效果代码或构建产物。未开 PR、未合并、未部署、未进入 Stage 1。
+5. **Deviations**：无新增偏差；来源归档限制保留于前次日志。
+6. **Open questions**：C01–C18 仍须人工决策；本交付不代表独立 H6 审阅通过。
+7. **Next step**：正常推送本回执后复核最终分支头、原始作者、main 和干净工作树；等待人工审阅与阶段批准。
 
 ### 2026-11-19 — Stage 0 — 默认身份获准，提交前复核
 
