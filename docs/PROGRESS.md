@@ -2,13 +2,11 @@
 
 ## Current stage
 
-Stage 1 已获用户“确认并实施”授权，基于已独立 H6 的 `e51155b01599a79e3573e47be45077339c018f13`；仅写 `stage-1-foundation`，不改 main/Stage 0、不 PR/合并/部署/Stage 2。沿用有效默认 Git 身份。以下 Stage 0 状态作为历史保留。
-
-Stage 0：八个治理文件已提交并成功推送，远端交付已核验；等待人工审阅与阶段批准。
-分支：`stage-0-governance`。环境：指定 effect-lexicon-cloud checkout，路径 `/workspace/effect-lexicon`。
-唯一 origin：`https://github.com/Skw03/effect-lexicon.git`。
-远端 main 基底：`dfcff865aa74af520ab52a84b1a5f766156b4570`；开始时工作树干净，只有 README.md。
-用户明确授权本阶段八个路径及提交推送，并在获知公开提交记录的姓名/邮箱可见后确认使用默认 Git 身份；本环境 author 与 committer 均已有效解析，无身份配置变更。
+Stage 1：已获用户“确认并实施”授权，三效果基础闭环已实现；最终检查与交付回执见最新日志，交付后停留等待独立 H6，不开始 Stage 2。
+分支：`stage-1-foundation`；基底为已独立 H6 的 `e51155b01599a79e3573e47be45077339c018f13`。
+环境：指定 effect-lexicon-cloud，checkout `/workspace/effect-lexicon`，origin `https://github.com/Skw03/effect-lexicon.git`。
+沿用已有效解析的环境默认作者/提交者；不新增身份、不记录姓名邮箱。仅提交并正常推送 Stage 1 分支，不改 main/Stage 0、不 PR/合并/部署。
+Stage 0 的 H1 总结与日志作为历史保留。
 
 ### H1 summary (11 lines)
 
@@ -25,6 +23,28 @@ Stage 0：八个治理文件已提交并成功推送，远端交付已核验；�
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 1 — 三效果实现与最终验证
+
+1. **Summary**：完成 strict TypeScript + React 18/Vite 基础、主题与 shell、三条文本 Library、未知路由/slug Not Found、三份双语内容、registry、renderPrompt、详情控件/描述/提示词/复制。Tilt 使用缓存矩形和 rAF 平滑、键盘方向键/Escape、触屏 pan-y、单路径 Auto/Stop；Typewriter 支持逐字/删除/停顿、暂停/重播、非循环遍历三句并保留第三句、离屏暂停；Glass 使用真实 backdrop-filter、四参数与三个静态背景。Stage 1 适用验收通过，尚不是独立 H6 结论。
+2. **Files changed**：README；package.json/package-lock.json、index.html、tsconfig、Vite/Tailwind/ESLint 配置；src/types.ts、content/index 与三份 effects、content.test；demos 三组件与 CSS/registry/typewriterMachine 和测试；hooks/useRaf/useInView/useReducedMotion/useVirtualPointer；components/DemoStage/ParamPanel/PromptPanel；pages/Library/EffectDetail/NotFound；lib/renderPrompt/clipboard 及测试；main.tsx/styles.css；scripts/browser_smoke.py；SPEC 的相关样例末尾无障碍文案与本日志。未修改 AGENTS、ROADMAP、源档，未提交 dist/node_modules。
+3. **Commands run and results**：
+   - Node `v24.22.1`，npm `11.9.0`。默认 npm cache 路径不可写导致初次安装 ENOENT；改用允许写入的 `/tmp/effect-npm-cache`，不改网络策略、不更换身份/鉴权。安装均带 `--save-exact --ignore-scripts`；随后真实 `npm ci --ignore-scripts --cache /tmp/effect-npm-cache` 成功，232 包。锁中 esbuild/fsevents 安装脚本未运行；构建使用可选平台二进制。npm 提示 ESLint 9.28.0 已不受维护，保留已验证固定版本并记录后续维护事项，无临时升级。
+   - 精确生产依赖：react/react-dom 18.3.1，react-router-dom 6.30.1，fuse.js 7.1.0（仅按栈安装，未提前实现搜索）。开发依赖：typescript 5.8.3、@types/react 18.3.20、@types/react-dom 18.3.6、vite 6.3.5、tailwindcss 3.4.17、vitest 3.2.4、eslint/@eslint/js 9.28.0、typescript-eslint 8.34.0。React DOM/类型与 ESLint TS 配套是获准栈所需，不使用动画/UI 库。无额外浏览器依赖安装。
+   - 最终 `npm run typecheck`、`npm run lint`（max-warnings 0）、`npm run test`、`npm run build` 均返回 0；Vitest **3 文件、28 测试通过，0 skip/todo**：15 提示词、10 内容、3 状态机/路径测试。数值逐 kind 检查边界，boolean/select 不伪造 min/max，覆盖显式/隐式/无单位、正向/反向条件。
+   - 首次 Vitest 27/28：浮点路径出现 0.09999999999999998，已在实现钳制 0.1–0.9，原边界测试保留后通过；没有删除或放宽断言。此前 commentary 中预计 29 项不准确，以真实 28 项为准。
+   - `npm run dev -- --port 5173` 后云端共享 Chromium 实际打开 Library/Tilt；浏览器 tab API 报 “could not read requirements”，用已提供的共享 Chromium 原生窗口成功查看。随后用环境已有 Python Playwright + `/usr/bin/chromium` 运行 `python3 scripts/browser_smoke.py`：最终 **66 项真实浏览器检查全部通过**，输出 `/tmp/effect-stage1-browser.json`。最初脚本 status 定位匹配到了 output 隐式 status，改为明确复制反馈 p[role=status] 后通过，未改产品验收。
+   - 构建输出 JS 约 192.11 kB、gzip 65.16 kB；CSS 约 11.98 kB，最终精确值见命令输出。`git diff --check` 通过；源档 SHA-256 仍 `634d67c8765b7ec96aea1957d67a91048166ac1f127043a130b87665f20544c8`；AGENTS/ROADMAP/源档对基底无差异。
+4. **Acceptance checklist / evidence**：
+   - PASS：三详情真实渲染；当前参数进入中英文提示词，真实剪贴板内容逐字相等，语言偏好 reload 保留；legacy execCommand 回退与全部复制失败选中原文均实测。
+   - PASS：Tilt 鼠标/键盘焦点与 Escape、Auto/Stop/Reset；关闭 glare 同时移除高光与提示词分支；浏览器真实 touchStart/touchMove 模拟拖动倾斜，纵向 swipe 实际改变页面 scrollY，触屏提示与 44px 目标通过。
+   - PASS：Typewriter 正常循环、暂停冻结、Replay 归零、非循环保留第三句、离屏暂停；reduced-motion 初始完整首句无闪烁，手动 Play 即使 loop=true 也只遍历一次三句并静止，Replay 可再运行。
+   - PASS：Glass 四参数改变 computed backdropFilter/fill/border/radius，三背景切换和“视觉样式 · 无动画”标签。静态无虚构时间。
+   - PASS：reduced-motion 的 Tilt hover 静止，显式 Auto 有运动且约 4 秒后回正；三路由 320/768/1280 无横向页面滚动；键盘可达参数/语言/复制控件且可见焦点；未知路径、未知 slug 和尚未实现 /guide 均 Not Found。未发布 related 不生成死链。无捕获到的浏览器运行错误或外部运行请求。
+   - PASS：代码清理 timeout/rAF/IntersectionObserver/ResizeObserver/matchMedia/scroll/resize listeners；布局读取由测量缓存及 rAF 更新，指针 handler 不读布局；动态 CSS 仅 transform/opacity，打字直接更新文字。
+5. **Deviations / boundaries**：C01 控制清单只含六个真实计划 related slug，Stage 4 必须切换实际实现严格引用校验；/guide 链接隐藏，图库/搜索/筛选/URL 状态/其余效果未做。C09 保留 Typewriter/Glass 英语两短语原样边界，最终全库数量仍待决。C10 为避免演示与复制提示词无障碍描述不符，最小补充 Tilt 方向键/触屏滚动/单次 Auto、Typewriter 键盘触屏单遍、Glass 静态 reduced-motion 与控件可达性；未添加参数或虚构静态动画。背景切换是演示按钮，不是提示词参数。单位无空格为 CSS 可用值，单位不重复。此处浏览器为真实 Chromium + 触屏模拟，未声称物理手机测试、Lighthouse/axe 或 Stage 5 全量验收。
+6. **Open questions**：没有阻止 Stage 1 适用验收的剩余问题；保留台账中未获批准的后续项与最终全库短语规则。默认鉴权读远端成功，推送结果另记。独立 H6、物理设备覆盖、Stage 5 全量可访问性审计、Stage 6 主机/深链接部署仍待对应阶段。
+7. **Next step**：提交实现并仅正常推送 stage-1-foundation，核验远端 SHA/main/Stage 0/干净工作树；停止并等待独立 H6 与下一阶段批准。文档规则先行提交为 `879d8fd`。
 
 ### 2026-11-19 — Stage 1 — 获批规则落地
 
@@ -128,7 +148,8 @@ Stage 0：八个治理文件已提交并成功推送，远端交付已核验；�
 ## Decisions awaiting human
 
 - **提交门禁已解除**：用户明确确认使用环境默认 Git 姓名/邮箱；已核验 author 与 committer 有效。阶段审批和产品决策仍待人工确认。
-- **Stage 1 前集中确认**：C01–C03、C05、C08–C13、C18 的最小修订方向，尤其保留原样样例与验证规则如何协调。C04 已获本轮 Stage 0 N/A 授权，无需重复索要。
+- **已批准**：C01、C02、C03、C04/C05、C11/C12，见 Stage 1 日志和 SPEC 修订。C18 本阶段按用户明确要求区分 kind 并测试单位，不伪造范围。
+- **保留待决**：C08 后续单参数项、C09 最终全库英语短语数量、C10 其他 15 项提示词完整性；Stage 1 仅做已说明的最小可访问性补充，未一概批准全部台账。
 - **Stage 2–5 实现前确认**：C06–C07 测试延期/计数、C14 属性例外、C15 组件 props、C17 token 与路由约定。可以一次审核全部建议；未经确认不把它们变成产品规范。
 - **Stage 6 及成长前确认**：C13 部署承诺、C16 发布/增长门禁，以及 F3 人类输入、许可证、主机与域名、人工内容审阅；无提前生产发布。
-- **阶段门**：人工审阅 H1 总结和歧义，另开独立 H6 审阅；只有明确批准才能启动 Stage 1。本次自检不冒称独立审阅。
+- **阶段门**：Stage 0 H6 与 Stage 1 启动授权已收到；本轮 Stage 1 自检不冒称独立 H6。等待新会话独立复核与下一阶段批准。
