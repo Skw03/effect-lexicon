@@ -2,7 +2,13 @@
 
 The 2026-11-19 instruction opens Stage 6 development and independent candidate verification only. Stage 7 is not authorized. This runbook is not approval to connect a host, publish a preview, activate workflows, merge into a deploying branch, or deploy. No account, domain, asset license or human read-through is assumed. The Stage 0–5 historical merge authorization remains scoped to those stages.
 
-## Cloudflare Pages preview preparation — current scope
+## Verified Preview status — 2026-11-19
+
+Independent live audit: **PASS for the audited Preview only; full Stage 6/H2 remains BLOCKED**. Product source `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5`; immutable target https://d7f5ddba.effect-lexicon-preview.pages.dev and moving alias https://stage-6-pages-preview.effect-lexicon-preview.pages.dev both returned200. All27 fetchable files matched the natural build; full29-file output digest remains `69a1cdd09c8a339ced68bb5ac2aa539cf38eff7776867f0e13f04ca5760fb0f1`. See [sourced live audit record](reviews/stage-6-live-preview-d7f5ddba.md) for routes, headers/noindex, hydration and interaction coverage, reruns and exclusions.
+
+Production hostname https://effect-lexicon-preview.pages.dev returned404 Deployment Not Found; no dashboard inventory was inspected. Cloudflare injected NEL/Report-To; no related outbound traffic was observed during the audit, not proof reporting is disabled. Chromium used a certificate exception for the environment proxy; curl trust verification passed. No live Lighthouse/axe, real-device TLS, other browser engines or screen-reader verification. Owner18-entry review, real Actions, branding/domain/assets/terms and production readiness/explicit release approvals remain pending. This status supersedes the historical preparation statements below; it does not authorize further uploads or production.
+
+## Cloudflare Pages preview preparation — historical setup context
 
 2026-11-19: owner selected **Cloudflare Pages, preview only**, and feedback at **https://github.com/Skw03/effect-lexicon/issues**. SUN read that page and observed “New issue”; no issue or setting was changed. Owner has now registered a Cloudflare account; Pages project/access and preview target are not yet confirmed. No cross-site GitHub installation or token authorization was granted. Final name/domain/assets/legal terms remain pending. Earlier reports retain their historical state; full Stage 6 remains BLOCKED.
 
@@ -24,7 +30,7 @@ WRANGLER_SEND_METRICS=false XDG_CONFIG_HOME=/tmp/effect-pages-config /tmp/effect
 
 Run `python3 scripts/pages_config_build_check.py` for effective-env fail-closed checks. In another terminal run `AUDIT_BASE=http://127.0.0.1:4583 python3 scripts/pages_preview_check.py`, the existing `stage6_regression.py`, and axe. No login/project/deploy command is involved. Wrangler may try to fetch generic Request.cf simulation metadata; no account or target is supplied. Generated `.wrangler` state is ignored. The standalone four-category Lighthouse gate still uses the portable local audit build, not a preview with indexing protection disabled.
 
-### Account owner's minimum next step
+### Account owner's initial setup (historical, already performed for this preview)
 
 **Now: the account exists; wait for independent candidate acceptance before creating anything. Then the recommended first-time setup is a separate empty Direct Upload preview project, without GitHub integration. Never send passwords or API tokens to ChatGPT.** The owner authenticates on their own machine (official `wrangler login`, never share its credentials), then uses `wrangler pages project create <owner-chosen-preview-project> --production-branch=main` rather than deploy; the placeholder must be replaced by the owner, and this command is only for the later authorized setup. Production branch is explicitly `main`; it must differ from preview branch `stage-6-launch`. No assets are supplied at creation. Return only the project name, production branch and confirmation that Deployments is empty and no custom domain/Git integration exists. SUN then verifies the target and obtains separate preview authorization. If setup requires a first upload, stop before it; do not use dashboard Create/Save and Deploy.
 
@@ -36,7 +42,7 @@ Preview URLs are public by default. **Noindex is a crawler directive, not access
 
 ### Bind the eventual preview to its reviewed artifact
 
-Before any separately approved upload, record the independently reviewed **full Git SHA**, confirm a clean checkout at that SHA, record Node/npm/build command and nonsecret configuration, build once, then compute a digest over the exact output. Do not rebuild between hashing and upload. Direct Upload source labels alone are not proof of source identity. For this candidate (still uncommitted), use the reviewed patch identity plus base until a later exact-commit review supplies that SHA; do not label the dirty build as the base commit's artifact.
+Before any separately approved upload, record the independently reviewed **full Git SHA**, confirm a clean checkout at that SHA, record Node/npm/build command and nonsecret configuration, build once, then compute a digest over the exact output. Do not rebuild between hashing and upload. Direct Upload source labels alone are not proof of source identity. This preview is bound to reviewed source commit `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5`; documentation-only receipts do not change its product artifact. For a future uncommitted candidate, retain patch identity plus base until exact-commit review; never label a dirty build as its base commit artifact.
 
 ```sh
 python3 - <<'PYDIGEST'
@@ -48,9 +54,9 @@ print(sha256(manifest.encode()).hexdigest())
 PYDIGEST
 ```
 
-Keep that digest with the reviewed SHA and build inputs in the release receipt, outside the upload directory. After the owner uploads only that approved artifact, record dashboard environment **Preview**, deployment ID and the immutable `https://<deployment-hash>.<project>.pages.dev` URL. The branch alias is a moving pointer and is insufficient for review; record it only as secondary information. Verify on the immutable URL, and record whether a production deployment exists (and its unchanged prior ID if any), without creating one for comparison. See [official preview alias behavior](https://developers.cloudflare.com/pages/configuration/preview-deployments/#preview-aliases). Current hosted URL, deployment ID, reviewed final commit binding and production-deployment inventory are all pending; no remote dashboard was inspected.
+Keep that digest with the reviewed SHA and build inputs in the release receipt, outside the upload directory. After the owner uploads only that approved artifact, record dashboard environment **Preview**, deployment ID and the immutable `https://<deployment-hash>.<project>.pages.dev` URL. The branch alias is a moving pointer and is insufficient for review; record it only as secondary information. Verify on the immutable URL, and record whether a production deployment exists (and its unchanged prior ID if any), without creating one for comparison. See [official preview alias behavior](https://developers.cloudflare.com/pages/configuration/preview-deployments/#preview-aliases). The current immutable preview URL, source binding and fetched-byte match are recorded above. A full dashboard deployment inventory/identifier verification remains outside the audit; no remote dashboard was inspected.
 
-Use [the uncompleted 18-entry human checklist](HUMAN_REVIEW.md). Actual hosted routing/refresh/query/404, headers/cache/CSP, hydration, noindex and access policy remain unverified. Name remains provisional; human content approval, assets/licenses/terms, Actions, production smoke and release remain pending.
+Use [the uncompleted 18-entry human checklist](HUMAN_REVIEW.md). Hosted routing/refresh/query/404, headers/noindex and hydration were audited within the scope above; dashboard Access policy was not inspected. Name remains provisional; human content approval, assets/licenses/terms, Actions, production smoke and release remain pending.
 
 ## Reproduce the local candidate
 
@@ -121,9 +127,9 @@ AXE_PATH=/tmp/effect-stage6-audit/node_modules/axe-core/axe.min.js python3 scrip
 
 A complete release still requires independent H6 on the exact commit, Actions branch PASS, verified external preview and owner tasks below. A score is not a human content or device review.
 
-## Remaining host-dependent steps (account/target blocked)
+## Remaining production and dashboard steps (not authorized by Preview PASS)
 
-Cloudflare Pages is selected for preview only; its adapter is local and inactive remotely. SUN must still confirm account/project identity, access, nonproduction preview target, and that connecting the repository cannot deploy main. Provider-specific routes, headers, build variables, preview settings, HTTPS/DNS instructions, official integration and rollback controls must then be recorded and tested on that target. No external preview may be created before confirmation.
+Cloudflare Pages preview effect-lexicon-preview is live at the audited target above. The external audit does not inspect account access, production integration settings or dashboard inventory. Production routes/headers, final build inputs, DNS/HTTPS, official integration and rollback controls still require their own evidence and authorization. A new external deployment requires separate target confirmation and approval.
 
 Production integration must remain disconnected/disabled through candidate review. H2's automatic production deploy on main is a future owner-enabled setting, gated by independent PASS and separate production release authorization. Even after release approval, the owner performs production setup and deployment. Never enable integration merely to test CI or a PR.
 
@@ -138,10 +144,10 @@ Once the project/target is confirmed and the applicable action is separately aut
 
 ## Rollback and post-release smoke
 
-Before production, record the host's exact immutable last-good deployment identifier and dashboard rollback procedure here. Without a provider/account those executable provider steps are **blocked**; this generic contract alone does not satisfy the complete H2 runbook gate. Roll back by owner-promoting the recorded last-good artifact; do not force-push or rewrite Git history. If integration would redeploy a bad main, owner pauses it first. If a source fix is needed, use a reviewed revert/fix PR and rerun all gates. Verify headers, canonical URLs and assets after rollback; preserve the failed deployment and logs for diagnosis.
+Before production, record the host's exact immutable last-good deployment identifier and dashboard rollback procedure here. Without verified production target, deployment inventory and rollback controls, executable production steps remain **blocked**; this generic contract alone does not satisfy the complete H2 runbook gate. Roll back by owner-promoting the recorded last-good artifact; do not force-push or rewrite Git history. If integration would redeploy a bad main, owner pauses it first. If a source fix is needed, use a reviewed revert/fix PR and rerun all gates. Verify headers, canonical URLs and assets after rollback; preserve the failed deployment and logs for diagnosis.
 
 Smoke checklist: Gallery shows 18 effects; all 18 direct detail URLs and Guide refresh; unknown path returns 404; JS disabled still shows names/aliases/descriptions/prompts; representative pointer, scroll, modal and clipboard work; EN/ZH preference survives refresh; reduced motion has no autoplay and manual runs finish; no CSP/console errors; sitemap contains exactly the 20 published routes on approved origin; robots references it; approved OG image/favicon/manifest resolve; hashed assets immutable and HTML no-cache; feedback and exact legal text present; real HTTPS and certificate valid; both mobile Lighthouse gates pass. Record date, SHA, deployment URL/ID, tester and rollback ID.
 
 ## Human tasks remaining
 
-Cloudflare Pages project/preview target and verified access (account registered); final site name/domain and trademark checks; domain purchase/DNS/HTTPS; approved share image and favicon; code license and content terms; approved Issues link on the eventual preview; host/GitHub settings or secrets once known; Search Console verification; native Chinese and terminology review; personal final read-through of all 18 entries and prompts; explicit independent pass and separate owner production release/tag. None is implied complete by automated tests.
+Dashboard access/settings and production target verification (Preview already audited); final site name/domain and trademark checks; domain purchase/DNS/HTTPS; approved share image and favicon; code license and content terms; approved Issues link returned200 in the audit; host/GitHub settings or secrets once known; Search Console verification; native Chinese and terminology review; personal final read-through of all 18 entries and prompts; explicit independent pass and separate owner production release/tag. None is implied complete by automated tests.
