@@ -1,0 +1,11 @@
+.reveal-stage { width: 100%; height: 360px; overflow-y: auto; touch-action: pan-y; background: #eeedf7; }
+.reveal-list { display: grid; gap: 24px; padding: 24px; }
+.scroll-reveal-slot { min-height: 144px; }
+.scroll-reveal-card { line-height: 1.5; padding: 24px; min-height: 144px; background: white; border: 1px solid #ddd8f1; border-radius: 12px; opacity: 0; transform: translateY(var(--scroll-distance)); }
+.scroll-reveal-card.is-seen { animation: scroll-card-in 600ms ease-out both; }
+.scroll-reveal-card.is-static { opacity: 1; transform: none; }
+@keyframes scroll-card-in { from { opacity: 0; transform: translateY(var(--scroll-distance)); } to { opacity: 1; transform: translateY(0); } }
+.reveal-static { height: 100%; overflow: hidden; pointer-events: none; }
+.reveal-static .reveal-list { gap: 12px; padding: 16px; }
+.reveal-static .scroll-reveal-card { line-height: 1.5; padding: 14px; min-height: 100px; }
+.reveal-static .scroll-reveal-slot { min-height: 100px; }

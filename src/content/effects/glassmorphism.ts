@@ -4,7 +4,7 @@ export const glassmorphism: Effect = {
   id: 'glassmorphism', slug: 'glassmorphism', status: 'published',
   name: { en: 'Glassmorphism (Frosted Glass)', zh: '玻璃拟态' },
   aliases: { en: ['frosted glass', 'glass UI', 'backdrop blur', 'blurred translucent card'], zh: ['毛玻璃', '磨砂玻璃', '毛玻璃卡片', '半透明模糊背景'] },
-  searchPhrases: { en: ['blur the background behind a panel', 'translucent card that blurs what is behind it'], zh: ['半透明模糊的卡片', '像磨砂玻璃', '能隐约看到后面的背景'] },
+  searchPhrases: { en: ['blur the background behind a panel', 'translucent card that blurs what is behind it', 'a frosted panel softens the colors behind it'], zh: ['半透明模糊的卡片', '像磨砂玻璃', '能隐约看到后面的背景'] },
   category: 'backgrounds', type: 'style', triggers: ['none'],
   tags: ['blur', 'translucent', 'backdrop-filter', 'card'],
   summary: '半透明面板让背后的内容变模糊，像隔着磨砂玻璃看东西。',

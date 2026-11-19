@@ -16,11 +16,10 @@ const current = [
   ['frosted glass', 'glassmorphism'], ['blur background', 'glassmorphism'], ['毛玻璃', 'glassmorphism'],
 ];
 test.each(current)('%s includes %s in top three', (query, slug) => expect(ids(query)).toContain(slug));
-const future = [
-  [4, '加载时灰色条闪光', 'skeleton-shimmer'], [4, '滚动时背景比内容慢', 'parallax-scroll'],
-  [4, '向下滚动内容渐渐出现', 'scroll-reveal'], [4, '彩色流动的背景', 'aurora-gradient'], [4, '导航链接下面划线滑出来', 'underline-slide-link'],
-];
-for (const [stage, query, slug] of future) test.todo(`Stage ${stage}: ${query} must include ${slug} in top three`);
+test.each([
+  ['加载时灰色条闪光', 'skeleton-shimmer'], ['滚动时背景比内容慢', 'parallax-scroll'],
+  ['向下滚动内容渐渐出现', 'scroll-reveal'], ['彩色流动的背景', 'aurora-gradient'], ['导航链接下面划线滑出来', 'underline-slide-link'],
+])('%s includes %s in top three', (query, slug) => expect(ids(query)).toContain(slug));
 test('Chinese description ranks Tilt first with a real alias/phrase hint', () => {
   const hit = searchEffects(publishedEffects, '鼠标移上去卡片跟着动')[0];
   expect(hit.effect.slug).toBe('card-tilt-3d');
@@ -47,7 +46,8 @@ describe('filters and URL', () => {
     const selected = { ...state, triggers: [...state.triggers], categories: [...state.categories] };
     expect(filterEffects(publishedEffects, selected).map(effect => effect.slug)).toEqual(['card-tilt-3d', 'typewriter', 'spotlight-card', 'gradient-text-shimmer']);
     expect(filterEffects(publishedEffects, { ...selected, type: 'animation' }).map(effect => effect.slug)).toEqual(['typewriter', 'gradient-text-shimmer']);
-    expect(filterEffects(publishedEffects, { ...selected, categories: ['backgrounds'] })).toEqual([]);
+    expect(filterEffects(publishedEffects.slice(0, 10), { ...selected, categories: ['backgrounds'] })).toEqual([]);
+    expect(filterEffects(publishedEffects, { ...selected, categories: ['backgrounds'] }).map(effect => effect.slug)).toEqual(['aurora-gradient']);
   });
   test('search and approximate results stay inside filters', () => {
     const filtered = filterEffects(publishedEffects, { ...emptyState, type: 'style' });

@@ -1,0 +1,10 @@
+.modal-demo { position: relative; isolation: isolate; min-height: 320px; width: 100%; display: grid; place-items: center; background: #e8e7f3; }
+.modal-layer { position: absolute; inset: 0; display: grid; place-items: center; padding: 16px; }
+.modal-backdrop { position: absolute; inset: 0; background: rgb(0 0 0 / .4); transition: opacity 200ms ease; }
+.modal-dialog { position: relative; width: min(340px,100%); padding: 24px; border-radius: 12px; background: white; box-shadow: 0 8px 32px rgb(0 0 0 / .15); transition: transform 250ms cubic-bezier(.16,1,.3,1), opacity 250ms cubic-bezier(.16,1,.3,1); }
+.modal-dialog h3 { margin: 0; }
+.modal-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.modal-static-action { display: inline-block; border: 1px solid #e7e5e4; padding: 4px 16px; border-radius: 8px; }
+.mini-preview .modal-demo { height: 100%; min-height: 100%; pointer-events: none; }
+.mini-preview .modal-dialog { padding: 14px; }
+.mini-preview .modal-dialog p { margin: 6px 0; }

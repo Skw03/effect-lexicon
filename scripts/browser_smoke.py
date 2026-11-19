@@ -27,13 +27,13 @@ with sync_playwright() as p:
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.on('request', lambda request: external.append(request.url) if not request.url.startswith(BASE) else None)
     page.goto(BASE)
-    expect(page.locator('main a.effect-title')).to_have_count(10)
-    check('Library has exactly ten canonical effect entries', page.locator('main a.effect-title').evaluate_all('(links) => links.map(link => link.getAttribute("href"))') == ['/effects/card-tilt-3d', '/effects/typewriter', '/effects/glassmorphism', '/effects/card-flip', '/effects/spotlight-card', '/effects/magnetic-button', '/effects/ripple-button', '/effects/sliding-fill-button', '/effects/gradient-text-shimmer', '/effects/staggered-text-reveal'])
+    expect(page.locator('main a.effect-title')).to_have_count(18)
+    check('Library has exactly eighteen canonical effect entries', page.locator('main a.effect-title').evaluate_all('(links) => links.map(link => link.getAttribute("href"))') == ['/effects/card-tilt-3d', '/effects/typewriter', '/effects/glassmorphism', '/effects/card-flip', '/effects/spotlight-card', '/effects/magnetic-button', '/effects/ripple-button', '/effects/sliding-fill-button', '/effects/gradient-text-shimmer', '/effects/staggered-text-reveal', '/effects/aurora-gradient', '/effects/underline-slide-link', '/effects/shrinking-sticky-header', '/effects/parallax-scroll', '/effects/scroll-reveal', '/effects/skeleton-shimmer', '/effects/pulsing-dots-loader', '/effects/modal-scale-fade'])
     for slug in ['card-tilt-3d','typewriter','glassmorphism']:
         page.goto(BASE + '/effects/' + slug)
         expect(page.locator('h1')).to_be_visible()
         check(slug + ' real detail and controls', page.locator('.demo-stage').count() == 1 and page.locator('input[type=range]').count() >= 3)
-        check(slug + ' no unpublished related dead links', page.locator('a[href^="/effects/"]').evaluate_all('(links) => links.map(a => a.getAttribute("href"))') == {'card-tilt-3d':['/effects/card-flip','/effects/spotlight-card'], 'typewriter':['/effects/gradient-text-shimmer','/effects/staggered-text-reveal'], 'glassmorphism':[]}[slug])
+        check(slug + ' no unpublished related dead links', page.locator('a[href^="/effects/"]').evaluate_all('(links) => links.map(a => a.getAttribute("href"))') == {'card-tilt-3d':['/effects/card-flip','/effects/spotlight-card'], 'typewriter':['/effects/gradient-text-shimmer','/effects/staggered-text-reveal'], 'glassmorphism':['/effects/aurora-gradient','/effects/modal-scale-fade']}[slug])
         for lang, label in [('en','English'),('zh','中文')]:
             page.get_by_role('button', name=label, exact=True).click()
             key, value = {'card-tilt-3d':('maxTilt',20),'typewriter':('typingSpeed',100),'glassmorphism':('blur',30)}[slug]

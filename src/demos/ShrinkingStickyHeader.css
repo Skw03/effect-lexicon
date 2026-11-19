@@ -1,0 +1,12 @@
+.sticky-stage { width: 100%; height: 360px; overflow-y: auto; overflow-anchor: none; touch-action: pan-y; background: #eef2f0; }
+.sticky-document { min-height: 900px; }
+.sticky-demo-header { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 16px; transition: height 200ms ease; background: transparent; }
+/* SPEC §7 explicitly requests a height transition for this contained header. */
+.sticky-header-surface { position: absolute; inset: 0; z-index: -1; background: rgb(255 255 255 / .85); backdrop-filter: blur(6px); box-shadow: 0 3px 12px rgb(0 0 0 / .1); transition: opacity 200ms ease; }
+.sticky-demo-header nav { display: flex; gap: 12px; }
+.sticky-demo-header a { display: flex; align-items: center; min-height: 44px; }
+.sticky-story { padding: 24px; }
+.sticky-story section { padding: 24px 0; border-top: 1px solid #cbd5d1; }
+.scroll-static { overflow: hidden !important; height: 100% !important; pointer-events: none; }
+.mini-preview .sticky-story { padding: 12px 20px; }
+.mini-preview .sticky-story h3 { margin: 0; }

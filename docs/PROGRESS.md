@@ -2,10 +2,8 @@
 
 ## Current stage
 
-Stage 3：独立 H6 与阶段验收已通过；已按协调方授权提交并正常推送 `stage-3-demos-a`。实现提交 `cb0ca9f8d5bf08467d4e012432c9d3037d295f49`；最终日志回执分支头见远端及交付消息。不开始 Stage 4，不开 PR、不合并、不部署。
-验收基底：`b263169e837b9f9138698f6d69f798da95e86a76`；候选完整 patch SHA-256：`1036b2b4d4717b8f302d692c7037eeab169cfceb738fc08d7b56e1bff7c0f0f7`（120412 bytes，34 paths）。
-环境：指定 effect-lexicon-cloud，checkout `/workspace/effect-lexicon`；唯一 origin `https://github.com/Skw03/effect-lexicon.git`。提交前远端 main 为验收基底，无同名远端分支。
-提交推送结果及最终分支头见下方回执和交付消息。除本日志外，候选代码与测试逐字节保留；默认 Git 身份沿用，不在文档记录姓名邮箱。
+Stage 4：协调方确认独立 H6 复验与阶段验收通过，已明确授权在原环境提交并正常推送 `stage-4-demos-b`。本轮只补正式验收/交付记录，代码与测试保持通过候选不变。提交与远端结果见最新回执。不创建 PR、不合并、不部署、不开始 Stage 5。
+验收基底：`67bd5fcad2fa316a729d699b741e0da5a5230de3`；分支 `stage-4-demos-b`；指定 effect-lexicon-cloud `/workspace/effect-lexicon`；origin `https://github.com/Skw03/effect-lexicon.git`。历史 Stage 3 验收/交付记录保持如下。
 
 ### H1 summary (11 lines)
 
@@ -22,6 +20,76 @@ Stage 3：独立 H6 与阶段验收已通过；已按协调方授权提交并正
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 4 — 独立 H6 通过，提交推送授权
+
+1. **Summary**：协调方确认 Stage 4 独立复验通过，明确授权原 effect-lexicon-cloud / Skw03/effect-lexicon 工作区以默认 Git 身份提交并正常推送 stage-4-demos-b。受审完整 patch v1 SHA-256 `fb597658d9c96ef415b1ff332e294c5ba1ade6849d1a1457acbf78e953755565`，133973 bytes / 39 paths，基底 `67bd5fcad2fa316a729d699b741e0da5a5230de3`。
+2. **Files changed**：相对已验收候选仅本日志；原 39 路径全部精确保留。代码、测试、SPEC、原始 REQUIREMENTS_SOURCE、schema、依赖/锁文件不再改动。
+3. **Commands/results**：重读治理/路线图/最近日志，核对 origin、分支、HEAD、远端 main、同名远端分支和工作树。修改日志前完整 diff 与受审 patch 逐字节相同，签名/字节/39 路径一致，无额外 untracked 或实际暂存内容；默认 author/committer 可用，未修改配置或公开姓名邮箱。远端 main 仍为验收基底、同名远端分支不存在。本轮重新运行 typecheck、lint、test、build 全部返回 0，139 passed / 0 skip / 0 todo；JS gzip 97.82 kB、CSS gzip 6.50 kB。未对未变更功能重复浏览器回归；使用已通过独立证据及原自检记录。
+4. **Acceptance**：协调方提供的独立 H6 结果：`npm ci --ignore-scripts`、typecheck/lint/test/build 全通过；139 单测；Chromium Stage 4 259 项 + 历史 391 项，另 35 组独立手势/下划线检查；18 词条/8 类、12 组/14 搜索输入/16 目标，独立确认上下滚交接与 reduced-motion 下实际下划线状态。触摸是 Chromium CDP 模拟，不是物理手机。本阶段正式验收通过；不扩大为 Stage 5 审计或发布验收。
+5. **Deviations**：无实现变化；默认 Git 身份沿用、不强推、不改 main，不开 PR/合并/部署/Stage 5。
+6. **Open questions**：无本轮交付阻塞；后续由协调方安排，不自动开始下一阶段。
+7. **Next step**：仅暂存原候选 39 路径，校验除日志外逐文件 SHA-256 与已验收候选一致、暂存 diff 无空白错误后提交并正常推送。成功后写入独立文档回执并再次推送，核对远端最终 SHA、main 不变、工作树干净及实现/测试等价；最终提交头见交付消息，避免日志自引用。
+
+
+### 2026-11-19 — Stage 4 — 吸收独立 H6 两处修复，等待最终放行
+
+1. **Summary**：按协调方明确续修指令，仅解决 Scroll Reveal 原生触屏边界释放与 Underline reduced-motion 状态反馈两处。协调方 H6 的分数高度对照证据指出卡片正文实际滚动高度 1101.375px、DOM scrollHeight 1101 的 Chromium 底部舍入问题；采用其已验证的局部 `line-height: 1.5` 方向。本工作者随后自行实跑原完整脚本与新增边界检查，原失败门通过。没有把 H6 提供的 231/231 实验结果直接当成本工作者结果。
+2. **Files changed since blocked candidate**：恰好五个路径：`src/demos/ScrollReveal.css`、`ScrollReveal.tsx`、`UnderlineSlideLink.tsx`、`scripts/stage4_regression.py`、本日志。完整 Stage 4 patch 仍为原 39 路径。Scroll Reveal 仅给 `.scroll-reveal-card` 设置 `line-height: 1.5`，保持原生换行和内滚；撤掉此前无效试改引入的 settled state/onAnimationEnd 清理和卡片临时 pointer-events 规则，恢复仅由 seen 记录 once 的原模式；完整回归证明不需要这些试改。静态首页外层的禁止指针规则保留。Underline 取消 hover/focus 激活上的 `!reducedMotion` 条件，仍保留 reduced-motion 的 0ms 过渡、tap、Auto 与清理逻辑。
+3. **Commands/results**：
+   - 重读 AGENTS、ROADMAP、最近日志、SPEC §7/8/9 与原文 E Stage 4。原指定环境/checkout；HEAD=`67bd5fcad2fa316a729d699b741e0da5a5230de3`、分支 `stage-4-demos-b`、origin 均正确；远端 main 仍为该基底，无同名远端分支。修前 `git diff --binary HEAD` 与已上传 blocked-candidate 完全相同，SHA-256 `2892d582ef4b4bc83a07cee7f9d5132cc278c66bb91609d89f4fded3f3d73be6`，未混入/覆盖并发工作。
+   - 沿用上一轮 `npm ci --ignore-scripts` 的未变更安装，本轮不增加依赖、不重跑安装脚本。`npm run typecheck`、`npm run lint`、`npm run test`、`npm run build` 全部返回 0；Vitest **139 passed / 0 todo / 0 skip**，4 文件；构建 JS 290.91 kB / gzip **97.82 kB**，CSS 25.65 kB / gzip **6.50 kB**。
+   - `python3 scripts/stage4_regression.py` **259/259 PASS**（`/tmp/stage4-h6-fixes.log`、`/tmp/effect-stage4-results.json`）：原 231 项全部实跑并保留；新增 28 项，其中 normal/reduce 两模式 hover 激活、leave 清除、真实 Tab/Shift+Tab 焦点激活/blur 清除共 8 项，均检查实际 scaleX 矩阵与清晰焦点而非只查 duration；320/375/390/768/1280 五宽度、上下边界各检查触点真实命中卡片 p 与原生 CDP touch 手势带动外层页面，共 20 项。原 375px 正文底部释放断言原样保留并通过。页面有滚动余量，预置边界后手势阶段没有程序化滚动、preventDefault 或滚动桥接。
+   - 原 391 项历史回归完整重跑：`browser_smoke.py` **66/66**、`clipboard_regression.py` **8/8**、`discovery_regression.py` **68/68**、`stage3_regression.py` **142/142**、`magnetic_boundary_regression.py` **107/107**；日志 `/tmp/stage4-h6-{smoke,clipboard,discovery,stage3,magnetic}.log`。合计本轮 Chromium **650/650**。没有删除、弱化或跳过旧测试。全部观察上下文未捕获未处理异常或外部运行请求。
+4. **Acceptance checklist（开发复验）**：PASS 原触屏阻塞与五宽上下释放；PASS 两模式 Underline hover/keyboard 实际反馈；PASS 18 首页/详情、全部 14 输入/16 目标、真实参数/双语复制、滚轮/键盘/触屏/Replay、Reduced Motion、暂停/离屏、模态焦点与 320 起布局；PASS 四质量门及 391 历史回归。**最终协调方 H6/阶段放行仍待确认**，本日志不自行宣告验收、可合并或提交许可。旧 blocked 记录作为历史完整保留，由本条更新当前状态。
+5. **Deviations**：无新增规格偏离。没有写死滚动总高度、加小数补偿、手工转发滚动、屏蔽卡片正文触点或改公共滚动 hook；仅局部行高与激活条件及撤回无效试改。公共 schema、其他 demo、依赖、SPEC/ROADMAP/AGENTS/原需求均保留。Chromium touch 是模拟而非物理手机；本轮未做 Stage 5 axe/Lighthouse、跨浏览器、全量优化或发布审计，不声称这些通过。
+6. **Open questions**：本次两项已知实现阻塞均已修复并由本工作者复验，无新增已知阻塞；等待协调方对更新后的确切候选独立核验及放行。不提交、推送、开 PR、合并、部署或进入 Stage 5。
+7. **Next step / reproducibility**：重新导出基底至当前的完整 `git diff --binary HEAD`（新增路径保持 intent-to-add，无实际暂存/提交），验证原树 reverse --check、干净基底 apply --check/apply、108 个源文件逐字节一致及 reverse 恢复基底。私有 Library 原候选身份以版本更新保存，旧版本保留用于追溯；交付回报列准确文件名/版本/ID/字节/SHA-256。复跑：应用补丁，运行四质量门；`npm run dev -- --port 5173` 后运行上述六个 Python Chromium 脚本。本候选继续未提交等待协调方指令。
+
+
+### 2026-11-19 — Stage 4 — 八项演示未提交候选（等待独立 H6）
+
+1. **Summary**：已实现 Stage 4 的八项候选（尚未完成验收）：Aurora、Underline、Shrinking Sticky Header、Parallax Scroll、Scroll Reveal、Skeleton、Pulsing Dots、Modal Scale Fade；保留原十项顺序，共 18 项、8 类。新增独立中英内容/模板、3 条日常描述/语言、术语边界、真实参数、演示/CSS/registry。Typewriter、Glassmorphism 各仅在原两条英文短语末尾追加一条自然描述，原名称、参数、提示词和行为未变。移除 plannedRelatedSlugs 与首期短语数量例外，全部 related 严格指向 published 且 registry 已实现条目；五个剩余查询已激活，12 组/14 实际输入/16 目标均运行。本记录为开发自检，不是独立验收或放行。
+2. **Files changed**：共 39 路径：八个 `src/content/effects` 新文件；八组 `src/demos/<Component>.tsx/.css`；新 `src/demos/useScrollStage.ts`；新 `scripts/stage4_regression.py`；修改内容 index、registry、content/search 测试、Typewriter/Glassmorphism 英文短语、DemoStage/EffectCard、四个历史浏览器脚本及本日志。详单可用 `git diff --name-only HEAD` 重现。公共 `Effect`/`DemoProps` schema、依赖/锁文件、原需求、SPEC、ROADMAP、AGENTS 不变。无 Guide、发布设置或第三方素材。
+3. **Commands/results**：
+   - 指定 effect-lexicon-cloud `/workspace/effect-lexicon`；唯一 origin `https://github.com/Skw03/effect-lexicon.git`。初始 `work` 分支只有 `dfcff86` 初始快照且干净、无本地 main。`git ls-remote origin refs/heads/main refs/heads/stage-4-demos-b` 核实 main 为 `67bd5fcad2fa316a729d699b741e0da5a5230de3`，无远端同名分支；`git fetch origin main` 后 `git switch -c stage-4-demos-b FETCH_HEAD`，HEAD 与 origin/main 同为确切验收基底。未改 main、未覆盖并发工作。
+   - 完整读取治理、路线图、最近阶段日志、SPEC 与原文 E Stage 4（750–774）、H6。`npm ci --ignore-scripts --cache /tmp/effect-npm-cache` 成功，232 包；沿用既有版本，未跑安装脚本，现有 ESLint 支持期提示未通过升级处理。
+   - `npm run typecheck` / `npm run lint` / `npm run test` / `npm run build`：最终结果见下方实测表。单元门包含 18 项内容、所有模板键/每参数两语言、数字/选择/布尔、严格关联/registry、全库 3–6 双语短语、减少动态/键盘（含 arrow-key/方向键）/触摸（含 tap）文案、旧 Stage 3 参数以及八项新默认/范围。
+   - Chromium 使用环境已有 Python Playwright 与 `/usr/bin/chromium`，`npm run dev -- --port 5173`。实跑 `scripts/browser_smoke.py`、`clipboard_regression.py`、`discovery_regression.py`、`stage3_regression.py`、`magnetic_boundary_regression.py`、`stage4_regression.py`；最终计数见下表。原脚本只更新确切十八项计数/有序路径、Glass 的两个真实关联及发现结果栏的精准 status 定位，未删除旧行为断言；原 filter 的空交集断言保留在原十项数据上，并另外严格断言十八项数据新增 Aurora 命中。没有 todo/skip 搜索门或计划 slug 容错。
+   - 新浏览器门实际验证：18 首页/详情与关联；14 条输入/16 目标 top-three；八项所有参数双语渲染/系统剪贴板/默认恢复；Underline pointer、键盘、tap、Auto/停止；三内部滚动区的 wheel、PageDown/Tab 释放、原生 touch、Replay/Pause/恢复/用户接管、边缘滚动页面；Sticky 阈值/高度/背景及锚定稳定；Parallax 两个速度实际矩阵；Reveal 容器 Observer、最后卡片及 once；Skeleton 伪元素真实平移、切换真实内容、读屏状态；Dots 尺寸/时长/错峰/读屏标签；三连续演示实际运动/暂停/离屏/首页预算；Reduced Motion 默认静态、显式有限播放/重播；Modal 真开关、缩放参数、双向 Tab 循环、Escape/按钮关闭及焦点返回；320/768/1280 首页和八详情无横向页面溢出。所有观察上下文捕获运行错误及外部运行请求。
+   - 调试事实：旧 discovery 只用 `[role=status]` 的唯一定位与两个新增加载状态冲突，改为 `.result-line p[role=status]`，polite/atomic 和数量断言原样保留。新增键盘测试改为实际 Tab/Shift+Tab 路径，避免鼠标模态下 programmatic focus 不触发 focus-visible 的错误假设。Reveal 时长含 80ms 批内错峰，取样覆盖完整周期；Modal CSS duration 是浏览器返回的单值 `.6s`，不是重复列表。严格文案测试识别明确 arrow-key/方向键与 tap 同义表达，适用于所有条目，没有逐词条豁免。一次开发 HMR 造成测试 DOM detach，完整静态候选重跑，不计为通过。
+   - 修复两个真实交互问题：Sticky 高度变化触发原生 scroll anchoring 回退，在阈值附近可能振荡；仅此演示设 `overflow-anchor: none`，追加 41px 阈值稳定断言。Modal 关闭 timer 内同步 focus 时 opener 仍 disabled；移至关闭后的 React effect，普通/减少动态实际验证回到 opener。滚动脚本用户输入后完成状态同步、Pause 冻结滚动与进行中的 Reveal，切回 Play 可继续；没有锁住页面或拦截原生 wheel/touch 默认行为。
+4. **Acceptance checklist / 实测结果**：**FAIL：Stage 4 尚未完成**。新滚动渐显触屏底部释放门未通过；不能以单元测试和旧回归通过替代此门。以下 PASS 仅指明确实跑的子检查。
+
+   | 检查 | 实测 |
+   | --- | --- |
+   | npm ci --ignore-scripts | PASS，232 packages |
+   | typecheck / lint / test / build | PASS；4 单测文件，139 passed，0 todo / skip |
+   | 生产包 | JS gzip 97.85 kB；CSS gzip 6.51 kB |
+   | browser_smoke.py | PASS 66/66 |
+   | clipboard_regression.py | PASS 8/8 |
+   | discovery_regression.py | PASS 68/68 |
+   | stage3_regression.py | PASS 142/142 |
+   | magnetic_boundary_regression.py | PASS 107/107 |
+   | 既有 Chromium 合计 | PASS 391/391，最新完整日志 `/tmp/stage4-final-*.log` |
+   | stage4_regression.py | **FAIL / 未完整通过**，完整运行日志 `/tmp/stage4-final-new.log`；不得把前面的 PASS 行视为本脚本通过 |
+   | 独立运行相同布局段 `/tmp/stage4-layout.py` | PASS 29/29（27 个 320/768/1280 首页/八新详情宽度检查，另 2 个该运行上下文错误/请求检查） |
+   | 定位用 `/tmp/stage4-touch.py` | 5 项通过后失败于 Scroll Reveal 卡片表面底部触屏向页面释放；等待动画结束 1000ms 的定位运行同样失败 |
+   | Modal 关闭焦点专项复测 | 普通与 reduce 两个上下文都通过 |
+
+   独立 H6 与协调方阶段放行 **未执行/未放行**。不得将本候选称为已验收或可直接合并。浏览器截图只在 `/tmp` 查看，用于核实首页静态代表画面、布局、极光/骨架/弹窗真实呈现，不上传截图。
+5. **Deviations / implementation choices**：
+   - 按本次 C08 明确授权补两个有用第二参数：Parallax `midgroundSpeed` 默认 .8、范围 .6–1、步长 .05，来自规格原始中景 0.8 速度，保留默认 0.5/.8/1；Skeleton `bandWidth` 默认 40%、范围 20–60、步长 5，亮带宽度为实现选择，规格未规定数值，不声称行业标准。两个参数均真实作用于画面与中英文模板。其他明确默认/范围原样。
+   - 逐项动画属性：Aurora 只 transform，静态 blur 与三相位/周期差；Underline scaleX；Parallax translate3d；Reveal transform/opacity；Skeleton 伪元素 transform 与已加载内容 opacity；Dots transform/opacity；Modal transform/opacity。Sticky 高度 200ms ease 是 SPEC §7 对该效果明确规定的唯一局部布局属性例外，背景/模糊/阴影为静态层，用 opacity 显隐，未扩展为其他动画属性许可。
+   - 三滚动演示只监听/观察自己的容器，不监听 window；尺寸在 ResizeObserver 中缓存，scroll handler 只排 RAF，卸载断开监听/观察器/帧。详情默认由实际滚动触发，Replay 才开始自动滚动；首页不创建可滚动/可聚焦滚动区且无无效播放控件。Modal 首页是静态打开图，去掉 dialog/aria-modal/可交互控件，不抢焦点；详情开启时才设置语义与焦点循环，遮罩局限舞台，不修改页面 overflow。首页提示词明确 Skeleton 切换与 Modal 打开在详情体验。
+   - 沿用既有可见性与全局最多六个连续预览预算，Reduced Motion 不自动循环，手动一遍结束可再播。新增滚动 helper 只共享三项所需生命周期；DemoStage 的新状态仅用于滚动播放，没有重大共享重构。现有 19 组 synonyms 已覆盖全部新查询，没有为测试加入生硬搜索算法特例。
+   - 仅 Chromium 实测；touch 为 Chromium 模拟，**不是物理手机**。未执行 Stage 5 的 axe/Lighthouse/全库加固、跨浏览器或生产深链/发布审计；不声称这些通过。未提交、推送、开 PR、合并或部署。
+6. **Open questions / blocking finding**：**未解决：Scroll Reveal 在容器底部、手势起点落于卡片正文时，原生 touch swipe 未继续滚动外层页面**（`src/demos/ScrollReveal.tsx`、`ScrollReveal.css`；`scripts/stage4_regression.py` 的 `touch at bottom releases page` 断言）。诊断观测：375×800 Chromium mobile context，容器 scrollTop=741、scrollHeight-clientHeight=741、外层 scrollY=99；卡片正文 x≈215/y≈710 的手势后外层仍 99，在留白 x≈80 手势可到 234。Sticky 和 Parallax 同样手势能够向外层释放。原因未确定，不能称为正常退出。
+   - 已尝试在动画结束时清除 transform/animation 并保留 once 状态、动画期间由 slot 接收指针命中；这两处候选清理已保留，但**没有解决该失败**。等待 1000ms 后再滑也不能解决，不以延长等待隐藏问题。没有添加 preventDefault、页面 scroll lock 或程序化转发外层滚动。
+   - 按 AGENTS 的明确停止条件 “A test still fails after two honest attempts and you do not understand why”，停止继续产品试改，交协调方诊断/授权后再处理；不假装通过或弱化断言。新脚本另将搜索采样等待从固定 250ms 改为真实已应用 query 的 active-summary，以避免并发构建负载下在 debounce 完成前读取旧结果；所有 14 输入/16 目标断言保留。
+   - 本轮未改原始需求或产品方向。C08/C09 仅按本次明确授权处理；其他历史决策按原记录保留。候选仍等协调方独立 H6，未经其明确指令不得提交推送。
+7. **Next step / reproducibility**：所有新增路径用 intent-to-add 纳入 `git diff --binary HEAD` 完整补丁（不 commit）；原树 `git apply --reverse --check`，从确切基底 `git archive` 的干净目录 `git apply --check`/apply、逐文件字节一致、reverse 后与基底字节一致。最终文件名、字节、SHA-256、Library ID 在交付消息中提供，避免补丁自引用。复跑：在基底应用 patch，`npm ci --ignore-scripts --cache /tmp/effect-npm-cache`，依次运行 typecheck/lint/test/build；启动 dev 5173，运行上述六个 Chromium 脚本。不得将多个浏览器重负载下尚未完成的动画取样当成最终状态；脚本关键静态终态采用严格 computed CSS 等待断言。补丁名使用 blocked-candidate 标记；保持未提交候选，先等待协调方处理上述阻塞，再进行独立 H6。
+
 
 ### 2026-11-19 — Stage 3 — 正常推送交付回执
 

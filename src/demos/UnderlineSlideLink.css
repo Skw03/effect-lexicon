@@ -1,0 +1,4 @@
+.underline-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 20px 8px; }
+.underline-nav a { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; text-decoration: none; color: #4338ca; }
+.underline-nav a span { position: absolute; bottom: 3px; left: 0; width: 100%; background: currentColor; transition: transform 250ms ease-out; }
+.mini-preview .underline-nav { gap: 8px; }

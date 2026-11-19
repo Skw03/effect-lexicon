@@ -1,0 +1,10 @@
+.aurora { position: relative; isolation: isolate; overflow: hidden; width: 100%; min-height: 320px; display: grid; place-items: center; background: #15132e; color: white; }
+.aurora-blobs, .aurora-shade { position: absolute; inset: 0; pointer-events: none; }
+.aurora-blob { position: absolute; width: 65%; height: 85%; border-radius: 50%; filter: blur(var(--aurora-blur)); animation: aurora-drift ease-in-out alternate infinite; }
+.blob-0 { background: #7c3aed; left: -20%; top: -20%; --drift-x: 50%; --drift-y: 25%; }
+.blob-1 { background: #06b6d4; right: -15%; top: 0; --drift-x: -35%; --drift-y: 20%; }
+.blob-2 { background: #f472b6; left: 25%; bottom: -45%; --drift-x: 20%; --drift-y: -40%; }
+.aurora-shade { background: rgb(0 0 0 / .5); }
+.aurora strong { position: relative; padding: 24px; text-align: center; font-size: clamp(20px, 4vw, 32px); }
+@keyframes aurora-drift { from { transform: translate(0,0) scale(1); } to { transform: translate(var(--drift-x),var(--drift-y)) scale(1.2); } }
+.mini-preview .aurora { min-height: 100%; height: 100%; }
