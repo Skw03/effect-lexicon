@@ -60,7 +60,7 @@
 
 ## Stage 6 当前交接
 
-远端 main 已核实为 `0dba59fb0a833d40f8e54da430f199c6ebe58dbc`（PR #5）。Stage 0–5 最终 PASS 依据保留于 [复验报告](reviews/rereview-stage-5-independent.md)。当前 `stage-6-launch` 未提交候选仅供开发自检与独立审查；宿主、正式素材/法律输入、外部预览、Actions 和生产均未完成。详见 [发布手册](RELEASE.md) 与 [当前进展](PROGRESS.md)。Stage 6 授权取代下列旧快照的 NOT DUE，仅限本次明确范围；历史 Stage 2–5 merge 授权不因此扩大。
+远端 main 已核实为 `0dba59fb0a833d40f8e54da430f199c6ebe58dbc`（PR #5）。Stage 0–5 最终 PASS 依据保留于 [复验报告](reviews/rereview-stage-5-independent.md)。`stage-6-launch` 产品候选已提交并推送；独立实测快照为 `6cc71919b6abb6212f2d1357278a6d1dd9380878`，协调方转交的独立结果确认 S6-IR-001/002/003 PASS / CLOSED。S6-IR-004 文档修正仍 OPEN，待后续独立结果绑定文档提交 SHA，不以产品实测替代文档复验。完整 Stage 6 / H2 仍 BLOCKED：宿主/域名、正式素材/法律输入、人工18词条终审、外部预览、Actions 和生产验证均未完成。详见 [发布手册](RELEASE.md) 与 [当前进展](PROGRESS.md)。Stage 6 授权取代下列旧快照的 NOT DUE，仅限本次明确范围；历史 Stage 2–5 merge 授权不因此扩大。
 
 ## 历史基线与交接入口
 

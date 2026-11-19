@@ -2,6 +2,8 @@
 
 ## Current stage
 
+2026-11-19 当前状态：产品候选已提交并推送至 `stage-6-launch`，独立实测提交为 `6cc71919b6abb6212f2d1357278a6d1dd9380878`。协调方转交的独立结果确认 S6-IR-001/002/003 PASS / CLOSED；仅004文档状态修正仍OPEN，待文档提交的独立复验绑定新SHA。完整Stage 6 / H2继续BLOCKED，Stage 7未授权。本轮仅获准最小文档修正并正常提交推送同分支。下列保存授权、修复回合与旧快照均为当时状态，不代表当前未提交或四项仍OPEN。
+
 2026-11-19 保存授权：修正版43路径候选已获原独立审查员本地技术范围PASS，完整H2继续BLOCKED；S6-IR-001～004仍OPEN，待精确提交独立复验。协调方现明确授权仅提交并正常推送stage-6-launch，不PR/tag/部署或激活集成。安全归档见[Stage 6本地候选独立审查摘要](reviews/stage-6-local-candidate.md)。除该摘要及本进度链接/状态外，代码、测试与配置保持受审字节；后续历史记录按其当时状态保留。
 
 2026-11-19 修复回合：精确候选 `a8d5fe13efcbdc1e61a06e84013cfab544285d7b7d70479f3a6890aa0a352fa1` 已由不继承实现会话的独立原生审查员判定 **CHANGES REQUIRED**（供应商无关候选）；完整发布 **BLOCKED**。S6-IR-001/002/003（P2）及004（P3）全部 **OPEN**。本轮明确授权修复后保持未提交并交回独立复验；不预写CLOSED、不提交/推送/tag/部署。以下原候选自检是历史证据，不覆盖这次独立发现。
@@ -30,6 +32,16 @@ Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 6 — 精确产品提交独立复验及004文档修正待验
+
+1. **Summary**：协调方转交独立审查专家对 `6cc71919b6abb6212f2d1357278a6d1dd9380878` 的结果：001/002/003 PASS，可关闭，本记录据此记CLOSED；004仍OPEN，仅当前状态措辞待修正复验。不是实施者自审关闭。
+2. **Files changed**：仅README、REVIEW_POLICY、PROGRESS及本地候选审查摘要；同步已提交状态，追加证据并标明原记录为当时状态。产品代码、测试、发布设置与原始要求不变。
+3. **Commands / evidence**：本轮核对origin、干净工作树、远端分支与main精确SHA；本轮typecheck、lint、test、build全部exit0（160 Vitest＋62 Node）；文档范围、链接、非文档逐文件等价及`git diff --check`检查通过。独立专家实跑160 Vitest＋62 Node、既有Chromium1169、路径1167、release441；axe21状态无违规。真实mobile Lighthouse首页91/100/100/100、Tilt93/100/100/100（performance/accessibility/best-practices/SEO）。这些是6cc7191的独立证据，不冒称本轮重跑浏览器或外部Actions。
+4. **Acceptance**：001–003 PASS / CLOSED；004文档修正待精确提交独立复验，不预写CLOSED。完整Stage 6 / H2 BLOCKED。
+5. **Deviations**：无行为、测试或发布设置变更；未新增依赖，未削弱检查，旧报告及验收保持历史原貌。
+6. **Open questions**：托管/域名、素材/条款、人工亲读18词条、真实外部预览/Actions和生产验证仍未完成，生产仍由owner单独放行。
+7. **Next step**：按明确授权正常提交推送同分支；新文档SHA由交付回执及后续独立复验绑定，避免自引用。不创建PR、tag、部署、激活CI或进入Stage 7。
 
 ### 2026-11-19 — Stage 6 — S6-IR-001/002/003/004 修复候选，OPEN 待独立复验
 

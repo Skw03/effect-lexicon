@@ -2,6 +2,12 @@
 
 日期：2026-11-19。仓库：Skw03/effect-lexicon；分支：stage-6-launch。
 
+## 提交后独立复验补记（2026-11-19）
+
+以下初审与候选复验记录保留为当时状态。协调方转交独立审查专家对产品提交 `6cc71919b6abb6212f2d1357278a6d1dd9380878` 的精确复验：S6-IR-001/002/003 PASS / CLOSED；004因README与REVIEW_POLICY仍称“未提交”而保持OPEN。本轮仅修正文档，新的文档提交SHA须由后续独立结果绑定；本补记不提前关闭004。
+
+该产品提交独立实跑：160 Vitest＋62 Node、既有Chromium1169、路径1167、release441；axe21状态无违规。mobile Lighthouse首页91/100/100/100、Tilt93/100/100/100（performance/accessibility/best-practices/SEO）。这些结果不替代真实托管、Actions或生产验证。完整Stage 6 / H2仍BLOCKED；托管/域名、素材/条款、人工18词条终审、真实外部预览/Actions与生产验证均待完成。
+
 ## 受审版本与独立性
 
 基底：`0dba59fb0a833d40f8e54da430f199c6ebe58dbc`。
