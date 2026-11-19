@@ -2,6 +2,8 @@
 
 ## Current stage
 
+Stage 5：独立 H6 与阶段验收已通过，协调方已明确授权提交并正常推送 `stage-5-hardening`。验收基底 `d0f2a1f9b948d2ac1a0132a02a1a44dbdf15ad3d`，受审候选SHA-256 `8170aea9b25f5305e69e7bf02e4821421befe887fc2419de51961956c2d345d7`（79,584 bytes / 19 paths）。本轮仅补充本日志和ACCEPTANCE，代码/测试保持受审字节一致。指定 effect-lexicon-cloud `/workspace/effect-lexicon`；唯一origin `https://github.com/Skw03/effect-lexicon.git`。实际提交/推送结果以交付消息及远端核验为准。不创建PR、不合并、不部署、不进入Stage 6；Library上传仍停止。
+
 Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正常推送 `stage-4-demos-b`。实现提交 `0a7dd887fe988010193d693e8d45ba165b7a494f`；本交付回执为单独文档提交，最终分支头以远端和交付消息为准。代码与测试保持通过候选一致。不创建 PR、不合并、不部署、不开始 Stage 5。
 验收基底：`67bd5fcad2fa316a729d699b741e0da5a5230de3`；分支 `stage-4-demos-b`；指定 effect-lexicon-cloud `/workspace/effect-lexicon`；origin `https://github.com/Skw03/effect-lexicon.git`。历史 Stage 3 验收/交付记录保持如下。
 
@@ -20,6 +22,43 @@ Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 5 — 独立 H6 通过及提交推送授权
+
+1. **Summary**：未参与实现且未继承开发会话的原生审查员，在同一执行器的干净基底隔离目录应用受审补丁并独立实跑H6，结论 `ready to merge（Stage 5范围）`、无阻断缺陷。协调方随后明确授权本轮提交及正常推送，未授权PR/合并/部署。
+2. **Files changed**：相对受审候选仅 `docs/PROGRESS.md`、`docs/ACCEPTANCE.md` 增补验收结果和限制；其余17个候选路径逐文件SHA保持一致。受审补丁79,584 bytes、19路径、SHA-256 `8170aea9b25f5305e69e7bf02e4821421befe887fc2419de51961956c2d345d7`；不修P3，不修改SPEC/REQUIREMENTS_SOURCE、依赖/schema或产品内容。
+3. **Commands/results**：提交前核对完整工作树diff与受审SHA一致；origin正确、HEAD为精确基底、远端main未变且同名远端分支不存在；现有默认Git作者/提交者有效，未修改配置或输出邮箱。重读治理/验收/日志，精确核对19路径，不包含原始运行日志、审计附件、patch、构建产物、令牌或新增个人数据。本轮重新运行typecheck/lint/test/build均exit0，140 passed、0 skip/todo；JS gzip99.20kB，CSS gzip6.62kB；git diff --check通过。未重复未变更代码的浏览器套件，独立实跑证据见下项。
+4. **Acceptance（独立审查实跑）**：四门通过，**140 Vitest / 0 skip/todo**；**1169/1169 Chromium**（67+8+68+142+107+259+518）；Lighthouse12.8.2首页/Tilt **100/100 accessibility**，与开发自检形成两轮均100；axe4.10.3 **21状态、0 critical/serious，全部violations空**。第19项隔离干跑四门、146临时单测及真实浏览器集成通过，正式内容18项不变。独立探针另复现旧基底两清除BODY和IME草稿泄露，验证候选实际Tab/Space清除回焦及下一Tab、550ms组合不更新、中文提交/清空/Back。原始审查与日志保留本执行器 `/tmp/h6-independent/`，未外传。
+5. **Deviations / limits**：两项非阻断P3语义建议保留：PromptPanel.tsx:29、Glassmorphism.tsx:10普通div的aria-label分组语义不可靠；未立即修复。axe incomplete含该语义及复杂背景/textarea对比度人工项；不宣称完整WCAG认证。真机、其他浏览器、原生屏读器、OS Pinyin窗口未验证。SSR/server snapshot/hydration及JS-off风险仍属未执行Stage6清单。
+6. **Open questions**：无本次代码交付阻塞；原Library上传拒绝不重试、不改出口。GitHub目标仓库的本轮推送依据既有用户阶段授权及协调方明确指令执行，与Library上传无关。
+7. **Next step**：四门及内容一致性通过后，精确暂存19路径，提交并正常推送该阶段分支；核验远端SHA等于本地提交、main仍为基底、工作树干净。Stage5到此停止，不进入Stage6。
+
+
+### 2026-11-19 — Stage 5 — 私有附件出口受阻，候选已保留
+
+- 完整候选与审计自检已完成；补丁与无截图审计证据包保留在指定环境 `/tmp/effect-stage5-library/`，工作树仍未提交。
+- 当前Library技能要求多文件使用同一官方prepared upload helper。正常沙箱运行在tools/list阶段报network，尚无上传会话或Library文件ID。
+- 同一官方helper申请允许的环境网络执行时，被自动审批明确拒绝：上传非公开源代码与审计证据到Library，缺少可信用户原文授权及私人受控目标的验证。该次操作未执行，不是已上传或结果未知。
+- 随后检查可见用户历史，找到Stage2–5项目实施/验收授权，但未找到明确私有附件上传授权。未重试被拒操作、未改用其他出口或变更网络设置。
+- **仅附件保存阻塞**：需要协调方提供相关可信用户证据或获得两个具体文件的私有Library保存批准。独立H6可先在本指定环境检查候选；无Library ID/版本可报告，不冒称成功。补丁摘要以最终交付消息为准。
+
+### 2026-11-19 — Stage 5 — 指南、加固与完整开发自检候选
+
+1. **Summary**：实现中文 `/guide` 六要素、原“卡片动起来”与准确Tilt短提示词对比、真实详情跳转及header/footer入口。修复现场复现的清除焦点和Pinyin组合查询泄露；触摸目标、可读提示词与辅助名称加固；正式内容保持18项/8类。完成13项中文报告及未执行Stage 6清单。仅开发自检，不预报最终H6。
+2. **Files changed**：`src/pages/Guide.tsx`、main/styles、Library/SearchBox；CardFlip/MagneticButton仅辅助名称改描述；Sticky/Skeleton仅44px目标；content.test新增源模板token严格门；新Stage 5功能/axe/第19项干跑三个Python脚本；smoke适配已实现Guide（未知路径门仍保留）；README、ACCEPTANCE、本日志。AGENTS/ROADMAP仅按授权澄清旧Stage 2 worker限定的历史性质，不改阶段顺序/放行边界。SPEC、REQUIREMENTS_SOURCE、Effect schema、依赖/锁文件、18份内容不变。
+3. **Commands/results**：
+   - 起始origin正确、工作树干净，本地旧work为67bd5fc；`git ls-remote origin refs/heads/main refs/heads/stage-5-hardening`精确返回main=d0f2a1f9b948d2ac1a0132a02a1a44dbdf15ad3d、无同名分支。fetch后从精确基底新建stage-5-hardening，未写main、未覆盖并发改动。
+   - 重读治理/路线图/日志/SPEC及原文E Stage5、D §3.3/7/8/9/10/11、H6。产品 `npm ci --ignore-scripts --cache /tmp/effect-npm-cache`成功232包，无lifecycle/升级。固定审计官方npm包Lighthouse12.8.2、axe-core4.10.3在仓库外`/tmp/effect-stage5-audit`独立安装，`--ignore-scripts --save-exact`，不更改产品栈/网络。
+   - 四质量门exit0；Vitest **140 passed，0 skip/todo，4文件**。JS294605 bytes / gzip默认level6 **99198 bytes（99.20kB）**，CSS26156 / gzip6618。构建产物不入patch。
+   - 历史浏览器最终完整实跑：smoke **67/67**、clipboard **8/8**、discovery **68/68**、Stage3 **142/142**、magnetic boundary **107/107**、Stage4 **259/259**；新Stage5 **518/518**。合计**1169/1169**。Chromium156.0.8078.79，dev5173；无捕获到运行错误/外部运行请求。旧脚本除smoke的Guide用例无改动。Stage5逐页四宽度实际Tab遍历、44px、16px提示词换行、正常六交互散焦恢复、18详情卸载timer/rAF归零；旧脚本继续覆盖触屏模拟、有限手动播放、真实复制/参数、模态焦点、预算与离屏。
+   - 真实审计访问构建preview4173：Lighthouse12.8.2 accessibility **首页100 / Tilt100**，默认mobile，仅跑accessibility；axe4.10.3全18详情+Library+Guide+打开modal共**21状态，0critical/0serious，全部violations为空**，额外开启label-content-name-mismatch实验规则。最终原始JSON禁用整页截图采集，私有证据附件保存，不上传截图或浏览器二进制。
+   - 第19项只在隔离`/tmp/effect-stage5-nineteenth-*`按README五步干跑：四门成功、新项真实预览/详情/搜索首位/有限播放/参数/双语真实剪贴板/关联通过；正式src逐文件前后hash相同。正式分支没有第19项。可复跑脚本保留，临时样例不属于产品目录。
+   - Stage6实证探针仅在/tmp：server render useReducedMotion报window is not defined；PromptPanel报Missing getServerSnapshot；构建Tilt详情JS-off h1=0/root空。记录待后续处理，不提前实现SSR。语言偏好与reduced-motion hydration一致性仍需后续设计/验证。
+4. **Acceptance checklist**：SPEC §11十三项各自的证据/命令/限制见ACCEPTANCE。本轮自检均通过；自动审计不等于完整WCAG或屏读器验证。候选交付后等待协调方独立H6，不声明最终验收/可合并。
+5. **Deviations / fixes**：修前两清除Enter后均落BODY；组合ka pian等待350ms会发布URL并18→3结果，修后草稿隔离且最终中文准确。Lighthouse初次虽100仍发现两处label-content-name-mismatch，实际修复并加axe规则；Sticky链接32px→44px、Skeleton checkbox13px→44px、提示词14→16px。一次discovery受开发重载影响失败，冻结产品文件后原样全跑68通过；初次干跑的“只返回一项”错误假设改为规范首位断言；审计脚本引号语法错误修正后全跑。未删/跳/弱化既有测试。唯一CSS布局动画例外仍为SPEC明确的Sticky height；真实文字更新和Replay内部scrollTop驱动已逐项说明。
+6. **Open questions / limits**：无已知Stage5实现阻塞；未做物理手机、Safari/Firefox、原生屏读器、OS Pinyin UI、中端手机帧率或生产环境审计。Stage6所有人类选择、独立预览/预渲染/metadata/安全头/CI/部署/DNS/回滚/JS-off验证仅清单；生产必须用户单独明确放行，不能仅因合并无意发布。
+7. **Next step / patch**：新增文件intent-to-add纳入完整`git diff --binary HEAD`，不实际暂存内容/提交；原树reverse --check、干净基底apply --check/apply、逐文件字节相等、reverse恢复基底验证后保存私有Library patch及原始审计文本附件。文件名/SHA/字节/路径数/Library ID版本在交付消息给出，避免补丁自引用。独立复跑按README四门、全部七功能脚本、axe/Lighthouse及第19项隔离脚本。收到协调方独立H6后的明确指令才提交推送；本轮到此停止。
+
 
 ### 2026-11-19 — Stage 4 — 正常推送交付回执
 

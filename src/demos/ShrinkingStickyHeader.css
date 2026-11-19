@@ -10,3 +10,5 @@
 .scroll-static { overflow: hidden !important; height: 100% !important; pointer-events: none; }
 .mini-preview .sticky-story { padding: 12px 20px; }
 .mini-preview .sticky-story h3 { margin: 0; }
+
+.sticky-demo-header a { min-width: 44px; justify-content: center; }

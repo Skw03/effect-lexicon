@@ -6,7 +6,7 @@ export function CardFlip({ values, virtualPointer, paused = false, reducedMotion
   const [hover, setHover] = useState(false);
   const [focused, setFocused] = useState(false);
   const active = !paused && (flipped || (!reducedMotion && (hover || focused)) || virtualPointer !== undefined);
-  return <button className="flip-card" aria-label="翻转卡片，Enter 或空格切换" aria-pressed={active}
+  return <button className="flip-card" aria-description="翻转卡片，Enter 或空格切换" aria-pressed={active}
     onPointerEnter={event => { if (event.pointerType === 'mouse') setHover(true); }} onPointerLeave={() => setHover(false)}
     onFocus={event => setFocused(event.currentTarget.matches(':focus-visible'))} onBlur={() => setFocused(false)}
     onClick={() => { setFlipped(!active); setHover(false); setFocused(false); }}>

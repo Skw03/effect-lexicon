@@ -107,3 +107,16 @@ it('Stage 3 preserves specified defaults/ranges and only adds scoped tuning para
     expect(Object.fromEntries(effect.params.map(param => [param.key, [param.default, param.min, param.max]]))).toEqual(params);
   }
 });
+
+it('every template token, including inactive conditions, names a declared parameter', () => {
+  for (const effect of effects) for (const lang of ['en', 'zh'] as const) {
+    const template = effect.prompt[lang];
+    const keys = effect.params.map(param => param.key);
+    // Inspect the source, not just rendered text: a false condition can hide a typo.
+    for (const token of template.matchAll(/{{([^{}]*)}}/g)) {
+      expect(token[1]).toMatch(/^[#^/]?\w+$/);
+      expect(keys, `${effect.slug}/${lang}: ${token[0]}`).toContain(token[1].replace(/^[#^/]/, ''));
+    }
+    expect(template.replace(/{{[^{}]*}}/g, '')).not.toMatch(/{{|}}/);
+  }
+});
