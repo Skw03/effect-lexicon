@@ -2,6 +2,10 @@
 
 ## Current stage
 
+2026-11-19 编辑修复精确提交复验归档：产品 `babdf63d203fd75a0decfd91f2f5848c00e54874` 已独立本地 **PASS**，ED-001/002/003 **CLOSED，仅源码范围**。[复验记录与来源](reviews/rereview-stage-6-editorial-babdf63.md)区分提交后实跑（四门、两种构建、92回归、74独立观察）与相同补丁的提交前旧套件，不将继承证据冒称重跑。下列“未提交/OPEN”保留为当时状态。d7f5ddba仍是旧8df5b37产品；新托管验证及owner18项签字未完成，完整Stage6/H2仍BLOCKED。
+
+本轮摘要：仅新增复验档案并同步PROGRESS、RELEASE及人工清单状态；不改产品文件或勾选人工项。按授权仅docs-only提交/正常推送本分支；从babdf63干净检出运行`npm ci --ignore-scripts`与`npm run build:pages-preview`，本地准备29静态文件ZIP和收据，检查noindex、文件白名单、摘要及解压逐字节一致性，精确结果由交付回执绑定。文档检查包含diff --check、链接和产品文件未变；不重跑未变源码的全部审查。无规范偏差/新建议；无Library或其他上传、部署、PR/merge/tag/CI激活。下一步由SUN协调独立托管验证和获准的预览交接；Stage7未授权。
+
 2026-11-19 ED-001–003 修复候选（未提交）：基底 `9f7d15d55b31cab733055ed11e1d6d6c6b4e4ec0`，分支 `stage-6-pages-preview`。三项均 **OPEN，待独立复验及后续托管预览验证**；当前不可变预览仍为旧产品 `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5`，未部署本候选。下方旧技术 PASS 是当时范围的历史记录，不关闭本次新发现。
 
 来源：独立 discovery 任务 `6aff3300-d13c-8191-b760-5874d3d480d9`，轮次 `01a1f4ed-e16a-7375-87ff-2c903c04a755`；测试目标为 [d7f5ddba Preview](https://d7f5ddba.effect-lexicon-preview.pages.dev)，此前[技术审查档案](reviews/stage-6-live-preview-d7f5ddba.md)保持原样。

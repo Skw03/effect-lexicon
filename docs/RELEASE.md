@@ -2,6 +2,10 @@
 
 The 2026-11-19 instruction opens Stage 6 development and independent candidate verification only. Stage 7 is not authorized. This runbook is not approval to connect a host, publish a preview, activate workflows, merge into a deploying branch, or deploy. No account, domain, asset license or human read-through is assumed. The Stage 0–5 historical merge authorization remains scoped to those stages.
 
+## Editorial source re-review — 2026-11-19
+
+Product `babdf63d203fd75a0decfd91f2f5848c00e54874` passed independent local post-commit review; ED-001–003 are CLOSED for source only. See [exact review record](reviews/rereview-stage-6-editorial-babdf63.md) for actual reruns, inherited checks and limits. The refreshed artifact is prepared locally from that exact clean source, with a separate ZIP receipt; it has not been transferred or deployed. The existing d7f5ddba Preview below remains the older 8df5b37 product. Updated hosted verification and owner sign-off are pending; full Stage 6/H2 remains BLOCKED. Documentation receipt commits do not change the product source used for this artifact.
+
 ## Verified Preview status — 2026-11-19
 
 Independent live audit: **PASS for the audited Preview only; full Stage 6/H2 remains BLOCKED**. Product source `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5`; immutable target https://d7f5ddba.effect-lexicon-preview.pages.dev and moving alias https://stage-6-pages-preview.effect-lexicon-preview.pages.dev both returned200. All27 fetchable files matched the natural build; full29-file output digest remains `69a1cdd09c8a339ced68bb5ac2aa539cf38eff7776867f0e13f04ca5760fb0f1`. See [sourced live audit record](reviews/stage-6-live-preview-d7f5ddba.md) for routes, headers/noindex, hydration and interaction coverage, reruns and exclusions.
