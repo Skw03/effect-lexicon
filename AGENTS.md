@@ -6,6 +6,9 @@
 - If a task conflicts with SPEC.md or this file, stop and ask. Do not choose silently.
 - Never edit SPEC.md, ROADMAP.md or AGENTS.md unless the task explicitly says so. Put suggested changes under Proposed spec changes in PROGRESS.md.
 
+## Independent review
+- Follow [docs/REVIEW_POLICY.md](docs/REVIEW_POLICY.md) for lifecycle checkpoints, independent review, exact-commit evidence, findings and post-commit retests. It preserves the current Stage 2–5 authorization and Stage 6 stop boundary; review results do not grant deployment authority.
+
 ## Scope discipline
 - Do one stage or one task at a time, and only what it lists. No bonus features, no unrequested refactors, renames, formatting sweeps or dependency upgrades.
 - If you notice an unrelated problem, record it under Observations in PROGRESS.md. Do not fix it.

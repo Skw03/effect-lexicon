@@ -7,7 +7,7 @@ export const synonyms = [
   ['毛玻璃', '磨砂', '玻璃', 'frosted', 'glass', 'blur'],
   ['打字', '逐字', 'typing', 'typewriter'], ['加载', '载入', 'loading'],
   ['骨架屏', '灰色占位', 'skeleton'], ['滚动', '滑动', '下滑', 'scroll'],
-  ['视差', 'parallax'], ['渐显', '淡入', 'fade'], ['水波纹', '涟漪', 'ripple'],
+  ['视差', 'parallax'], ['渐显', '淡入', '慢慢显示', '逐渐显示', 'fade'], ['水波纹', '涟漪', 'ripple'],
   ['磁吸', '吸附', 'magnetic'], ['渐变', '流动', 'gradient', 'aurora'],
   ['弹窗', '对话框', '模态', 'modal', 'dialog'], ['下划线', 'underline'],
   ['吸顶', '固定', 'sticky'], ['光斑', '聚光', 'spotlight', 'glow'],
