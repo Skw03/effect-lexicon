@@ -4,7 +4,7 @@ export const typewriter: Effect = {
   id: 'typewriter', slug: 'typewriter', status: 'published',
   name: { en: 'Typewriter Text', zh: '打字机效果' },
   aliases: { en: ['typing animation', 'typing effect', 'typed text', 'character-by-character reveal', 'Typed.js style'], zh: ['打字效果', '打字动画', '逐字显示', '文字逐个出现'] },
-  searchPhrases: { en: ['text that types itself out', 'letters appear one by one with a blinking cursor'], zh: ['文字一个字一个字蹦出来', '像有人在打字', '光标闪烁然后字出现'] },
+  searchPhrases: { en: ['text that types itself out', 'letters appear one by one with a blinking cursor', 'a headline types and deletes short phrases'], zh: ['文字一个字一个字蹦出来', '像有人在打字', '光标闪烁然后字出现'] },
   category: 'text', type: 'animation', triggers: ['page-load', 'continuous'],
   tags: ['typing', 'caret', 'loop', 'headline'],
   summary: '一行文字逐个字符出现，末尾有闪烁的光标，可循环切换多句话。',

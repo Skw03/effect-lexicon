@@ -34,8 +34,8 @@ with sync_playwright() as p:
  page=context.new_page();errors=[];external=[]
  page.on('pageerror',lambda e:errors.append(str(e)))
  page.on('request',lambda r:external.append(r.url) if not r.url.startswith(BASE) else None)
- page.goto(BASE);expect(page.locator('.effect-card')).to_have_count(10)
- check('exactly ten implemented homepage entries and canonical paths',page.locator('.effect-title').evaluate_all('(a)=>a.map(n=>n.getAttribute("href"))')==['/effects/'+s for s in ['card-tilt-3d','typewriter','glassmorphism']+SLUGS])
+ page.goto(BASE);expect(page.locator('.effect-card')).to_have_count(18)
+ check('exactly eighteen implemented homepage entries and canonical paths',page.locator('.effect-title').evaluate_all('(a)=>a.map(n=>n.getAttribute("href"))')==['/effects/'+s for s in ['card-tilt-3d','typewriter','glassmorphism']+SLUGS+['aurora-gradient', 'underline-slide-link', 'shrinking-sticky-header', 'parallax-scroll', 'scroll-reveal', 'skeleton-shimmer', 'pulsing-dots-loader', 'modal-scale-fade']])
  for slug,selector in zip(SLUGS,SELECTORS):
   card=page.locator('[data-effect='+slug+']');card.scroll_into_view_if_needed();expect(card.locator(selector)).to_be_visible()
   check(slug+' compact real DOM present')
@@ -137,7 +137,7 @@ with sync_playwright() as p:
    rp.get_by_role('button',name='重置 Reset',exact=True).click();rp.get_by_role('button',name='自动演示 Auto demo',exact=True).click();rp.wait_for_timeout(350)
    active= {'card-flip':lambda:rp.locator('.flip-card').get_attribute('aria-pressed')=='true','spotlight-card':lambda:float(css(rp.locator('.spot-fill'),'opacity'))>0,'magnetic-button':lambda:css(rp.locator('.magnetic-button'),'transform')!='matrix(1, 0, 0, 1, 0, 0)','sliding-fill-button':lambda:rp.locator('.sliding-button').get_attribute('aria-pressed')=='true'}[slug]
    check(slug+' reduced Auto real movement',active());rp.wait_for_timeout(4300);check(slug+' Auto finite stop and rest',rp.get_by_role('button',name='自动演示 Auto demo',exact=True).count()==1 and not active())
- rp.goto(BASE);expect(rp.locator('.effect-card')).to_have_count(10)
+ rp.goto(BASE);expect(rp.locator('.effect-card')).to_have_count(18)
  for slug in ['gradient-text-shimmer','staggered-text-reveal']:
   card=rp.locator('[data-effect='+slug+']');card.scroll_into_view_if_needed();rp.wait_for_timeout(150)
   check(slug+' reduced gallery no autoplay',card.get_by_role('button',name='播放 Play').count()==1)

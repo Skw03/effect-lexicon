@@ -1,0 +1,13 @@
+.skeleton-demo { width: min(360px,100%); padding: 16px; }
+.skeleton-content { min-height: 112px; }
+.skeleton-layout, .skeleton-loaded { display: flex; gap: 16px; align-items: flex-start; }
+.skeleton-avatar { width: 48px; height: 48px; border-radius: 50%; flex: none; display: grid; place-items: center; background: #e0e7ff; color: #3730a3; }
+.skeleton-bars { flex: 1; min-width: 0; display: grid; gap: 14px; padding-top: 4px; }
+.skeleton-block { position: relative; display: block; overflow: hidden; background: #e7e5e4; }
+.skeleton-bars .skeleton-block { height: 14px; border-radius: 4px; }
+.skeleton-block::after { content: ''; position: absolute; inset: 0; width: 100%; background: linear-gradient(90deg, transparent calc((100% - var(--skeleton-band)) / 2), rgb(255 255 255 / .85) 50%, transparent calc((100% + var(--skeleton-band)) / 2)); animation: skeleton-sweep var(--skeleton-duration) linear var(--skeleton-count) both; animation-play-state: var(--skeleton-state); }
+@keyframes skeleton-sweep { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+.skeleton-toggle { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.skeleton-loaded { animation: skeleton-content-in 200ms ease-out both; }
+.skeleton-loaded p { margin: 4px 0 0; }
+@keyframes skeleton-content-in { from { opacity: 0; } to { opacity: 1; } }

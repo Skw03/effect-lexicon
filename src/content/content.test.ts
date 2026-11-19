@@ -1,17 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { effects, plannedRelatedSlugs } from './index';
+import { effects } from './index';
 import { demoRegistry } from '../demos/registry';
 import { renderPrompt } from '../lib/renderPrompt';
 import { defaults } from '../types';
-describe('Stage 3 content contract', () => {
-  it('publishes exactly the three samples and seven Stage 3 effects', () => {
-    expect(effects.map(effect => effect.slug)).toEqual(['card-tilt-3d', 'typewriter', 'glassmorphism', 'card-flip', 'spotlight-card', 'magnetic-button', 'ripple-button', 'sliding-fill-button', 'gradient-text-shimmer', 'staggered-text-reveal']);
+describe('Stage 4 content contract', () => {
+  it('publishes exactly eighteen effects across eight categories', () => {
+    expect(effects.map(effect => effect.slug)).toEqual(['card-tilt-3d', 'typewriter', 'glassmorphism', 'card-flip', 'spotlight-card', 'magnetic-button', 'ripple-button', 'sliding-fill-button', 'gradient-text-shimmer', 'staggered-text-reveal', 'aurora-gradient', 'underline-slide-link', 'shrinking-sticky-header', 'parallax-scroll', 'scroll-reveal', 'skeleton-shimmer', 'pulsing-dots-loader', 'modal-scale-fade']);
     expect(new Set(effects.map(effect => effect.slug)).size).toBe(effects.length);
     expect(new Set(effects.map(effect => effect.id)).size).toBe(effects.length);
-    expect(plannedRelatedSlugs).toEqual(['spotlight-card', 'card-flip', 'staggered-text-reveal', 'gradient-text-shimmer', 'aurora-gradient', 'modal-scale-fade']);
+    expect(new Set(effects.map(effect => effect.category)).size).toBe(8);
   });
   for (const effect of effects) {
-    it(`${effect.slug} validates complete content, registry and planned references`, () => {
+    it(`${effect.slug} validates complete content, registry and implemented published references`, () => {
       expect(effect.slug).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
       expect(effect.status).toBe('published');
       expect(demoRegistry[effect.demo.component]).toBeTypeOf('function');
@@ -20,13 +20,14 @@ describe('Stage 3 content contract', () => {
       for (const field of [effect.name.en, effect.name.zh, effect.summary, effect.whatYouSee, effect.terminologyNote, effect.demo.hint, effect.demo.hintTouch]) expect(field?.trim().length).toBeGreaterThan(0);
       for (const list of [effect.aliases.en, effect.aliases.zh, effect.behavior, effect.useCases, effect.tags]) expect(list.length).toBeGreaterThan(0);
       expect(effect.searchPhrases.zh.length).toBeGreaterThanOrEqual(3);
-      // Explicit Stage 1 exact-sample boundary; global 3–6 EN rule remains a future decision.
-      if (effect.slug === 'card-tilt-3d') expect(effect.searchPhrases.en.length).toBe(3);
-      else if (['typewriter', 'glassmorphism'].includes(effect.slug)) expect(effect.searchPhrases.en.length).toBe(2);
-      else expect(effect.searchPhrases.en.length).toBeGreaterThanOrEqual(3);
+      expect(effect.searchPhrases.en.length).toBeGreaterThanOrEqual(3);
       expect(effect.searchPhrases.en.length).toBeLessThanOrEqual(6);
       expect(effect.searchPhrases.zh.length).toBeLessThanOrEqual(6);
-      for (const slug of effect.related) expect([...effects.map(item => item.slug), ...plannedRelatedSlugs]).toContain(slug);
+      for (const slug of effect.related) {
+        const target = effects.find(item => item.slug === slug);
+        expect(target?.status).toBe('published');
+        expect(demoRegistry[target!.demo.component]).toBeTypeOf('function');
+      }
       expect(new Set(effect.params.map(param => param.key)).size).toBe(effect.params.length);
       for (const param of effect.params) {
         if (param.kind === 'number') {
@@ -51,6 +52,9 @@ describe('Stage 3 content contract', () => {
       for (const param of effect.params) expect(template).toMatch(new RegExp('\\{\\{[#^]?' + param.key + '\\}\\}'));
       const rendered = renderPrompt(effect, defaults(effect), lang);
       expect(rendered).not.toContain('{{');
+      expect(rendered).toContain('prefers-reduced-motion');
+      expect(rendered).toMatch(lang === 'en' ? /keyboard|arrow-key/i : /键盘|方向键/);
+      expect(rendered).toMatch(lang === 'en' ? /touch|tap/i : /触屏|触摸/);
       expect(rendered).toMatch(lang === 'en' ? /Trigger:/ : /触发方式：/);
       expect(rendered).toMatch(lang === 'en' ? /suggested values/ : /建议值/);
       if (effect.type === 'style') {
@@ -59,7 +63,7 @@ describe('Stage 3 content contract', () => {
         expect(rendered).toMatch(lang === 'en' ? /none;.*no animation/ : /无；.*没有动画/);
         expect(rendered).toContain('blur(16px)');
       } else {
-        if (effect.slug === 'gradient-text-shimmer') expect(rendered).toMatch(/\d+(?:\.\d+)?s/);
+        if (['gradient-text-shimmer', 'aurora-gradient', 'skeleton-shimmer'].includes(effect.slug)) expect(rendered).toMatch(/\d+(?:\.\d+)?s/);
         else expect(rendered).toMatch(/\d+ms/);
         expect(rendered).toContain('prefers-reduced-motion');
       }
@@ -85,4 +89,21 @@ it('Stage 3 preserves specified defaults/ranges and only adds scoped tuning para
   const axis = effects.find(item => item.slug === 'card-flip')!.params.find(param => param.key === 'axis')!;
   expect(axis.default).toBe('vertical');
   expect(axis.options?.map(option => option.value)).toEqual(['vertical', 'horizontal']);
+});
+
+ it('Stage 4 numeric defaults and ranges remain faithful, with two meaningful additions', () => {
+  const expected: Record<string, Record<string, [number, number, number]>> = {
+    'aurora-gradient': { duration: [16,8,30], blur: [60,20,120] },
+    'underline-slide-link': { duration: [250,100,600], thickness: [2,1,6] },
+    'shrinking-sticky-header': { threshold: [40,10,120], collapsedHeight: [48,36,64] },
+    'parallax-scroll': { backgroundSpeed: [.5,.1,.9], midgroundSpeed: [.8,.6,1] },
+    'scroll-reveal': { distance: [24,0,60], duration: [600,200,1200] },
+    'skeleton-shimmer': { duration: [1.6,.8,3], bandWidth: [40,20,60] },
+    'pulsing-dots-loader': { size: [10,6,24], duration: [1.2,.6,2.4] },
+    'modal-scale-fade': { duration: [250,100,600], startScale: [.95,.8,1] },
+  };
+  for (const [slug, params] of Object.entries(expected)) {
+    const effect = effects.find(item => item.slug === slug)!;
+    expect(Object.fromEntries(effect.params.map(param => [param.key, [param.default, param.min, param.max]]))).toEqual(params);
+  }
 });

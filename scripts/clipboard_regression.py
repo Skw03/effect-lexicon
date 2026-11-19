@@ -102,7 +102,7 @@ def unmount_success(page):
     page.get_by_role('link',name='全部效果',exact=True).click()
     target=page.locator('a.effect-title[href="/effects/typewriter"]'); target.focus()
     settle(page)
-    assert page.locator('p[role=status]').count()==1 and page.locator('p[role=status]').inner_text()=='共 10 个效果' and page.evaluate('window.legacyWrites')==[]
+    assert page.locator('p[role=status]').count()==1 and page.locator('p[role=status]').inner_text()=='共 18 个效果' and page.evaluate('window.legacyWrites')==[]
     assert target.evaluate('el=>el===document.activeElement')
 
 def change_back(page):

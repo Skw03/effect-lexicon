@@ -1,3 +1,11 @@
+import { AuroraGradient } from './AuroraGradient';
+import { UnderlineSlideLink } from './UnderlineSlideLink';
+import { ShrinkingStickyHeader } from './ShrinkingStickyHeader';
+import { ParallaxScroll } from './ParallaxScroll';
+import { ScrollReveal } from './ScrollReveal';
+import { SkeletonShimmer } from './SkeletonShimmer';
+import { PulsingDotsLoader } from './PulsingDotsLoader';
+import { ModalScaleFade } from './ModalScaleFade';
 import { CardFlip } from './CardFlip';
 import { SpotlightCard } from './SpotlightCard';
 import { MagneticButton } from './MagneticButton';
@@ -10,4 +18,4 @@ import type { DemoProps } from '../types';
 import { CardTilt3d } from './CardTilt3d';
 import { Typewriter } from './Typewriter';
 import { Glassmorphism } from './Glassmorphism';
-export const demoRegistry: Record<string, ComponentType<DemoProps>> = { CardTilt3d, Typewriter, Glassmorphism, CardFlip, SpotlightCard, MagneticButton, RippleButton, SlidingFillButton, GradientTextShimmer, StaggeredTextReveal };
+export const demoRegistry: Record<string, ComponentType<DemoProps>> = { CardTilt3d, Typewriter, Glassmorphism, CardFlip, SpotlightCard, MagneticButton, RippleButton, SlidingFillButton, GradientTextShimmer, StaggeredTextReveal, AuroraGradient, UnderlineSlideLink, ShrinkingStickyHeader, ParallaxScroll, ScrollReveal, SkeletonShimmer, PulsingDotsLoader, ModalScaleFade };
