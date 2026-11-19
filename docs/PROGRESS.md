@@ -2,7 +2,7 @@
 
 ## Current stage
 
-Stage 3：独立 H6 与阶段验收已通过，协调方明确授权仅提交并正常推送 `stage-3-demos-a`。本轮不开始 Stage 4，不开 PR、不合并、不部署。
+Stage 3：独立 H6 与阶段验收已通过；已按协调方授权提交并正常推送 `stage-3-demos-a`。实现提交 `cb0ca9f8d5bf08467d4e012432c9d3037d295f49`；最终日志回执分支头见远端及交付消息。不开始 Stage 4，不开 PR、不合并、不部署。
 验收基底：`b263169e837b9f9138698f6d69f798da95e86a76`；候选完整 patch SHA-256：`1036b2b4d4717b8f302d692c7037eeab169cfceb738fc08d7b56e1bff7c0f0f7`（120412 bytes，34 paths）。
 环境：指定 effect-lexicon-cloud，checkout `/workspace/effect-lexicon`；唯一 origin `https://github.com/Skw03/effect-lexicon.git`。提交前远端 main 为验收基底，无同名远端分支。
 提交推送结果及最终分支头见下方回执和交付消息。除本日志外，候选代码与测试逐字节保留；默认 Git 身份沿用，不在文档记录姓名邮箱。
@@ -22,6 +22,16 @@ Stage 3：独立 H6 与阶段验收已通过，协调方明确授权仅提交并
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 3 — 正常推送交付回执
+
+1. **Summary**：已验收实现提交 `cb0ca9f8d5bf08467d4e012432c9d3037d295f49` 已正常推送 origin/stage-3-demos-a；本回执为单独文档提交，最终分支头以远端与交付消息为准。
+2. **Files changed**：相对实现提交仅 docs/PROGRESS.md。全部代码/内容/测试与验收候选逐文件 SHA-256 一致；SPEC、REQUIREMENTS_SOURCE 保留。
+3. **Commands/results**：本轮 typecheck、lint、test、build 全部返回 0；Vitest 93 passed / 5 个具名 Stage 4 todo；构建 JS gzip 87.20 kB、CSS gzip 5.00 kB。精确暂存原 34 路径，`git diff --cached --check` 通过；`git commit -m "feat: complete accepted Stage 3 demos batch A"` 与 `git push -u origin HEAD:refs/heads/stage-3-demos-a` 成功，无强推。ls-remote 确认新分支为实现 SHA、main 仍 `b263169e837b9f9138698f6d69f798da95e86a76`；推送后工作树干净。默认身份沿用，不记录姓名邮箱。
+4. **Acceptance**：独立 H6 已通过，详情见前条：391/391 Chromium + 6 项独立磁吸边界；本轮未重复未变更的浏览器功能检查。候选代码/测试等价及质量门均通过；回执提交前后继续核对仅日志改变。
+5. **Deviations**：无；未执行 Git 输出建议的 PR 链接，未创建 PR、合并、部署或开始 Stage 4。
+6. **Open questions**：无本轮交付阻塞；PR/合并及后续阶段交由协调方。
+7. **Next step**：正常推送本日志回执后核验最终本地/远端 SHA、唯一 origin、main 不变及工作树干净，然后停止。本地预览沿用 `npm run dev -- --port 5173`。
 
 ### 2026-11-19 — Stage 3 — 独立 H6 通过及提交授权
 
