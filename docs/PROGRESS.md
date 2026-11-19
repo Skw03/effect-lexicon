@@ -2,7 +2,7 @@
 
 ## Current stage
 
-Stage 4：协调方确认独立 H6 复验与阶段验收通过，已明确授权在原环境提交并正常推送 `stage-4-demos-b`。本轮只补正式验收/交付记录，代码与测试保持通过候选不变。提交与远端结果见最新回执。不创建 PR、不合并、不部署、不开始 Stage 5。
+Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正常推送 `stage-4-demos-b`。实现提交 `0a7dd887fe988010193d693e8d45ba165b7a494f`；本交付回执为单独文档提交，最终分支头以远端和交付消息为准。代码与测试保持通过候选一致。不创建 PR、不合并、不部署、不开始 Stage 5。
 验收基底：`67bd5fcad2fa316a729d699b741e0da5a5230de3`；分支 `stage-4-demos-b`；指定 effect-lexicon-cloud `/workspace/effect-lexicon`；origin `https://github.com/Skw03/effect-lexicon.git`。历史 Stage 3 验收/交付记录保持如下。
 
 ### H1 summary (11 lines)
@@ -20,6 +20,17 @@ Stage 4：协调方确认独立 H6 复验与阶段验收通过，已明确授权
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 4 — 正常推送交付回执
+
+1. **Summary**：已验收 Stage 4 实现提交 `0a7dd887fe988010193d693e8d45ba165b7a494f` 已正常推送 origin/stage-4-demos-b；本回执作为单独文档提交保存，最终分支头见远端及交付消息。
+2. **Files changed**：相对实现提交仅 docs/PROGRESS.md；其余代码/测试逐文件与已验收候选相同，SPEC/原需求不变。
+3. **Commands/results**：39 路径精确暂存、`git diff --cached --check` 通过；`git commit -m "feat: complete accepted Stage 4 demos batch B"` 与 `git push -u origin HEAD:refs/heads/stage-4-demos-b` 成功，新建远端分支，无强推。ls-remote 核实任务分支为上述实现 SHA，main 保持 `67bd5fcad2fa316a729d699b741e0da5a5230de3`，实现推送后工作树干净。本轮四质量门再次通过（139 单测），仅本日志后续变化不重复功能测试。默认身份沿用，无配置改动或姓名邮箱记录。
+4. **Acceptance**：独立 H6 通过及正式授权见前条；259 Stage 4 +391 历史 Chromium，另 35 组独立手势/下划线验证。提交内容仅在通过候选基础上补日志。触摸为 CDP 模拟；不声称 Stage 5 审计或真机验证。
+5. **Deviations**：无。未执行远端输出的 PR 建议链接，未开 PR、合并、部署或开始 Stage 5。
+6. **Open questions**：无交付阻塞；后续流程由协调方安排。
+7. **Next step**：正常推送本回执后，验证最终本地/远端 SHA、原始 main、干净工作树和非日志候选字节一致，然后停止。
+
 
 ### 2026-11-19 — Stage 4 — 独立 H6 通过，提交推送授权
 
