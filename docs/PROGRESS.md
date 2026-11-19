@@ -2,6 +2,8 @@
 
 ## Current stage
 
+当前快照（2026-11-19）：Stage 0–5 独立基线审查 **CHANGES REQUIRED**；产品 main `59a2429fcf190a6b9d3cf48d487f166c518866a9`，审查记录 `608dd5da1082ae546ca6dd7b866e1e4222eba495`。三个 P2 / FAIL / OPEN 见最新日志；Stage 5 相关验收已重开，不能继续称无未解决偏差。当前任务仅在 `stage-5-independent-review` 持久化[独立审查规则](REVIEW_POLICY.md)，获准提交推送，不整合产品修复、不 PR/合并/部署，Stage 6 未授权。以下原阶段交付段落保留为历史，不代表当前缺陷已关闭。
+
 Stage 5：独立 H6 与阶段验收已通过，协调方已明确授权提交并正常推送 `stage-5-hardening`。验收基底 `d0f2a1f9b948d2ac1a0132a02a1a44dbdf15ad3d`，受审候选SHA-256 `8170aea9b25f5305e69e7bf02e4821421befe887fc2419de51961956c2d345d7`（79,584 bytes / 19 paths）。本轮仅补充本日志和ACCEPTANCE，代码/测试保持受审字节一致。指定 effect-lexicon-cloud `/workspace/effect-lexicon`；唯一origin `https://github.com/Skw03/effect-lexicon.git`。实际提交/推送结果以交付消息及远端核验为准。不创建PR、不合并、不部署、不进入Stage 6；Library上传仍停止。
 
 Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正常推送 `stage-4-demos-b`。实现提交 `0a7dd887fe988010193d693e8d45ba165b7a494f`；本交付回执为单独文档提交，最终分支头以远端和交付消息为准。代码与测试保持通过候选一致。不创建 PR、不合并、不部署、不开始 Stage 5。
@@ -22,6 +24,23 @@ Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 5 — 独立审查治理与开放缺陷快照
+
+1. **Summary**：按本次明确授权持久化整项目生命周期的独立审查规则。main 核实为 `59a2429fcf190a6b9d3cf48d487f166c518866a9`；从审查记录提交 `608dd5da1082ae546ca6dd7b866e1e4222eba495` 新建隔离 worktree 和 `stage-5-independent-review`，保留原 `stage-5-hardening` 工作树。当前总体 **CHANGES REQUIRED**；本次文档自检不是新的产品独立 H6。
+2. **Files changed**：仅新增 `docs/REVIEW_POLICY.md`，最小引用于 `AGENTS.md`、`docs/ROADMAP.md`，本日志记录当前快照与责任交接。原始要求、SPEC、ACCEPTANCE、历史审查报告、要求矩阵、应用、测试和依赖/锁文件均不改。
+3. **Commands/results**：`git remote -v`、status/branch/worktree、`git ls-remote` 核实唯一 origin、精确 main 和 review 分支；目标分支事前不存在。显式 fetch 后从审查提交创建隔离分支。`npm ci --ignore-scripts --cache /tmp/effect-npm-cache` 成功232包，无生命周期脚本/升级；`npm run typecheck`、`npm run lint`、`npm run test`、`npm run build` 全部 exit0，140 Vitest / 4文件通过，JS gzip99.20kB。文档引用、四路径范围、原始要求摘要和 `git diff --check` 作为提交前检查；提交/正常推送后的完整 SHA 和远端核验随交付消息返回，避免提交自引用。默认 Git 身份沿用，不修改或记录邮箱。
+4. **Acceptance / 当前缺陷**：治理规则包含职责分离、可继任审查角色、阶段优先级、精确版本证据、五状态/三verdict、故障验收与提交后独立关闭、增量复验及授权边界。下面三项全部 **P2 / FAIL / OPEN**；修复 SHA 尚未交付本任务，未整合、未关闭。详细要求、步骤和接受条件以[原独立报告](reviews/baseline-0-5-59a2429.md)及[矩阵](REQUIREMENTS_CHECKLIST.md)为准。
+
+   | 缺陷 | 原实施责任任务 | 提交后的独立复验下一步 |
+   | --- | --- | --- |
+   | EL-IR-001：自然中文描述漏搜/排序偏差 | Stage 2 discovery 原实施任务，在专用修复分支处理；回归 Stage 3/4 内容和 Stage 5 搜索验收 | 复测原报告五类描述与措辞变化的目标前三，确认可靠子串/n-gram或等效匹配、非逐句白名单；保留14输入/16目标、精确名称/别名优先、真实匹配来源、空结果和筛选交集；回归 URL/清除焦点/IME。 |
+   | EL-IR-002：Modal 外部点击后焦点逃逸与 Esc 失效 | Stage 4 Modal 原实施任务，在专用修复分支处理；Stage 5 可访问性复验 | 打开后点击/触碰外部参数，再双向 Tab/Esc；确认焦点不逃逸、关闭/重置/卸载恢复与清理；保留舞台局限、两参数、normal/reduced 和 opener 回焦，不以去掉 modal 语义规避。 |
+   | EL-IR-003：Shimmer 活动高光文字对比度不足 | Stage 3 Shimmer 原实施任务，在专用修复分支处理；Stage 5 视觉/可访问性复验 | 对 Library/detail、默认与带宽/时长边界、静态 reduce 和关键动画相位测实际字形颜色至少4.5:1；保留三色固定字形、明显左→右扫光、参数/暂停/重播/有限播放；不以 axe 零违规代替动态对比度。 |
+
+5. **Deviations / limits**：无产品修复或新验收结论。原审查记录四门140单测、1169 Chromium、Lighthouse12.8.2首页/Tilt各100、axe4.10.3共21状态零严重/危急、第19项隔离干跑通过，是绑定旧基线的独立证据，本次未重复全审未变工作。仍缺物理手机/中端GPU、Safari/Firefox、原生屏读器、OS Pinyin窗口验证；自动工具覆盖限制与三项已复现产品FAIL分别记录。两项div分组语义P3保持OPTIONAL。历史ACCEPTANCE的通过不冲销本轮新发现。
+6. **Open questions / boundaries**：无本治理任务需新产品选择的阻塞；三项修复继续由原实施任务及独立审查员负责。Stage 2–5 既有顺序推进/验收后协调合并授权保持，不新增逐阶段人工批准；本次工作者仅获准正常提交推送四文档，不创建PR/合并/部署、不上传原始附件。Stage 6预渲染/JS-off/hydration及发布准备仍NOT DUE，生产须另行明确放行。
+7. **Next step**：推送专用治理分支并核验远端完整 SHA 后停止；等待协调方交付各修复分支的精确提交及独立复验记录，届时再按明确整合任务核验实际组合。缺陷只能在提交后独立复验满足原验收条件时于新记录关闭；后备审查员可凭本规则、快照和历史证据继任，无需原任务永久运行。
 
 ### 2026-11-19 — Stage 5 — 独立 H6 通过及提交推送授权
 
