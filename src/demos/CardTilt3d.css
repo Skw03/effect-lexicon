@@ -1,0 +1,6 @@
+.tilt-area { width: min(320px, 100%); height: 200px; touch-action: pan-y; border-radius: 16px; }
+.tilt-card { position: relative; width: 100%; height: 100%; border-radius: 16px; background: #272343; color: #fff; box-shadow: 0 8px 24px #27234320; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 24px; overflow: hidden; }
+.tilt-card strong { font-size: 22px; }
+.tilt-eyebrow { font-size: 13px; letter-spacing: .08em; }
+.tilt-glare { position: absolute; width: 640px; height: 400px; left: calc(50% - 320px); top: calc(50% - 200px); pointer-events: none; background: radial-gradient(ellipse, rgb(255 255 255 / .25), transparent 65%); }
+.tilt-area:focus-visible .tilt-card { border: 2px solid #a5b4fc; }

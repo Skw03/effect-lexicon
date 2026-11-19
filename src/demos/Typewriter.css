@@ -1,0 +1,4 @@
+.typewriter { width: 100%; min-height: 140px; padding: 24px; font-size: clamp(24px, 5vw, 40px); font-weight: 650; overflow-wrap: anywhere; }
+.caret { color: var(--accent); }
+.caret.blink { animation: caret-blink 1060ms steps(1, end) infinite; }
+@keyframes caret-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
