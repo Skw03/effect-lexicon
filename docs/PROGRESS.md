@@ -28,7 +28,7 @@ Stage 0：八个治理文件已提交并成功推送，远端交付已核验；�
 
 1. **Summary**：治理提交 `aaa15c299a1cae7aed0873c3c789d8cd6ef7138f` 已正常推送到 origin/stage-0-governance。此日志回执作为后续小提交保存，分支最终头以交付报告和远端为准，不改写历史。
 2. **Files changed**：治理提交恰好八个授权文件；回执仅更新 docs/PROGRESS.md。README、原文和 SPEC 未再修改。
-3. **Commands run and results**：显式 `git add --` 八路径；`git diff --cached --check` 无输出；`git diff --cached --stat` 显示八文件；`git commit -m "docs: establish Stage 0 governance and requirements archive"` 成功。`git show -s --format=fuller HEAD`、`git show --format=raw --no-patch HEAD` 确认 author/committer 均为环境已有的 kevin sun <sunkaiwen8@gmail.com>，父提交为原 main。`git push -u origin HEAD:refs/heads/stage-0-governance` 返回 0、新建远端分支成功。随后 `git ls-remote --heads origin main stage-0-governance` 确认任务分支等于该完整 SHA，main 仍为 `dfcff865aa74af520ab52a84b1a5f766156b4570`；`git status --short --branch` 无改动；基底至 HEAD 的 `git diff --check` 无输出。
+3. **Commands run and results**：显式 `git add --` 八路径；`git diff --cached --check` 无输出；`git diff --cached --stat` 显示八文件；`git commit -m "docs: establish Stage 0 governance and requirements archive"` 成功。`git show -s --format=fuller HEAD`、`git show --format=raw --no-patch HEAD` 已核验为环境默认 Git 作者与提交者，父提交为原 main。`git push -u origin HEAD:refs/heads/stage-0-governance` 返回 0、新建远端分支成功。随后 `git ls-remote --heads origin main stage-0-governance` 确认任务分支等于该完整 SHA，main 仍为 `dfcff865aa74af520ab52a84b1a5f766156b4570`；`git status --short --branch` 无改动；基底至 HEAD 的 `git diff --check` 无输出。
 4. **Acceptance checklist**：治理内容复核通过，默认身份符合用户新授权，提交/推送成功且已核验。typecheck/lint/test/build 仍为不适用、未运行；没有应用、效果代码或构建产物。未开 PR、未合并、未部署、未进入 Stage 1。
 5. **Deviations**：无新增偏差；来源归档限制保留于前次日志。
 6. **Open questions**：C01–C18 仍须人工决策；本交付不代表独立 H6 审阅通过。
@@ -38,7 +38,7 @@ Stage 0：八个治理文件已提交并成功推送，远端交付已核验；�
 
 1. **Summary**：用户在知晓公开提交姓名/邮箱后明确回复“提交使用的Git姓名和邮箱就使用默认的”。按此新授权使用目标 checkout 已有默认身份。
 2. **Files changed**：仍是原八个治理路径；本次补充 PROGRESS 授权与复核记录，不改原文/SPEC/产品决策。
-3. **Commands run and results**：`git var GIT_AUTHOR_IDENT` 与 `git var GIT_COMMITTER_IDENT` 均有效，均为 kevin sun <sunkaiwen8@gmail.com>；未设置任何身份值。`git status --short --branch` 与 `git remote -v` 确认目标分支/origin，只有原八文件未跟踪。`python3 /tmp/effect-stage0-library/verify_stage0.py` 全部治理检查再次通过；`git diff --check` 无输出；`git ls-remote --heads origin main stage-0-governance` 仅返回原 main 基底；`date -u +%Y-%m-%dT%H:%M:%SZ` 返回 2026-11-19T08:11:58Z。
+3. **Commands run and results**：`git var GIT_AUTHOR_IDENT` 与 `git var GIT_COMMITTER_IDENT` 已核验为环境默认 Git 作者与提交者；未设置任何身份值。`git status --short --branch` 与 `git remote -v` 确认目标分支/origin，只有原八文件未跟踪。`python3 /tmp/effect-stage0-library/verify_stage0.py` 全部治理检查再次通过；`git diff --check` 无输出；`git ls-remote --heads origin main stage-0-governance` 仅返回原 main 基底；`date -u +%Y-%m-%dT%H:%M:%SZ` 返回 2026-11-19T08:11:58Z。
 4. **Acceptance checklist**：八路径、全文归档、两框保真、G2/F、编辑器/忽略规则、无应用和构建产物均通过；typecheck/lint/test/build 不适用、未运行。提交及推送结果在交付后记录。
 5. **Deviations**：无新的产品偏差；原附件下载与重建来源限制仍如前记录。
 6. **Open questions**：C01–C18 仍待人工决定，不将建议自动视为确认。
