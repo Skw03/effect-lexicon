@@ -2,6 +2,8 @@
 
 ## Current stage
 
+Stage 1 已获用户“确认并实施”授权，基于已独立 H6 的 `e51155b01599a79e3573e47be45077339c018f13`；仅写 `stage-1-foundation`，不改 main/Stage 0、不 PR/合并/部署/Stage 2。沿用有效默认 Git 身份。以下 Stage 0 状态作为历史保留。
+
 Stage 0：八个治理文件已提交并成功推送，远端交付已核验；等待人工审阅与阶段批准。
 分支：`stage-0-governance`。环境：指定 effect-lexicon-cloud checkout，路径 `/workspace/effect-lexicon`。
 唯一 origin：`https://github.com/Skw03/effect-lexicon.git`。
@@ -23,6 +25,16 @@ Stage 0：八个治理文件已提交并成功推送，远端交付已核验；�
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 1 — 获批规则落地
+
+1. Summary：只采纳 C01、C02、C03、C04/C05、C11/C12 五组批准规则。SPEC 定义阶段关联白名单、静态无时间例外、独立预览与导航、分阶段顺序及有限手动 reduced-motion 演示。
+2. Files changed：docs/SPEC.md、docs/PROGRESS.md；原始需求不改，最终功能/验收不删。
+3. Commands/results：完整读五份治理文档及 E/H0/H6；核验 origin、干净 checkout；ls-remote main 为 dfcff865aa74af520ab52a84b1a5f766156b4570，Stage 0 为指定基底，Stage 1 尚不存在；从该 SHA 建分支。checkout 无 .agents/skills。
+4. Acceptance：规则记录完成；应用四项检查将在实现后实跑，本条不称通过。
+5. Deviations：Stage 0 专属分支/身份限制由本次明确用户授权取代，不改历史 AGENTS。/guide 暂隐藏；根页仅三条文本链接。参数按 kind 验证，不给 boolean/select 伪造范围。
+6. Open questions：其余建议并未整体批准。C09 本阶段保留两个样例英语短语数量；最终全库数量待澄清。C10 仅为准确性补充适用的键盘/触屏和有限播放说明。阶段无关 C06–C08、C13–C17 继续待决。
+7. Next：实现三效果闭环并实跑质量门。依赖授权范围内使用 React 18/React DOM、Router、Fuse；开发使用 TypeScript/React 类型、Vite、Tailwind、Vitest、ESLint 及其 TS 配套。精确版本和锁文件，安装 --ignore-scripts，不运行 package lifecycle，不引入其他产品依赖。
 
 ### 2026-11-19 — Stage 0 — 提交推送交付回执
 
@@ -90,7 +102,7 @@ Stage 0：八个治理文件已提交并成功推送，远端交付已核验；�
 
 ## Proposed spec changes
 
-以下均为**待用户确认**的最小修订建议；SPEC 和原文保持未修订。最终 18 条严格验收不削弱。
+以下为 Stage 0 原建议台账；已批准项以本轮日志为准，其余继续待决。SPEC 仅改获批条款；原文保持未修订，最终验收不削弱。
 
 | ID / 类型 | 原文位置与证据 | 影响 | 拟议最小修订（待确认） |
 | --- | --- | --- | --- |
