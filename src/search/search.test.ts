@@ -8,6 +8,8 @@ import { createPreviewBudget } from '../hooks/previewBudget';
 const ids = (query: string) => searchEffects(publishedEffects, query).slice(0, 3).map(hit => hit.effect.slug);
 // SPEC §6: 12 query groups, 14 actual strings, 16 target assertions.
 const current = [
+  ['点一下卡片翻过来', 'card-flip'], ['按钮被鼠标吸过去', 'magnetic-button'], ['点击按钮出现水波纹', 'ripple-button'],
+  ['鼠标移上去卡片跟着动', 'spotlight-card'], ['a card that follows my mouse', 'spotlight-card'],
   ['鼠标移上去卡片跟着动', 'card-tilt-3d'],
   ['a card that follows my mouse', 'card-tilt-3d'],
   ['文字像打字一样出现', 'typewriter'],
@@ -15,14 +17,12 @@ const current = [
 ];
 test.each(current)('%s includes %s in top three', (query, slug) => expect(ids(query)).toContain(slug));
 const future = [
-  [3, '鼠标移上去卡片跟着动', 'spotlight-card'], [3, 'a card that follows my mouse', 'spotlight-card'],
-  [3, '点一下卡片翻过来', 'card-flip'], [3, '按钮被鼠标吸过去', 'magnetic-button'], [3, '点击按钮出现水波纹', 'ripple-button'],
   [4, '加载时灰色条闪光', 'skeleton-shimmer'], [4, '滚动时背景比内容慢', 'parallax-scroll'],
   [4, '向下滚动内容渐渐出现', 'scroll-reveal'], [4, '彩色流动的背景', 'aurora-gradient'], [4, '导航链接下面划线滑出来', 'underline-slide-link'],
 ];
 for (const [stage, query, slug] of future) test.todo(`Stage ${stage}: ${query} must include ${slug} in top three`);
 test('Chinese description ranks Tilt first with a real alias/phrase hint', () => {
-  const hit = searchEffects(publishedEffects, current[0][0])[0];
+  const hit = searchEffects(publishedEffects, '鼠标移上去卡片跟着动')[0];
   expect(hit.effect.slug).toBe('card-tilt-3d');
   expect(['aliases', 'searchPhrases']).toContain(hit.matchedField);
   expect([...hit.effect.aliases.en, ...hit.effect.aliases.zh, ...hit.effect.searchPhrases.en, ...hit.effect.searchPhrases.zh]).toContain(hit.matchedText);
@@ -36,7 +36,7 @@ test('Chinese substrings expand each embedded concept', () => {
   expect(synonyms).toHaveLength(19);
 });
 test('English uses tokens/prefixes, not internal substrings', () => expect(searchEffects(publishedEffects, 'xyztypingxyz')).toEqual([]));
-test('empty search retains catalogue order', () => expect(ids('')).toEqual(publishedEffects.map(effect => effect.slug)));
+test('empty search retains catalogue order', () => expect(searchEffects(publishedEffects, '').map(hit => hit.effect.slug)).toEqual(publishedEffects.map(effect => effect.slug)));
 test('nonsense is empty, recommendations are separate', () => {
   const result = discover(publishedEffects, '胡言乱语火星香蕉');
   expect(result.hits).toEqual([]); expect(result.nearest).toHaveLength(3);
@@ -45,8 +45,8 @@ describe('filters and URL', () => {
   test('OR inside trigger and category groups; AND across all groups', () => {
     const state = { ...emptyState, triggers: ['pointer-follow', 'continuous'] as const, categories: ['cards', 'text'] as const };
     const selected = { ...state, triggers: [...state.triggers], categories: [...state.categories] };
-    expect(filterEffects(publishedEffects, selected).map(effect => effect.slug)).toEqual(['card-tilt-3d', 'typewriter']);
-    expect(filterEffects(publishedEffects, { ...selected, type: 'animation' }).map(effect => effect.slug)).toEqual(['typewriter']);
+    expect(filterEffects(publishedEffects, selected).map(effect => effect.slug)).toEqual(['card-tilt-3d', 'typewriter', 'spotlight-card', 'gradient-text-shimmer']);
+    expect(filterEffects(publishedEffects, { ...selected, type: 'animation' }).map(effect => effect.slug)).toEqual(['typewriter', 'gradient-text-shimmer']);
     expect(filterEffects(publishedEffects, { ...selected, categories: ['backgrounds'] })).toEqual([]);
   });
   test('search and approximate results stay inside filters', () => {

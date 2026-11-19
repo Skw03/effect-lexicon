@@ -2,11 +2,10 @@
 
 ## Current stage
 
-Stage 2：独立 H6 与阶段验收已通过，已按协调方授权提交并正常推送 `stage-2-discovery`。实现提交为 `3226efee357f5f338682e9fa6d81df1cbe0cc11d`；本日志回执单独提交，最终分支头见远端及交付消息。不开始 Stage 3。
-基底：`a847ed7a3520ec86ac9d8c60c9a835b87b571767`；已验收候选 patch SHA-256：`1be9c0a45fb69824eefe2f14ca83b410d34ac839db84c8a488ee7cd67226390a`。最终分支头见推送回执。
-环境：指定 effect-lexicon-cloud，checkout `/workspace/effect-lexicon`，唯一 origin `https://github.com/Skw03/effect-lexicon.git`。
-提交前远端 main 仍 `dfcff865aa74af520ab52a84b1a5f766156b4570`，Stage 1 仍指定基底，远端无 Stage 2 分支。不假定 main 已合并 Stage 1。
-使用已有默认 Git 身份，不写姓名邮箱。本任务只提交/正常推送 Stage 2；PR、检查及合并由协调方处理，不创建/合并 PR、不部署、不进入 Stage 3。Stage 0 历史不改。
+Stage 3：独立 H6 与阶段验收已通过，协调方明确授权仅提交并正常推送 `stage-3-demos-a`。本轮不开始 Stage 4，不开 PR、不合并、不部署。
+验收基底：`b263169e837b9f9138698f6d69f798da95e86a76`；候选完整 patch SHA-256：`1036b2b4d4717b8f302d692c7037eeab169cfceb738fc08d7b56e1bff7c0f0f7`（120412 bytes，34 paths）。
+环境：指定 effect-lexicon-cloud，checkout `/workspace/effect-lexicon`；唯一 origin `https://github.com/Skw03/effect-lexicon.git`。提交前远端 main 为验收基底，无同名远端分支。
+提交推送结果及最终分支头见下方回执和交付消息。除本日志外，候选代码与测试逐字节保留；默认 Git 身份沿用，不在文档记录姓名邮箱。
 
 ### H1 summary (11 lines)
 
@@ -23,6 +22,55 @@ Stage 2：独立 H6 与阶段验收已通过，已按协调方授权提交并正
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 3 — 独立 H6 通过及提交授权
+
+1. **Summary**：协调方明确确认独立 H6 通过，授权在原指定云端提交并正常推送 stage-3-demos-a。本轮只增加正式验收/交付记录，不修改已验收实现或测试。
+2. **Files changed**：相对验收候选仅 docs/PROGRESS.md；实现范围仍 34 路径。SPEC、REQUIREMENTS_SOURCE、依赖与数据契约保留。
+3. **Commands/results**：重读治理/ROADMAP/最近五条日志；origin、HEAD、branch、远端 main 与同名分支存在性核验通过。修改前 `git diff --binary HEAD` SHA-256、120412 字节、34 路径与指定候选完全相符；无无关未跟踪文件或暂存内容。默认 author/committer 有效，不输出或修改身份。逐文件记录非日志 SHA 用于提交后等价核验；运行四质量门及 diff 检查，最终结果见交付回执。
+4. **Acceptance（协调方提供的独立结果）**：`npm ci --ignore-scripts`、typecheck/lint/build 通过；Vitest **93 passed、5 个具名 Stage 4 todo**。Chromium **391/391**（107+142+68+66+8），另 **6 项独立磁吸内外边界**通过。原中心下方 155px 仍吸附、198px 界外回零。阶段验收通过；不把独立验证冒称本工作者本轮新跑。
+5. **Deviations / limits**：无候选代码变化。触屏/缩放为模拟，未声称物理设备或跨浏览器；其余后续阶段边界保留。
+6. **Open questions**：本轮提交/推送已获明确授权；不处理 PR/合并/部署，不开始 Stage 4。
+7. **Next step**：四质量门、精确暂存和非日志等价检查通过后，提交实现并正常推送；追加实际推送回执，再核验最终远端头/main/干净工作树。
+
+### 2026-11-19 — Stage 3 — H6 Magnetic Button 纵向感应区修复
+
+1. **Summary / reproduction**：协调方独立 H6 报告 radius=160 时中心向下 140px 可吸附，向下 155px（距静止按钮边缘 129px，仍小于 160）却在 600ms 后归零。原候选固定监听区高 300px，中心下方超过 150px 即触发 leave，视觉舞台内仍有可达区域。新增同一 Chromium 回归在修改前实际复现：+140 通过、+155 失败（`/tmp/magnetic-before.log`），不是仅凭报告推断。
+2. **Files changed since previous candidate**：仅 `src/demos/MagneticButton.css`、新增 `scripts/magnetic_boundary_regression.py`、本日志。监听区详情尺寸改为 `min(512px,100%) × 420px`：容纳静止按钮 160×52、两侧最大感应半径 160，以及横向 16px/纵向 24px 的界外余量。仍用未变换父区域的缓存矩形和按钮静止半宽 80/半高 26 计算；没有读取移动按钮边界，没有改 TS 算法、内容、默认值、范围、共享组件或其余已确认实现。compact 的 height:100% 与宽度限制原样保留，不将监听区扩散到预览之外。
+3. **Commands/results**：
+   - 重读治理、ROADMAP、最近日志、SPEC §7 与原文 E Stage 3。origin/分支/基底均正确，工作树完整 patch SHA 与上一交付 `6da0c1239edce2a94be24cc04712918df63230682b6c12f98e94e1b457abe6e2` 一致，未混入并发改动；`git ls-remote --heads origin main stage-3-demos-a` 仍只返回 main `b263169e837b9f9138698f6d69f798da95e86a76`。
+   - 最终 `npm run typecheck`、`npm run lint`、`npm run test`、`npm run build` 全部通过；Vitest **93 passed / 5 个具名 Stage 4 todo**。JS 256.10 kB / gzip 87.20 kB，CSS 18.59 kB / gzip 5.00 kB。沿用原 `npm ci --ignore-scripts` 安装，无依赖/锁文件变动。
+   - 最终 `python3 scripts/magnetic_boundary_regression.py` **107/107**：原 +140/+155 复现点；320/768/1280 宽度、半径 40/80/160、上下两侧内界点与仍在真实监听区内的外界点，实际吸附、固定指针稳定及 500ms 回弹后归零；无水平溢出；DPR=2；Chromium visual viewport 125% 缩放下实际内点吸附/外点恢复；减少动态静止与有限 Auto；实际 touchStart/touchEnd 模拟；compact 监听框在预览内、16:10 与触屏 Auto 不导航。
+   - 原严格脚本完整重跑：`python3 scripts/stage3_regression.py` **142/142**、`python3 scripts/browser_smoke.py` **66/66**、`python3 scripts/clipboard_regression.py` **8/8**、`python3 scripts/discovery_regression.py` **68/68**。没有修改或放宽这些脚本及单测。
+   - 修复调试记录：最初尝试宽 528px、高 420px，原严格键盘回归检测到 focus 后 ArrowRight 的既定目标刚好超出默认 80px 半径；将宽度调整为 512px，既覆盖最大半径并保留界外空间，也保留原键盘目标。已用最终尺寸完整重跑本批与边界测试。缩放脚本使用浏览器事件的 CSS 坐标，不再次乘 visualViewport.scale；最初探测中的重复倍率会把事件发到舞台外，不是产品缺陷。
+4. **Acceptance**：PASS 独立 H6 原问题已由同一脚本先红后绿验证；PASS 上下两侧所有参数半径的真实可达内/外界；PASS 静止目标测量与无反馈抖动；PASS compact、键盘、touch、Auto、响应式、DPR/视口缩放、Reduced Motion；PASS 四质量门和所有原严格 Chromium 回归。待独立复核，不把自检称为 H6 最终验收。
+5. **Deviations / boundaries**：无需求偏离，详情舞台根据真实最大感应范围自然增高；窄屏/compact 仍按可见视口限制横向可达范围，不捕获界面外或其他控件的指针。动画仍只 transform；不增加全局监听或定时器。仅 Chromium/模拟触屏与模拟视口缩放验证，未声称物理设备/跨浏览器测试。原其他阶段边界不变。
+6. **Open questions**：本阻断无已知未解决问题；等待协调方独立 H6 复核及明确提交/推送指令。未修改 SPEC、原文、治理、schema 或 Stage 4 内容。
+7. **Next step / patch**：以原基底生成新的完整 `git diff --binary HEAD`（非增量补丁），新增脚本 intent-to-add；原树 reverse check、干净基底 apply/字节比对/reverse 恢复及与上一候选差异范围校验后，按当前 Library 技能保存私有附件 `effect-lexicon-stage-3-demos-a-b263169-h6-fix-candidate.patch`。最终 SHA/字节数/Library ID 在交付消息给出，避免补丁自引用。独立复跑沿用原四质量门/四 Chromium 脚本，并新增 `python3 scripts/magnetic_boundary_regression.py`；dev 端口 5173。仍保留原未提交工作树，不推送、不开始 Stage 4。
+
+### 2026-11-19 — Stage 3 — Batch A 未提交候选与自检
+
+1. **Summary**：新增且仅新增 card-flip、spotlight-card、magnetic-button、ripple-button、sliding-fill-button、gradient-text-shimmer、staggered-text-reveal；首页与详情现为 10 项。每项独立 Effect 内容、组件与 CSS、registry，双语自然描述/别名/各 3 条实际搜索短语、术语说明、全部可编辑参数的双语模板与真实相关链接。保留 Stage 1 两个样例英语各两条的边界，以及 Tilt 原三条；没有修改样例内容或扩展数据契约。
+2. **Files changed**：七个 `src/content/effects/<slug>.ts`、七组 `src/demos/<Component>.tsx/.css`；新增局部 `src/demos/useDemoPointer.ts` 缓存几何与清理 observer/listeners/rAF；更新 content index、registry、content/search 验收测试；新增 `scripts/stage3_regression.py`，按十项实际目录精确适配旧三个 Chromium 脚本；`docs/PROGRESS.md`。
+   - 共享组件仅两个真实集成修复：`DemoStage.tsx` 传递 `paused={!visible}`，使点击层离屏清理、指针效果离屏归位；保留 Tilt 原方向键提示，其余使用真实 effect hint 与通用 Auto 说明。`EffectCard.tsx` 对非连续但 replayable 的逐词动画也遵守 playing，避免 Reduced Motion 初始错误播放；预览提示按效果/精细指针与触屏展示，避免对 Flip/Fill 错称方向键拖动。没有重构页面或改 schema。
+3. **Commands/results**：
+   - `git remote -v`、status/branch/log、`git ls-remote --heads origin main stage-3-demos-a`、`git fetch origin main` 验证唯一来源、干净 work 分支、main 指定 SHA 和无同名远端；`git switch -c stage-3-demos-a b263169e837b9f9138698f6d69f798da95e86a76` 成功，无覆盖并发工作。
+   - 阅读 AGENTS、ROADMAP、PROGRESS 与 SPEC §7/8/9、原始 E Stage 3/H6；按本轮 C08 授权执行常规参数选择。`npm ci --ignore-scripts --cache /tmp/effect-npm-cache` 成功，232 包，无新依赖/升级/lifecycle；保留既有 ESLint 支持期提示，不升级。
+   - 最终 `npm run typecheck`、`npm run lint`（max-warnings 0）、`npm run test`、`npm run build` 全部返回 0。Vitest **4 文件，93 passed / 5 个具名 Stage 4 todo**；总登记 98 不称 98 passed。Stage 3 五目标（Flip、Spotlight 中英双目标、Magnetic、Ripple）均实际执行；旧 Tilt 中文首位断言与原词条短语数量断言保留。增加所有模板必须实际使用每个参数、七项默认/范围精确值、Stage 3 related 必须真实存在检查。空搜索断言从 top-three helper 改为全目录顺序，保持原门的实际语义。
+   - 最终 build：JS 256.10 kB / gzip **87.20 kB**，CSS 18.59 kB / gzip **5.00 kB**；无构建产物入候选。
+   - `npm run dev -- --port 5173`；使用环境已有 Python Playwright 与 `/usr/bin/chromium`，没有下载浏览器或 npm 浏览器依赖。`python3 scripts/browser_smoke.py` **66/66**；`python3 scripts/clipboard_regression.py` **8/8**；`python3 scripts/discovery_regression.py` **68/68**；`python3 scripts/stage3_regression.py` **142/142**。后三个旧脚本对目录数量、筛选精确集合、真实 related 路径和卸载后的十项 status 作阶段适配，未删旧功能断言；近似推荐仍严格最多三个，预算仍九个真实组件夹具最多六个。
+   - 新浏览器覆盖：七项 compact/详情、每个编辑参数双语内容及实际 clipboard 一致、落地 related；Flip 两轴和 Enter/Space；Spotlight 光层/边框与方向键；Magnetic 默认 .35、小偏移参数变化、边缘半径与 14px 向量上限/回弹；Ripple 点击起点、键盘中心、扩散/淡出、重叠、DOM 清理；Fill 左入右退、焦点/键盘和宽度；Shimmer 真实扫光、暂停/离屏、带宽/周期；Reveal 延迟/距离/时长、辅助名称、暂停。七项 Reduced Motion 静态初始与显式有限播放，四个 Auto 约四秒后停止归位，移动端模拟实际 tap/contact 不导航，320/768/1280 无横向页面溢出。正常/减少动态/触屏 context 均监听运行错误与外部请求，均无捕获。
+   - 人工查看 Chromium 生成的首页与 Spotlight 截图，确认真实字形渐变、暗卡光层/近指针边框、compact 布局；截图仅在 /tmp，不上传、不入 patch。
+   - 调试事实：首次 typecheck 发现自定义 CSS 变量缺少 CSSProperties 标注，已修正；第一次搜索测试 Spotlight 完全复用旧中文查询造成 Tilt 首位回归，改为准确描述“光斑跟着动”，未放宽旧首位门；全部五个新 top-three 断言仍通过。测试脚本的 related 顺序依实际 index（Flip 在 Spotlight 前），误用 `ss ` 检测重复秒单位会匹配英文 unless，改为数值后重复单位正则；CSS pause 采样需等浏览器提交一帧再验证冻结。以上是明确原因的实现/测试修正，不删测或掩盖失败。
+   - `git diff --check` 通过。AGENTS、ROADMAP、SPEC、REQUIREMENTS_SOURCE、src/types.ts、package.json/package-lock.json、三个 Stage 1 内容文件均对 HEAD 无差异。来源 SHA-256 仍 `634d67c8765b7ec96aea1957d67a91048166ac1f127043a130b87665f20544c8`。最终 origin main 仍基底、无 Stage 3 远端分支。
+4. **Acceptance checklist（开发自检，非独立 H6）**：PASS 仅七项与总十项路由；PASS 完整双语字段/每参数两语言/单位一次；PASS 原有与本批实际搜索目标；PASS 真实交互与 compact、键盘/触屏模拟/明显焦点；PASS 正常与减少动态的有限手动播放、离屏与预算；PASS 旧 Stage 1/2 回归；PASS 四质量门。独立验收仍待协调方执行。
+5. **Deviations / implementation choices**：
+   - 按本次明确 C08 常规选择授权补第二参数，不改 SPEC 或原文总则：Ripple `opacity` 默认 .35、范围 .1–.6、步长 .05，来源 §7 明定 35% 起始透明度，调节反馈强度；Sliding Fill `width` 默认 160px、范围 120–240、步长 10，来源本批实际按钮的固定布局尺寸（规范未指定宽度，160 是实现选择，不冒称标准），只调节尺寸，不改默认填充时序/方向；Shimmer `bandWidth` 默认 20%、范围 10–40、步长 5，来源 §7 的约 20% 高光带，调节亮区。Flip duration 未给范围，选 200–1200ms、步长 50，默认 600ms/两轴严格保留。其余指定默认/范围原样。
+   - **逐项动画证据**：Flip transform/perspective；Spotlight 使用 --x/--y 平移径向层、opacity 200ms 与局部边框裁剪层，不动画背景位置或边框色；Magnetic transform；Ripple transform/opacity；Fill scaleX 左入右退，文字颜色即时改变，无颜色动画；Shimmer 用静态 SVG 三色渐变/字形裁剪与移动高光 rect 的 transform，等效呈现 background-clip text + 扫光，未采用规范描述中的 background-size 200%/背景位置动画，因为 §9 要求 shimmer 使用 transform；Reveal transform/opacity。**没有申请或使用新增动画属性例外**。静态 radius/intensity/bandWidth/width 参数即时调试不属于逐帧属性动画。
+   - Ripple 减少动态下每次直接激活只淡出一次、不空间扩散；Flip/Fill 直接激活即时换状态；四项 Auto 显式运行一次。Magnetic 感应半径解释为到静止按钮边缘的距离，跟随使用 100ms ease-out 小过渡，离开严格 500ms 指定回弹。无产品方向/技术栈/数据契约改变。
+   - Chromium 为唯一实测浏览器；触屏为 Chromium 模拟，不是物理手机。未执行跨浏览器、Stage 5 axe/Lighthouse 全量验收、生产主机深链/发布测试。Stage 4 八项、Guide 均未开始；既有五个 Stage 4 查询 todo 和严格真实 related 最终门保留。现有 synonyms 已覆盖这批所需概念，新增别名/自然句进入既有索引，无需改搜索算法或同义组。
+6. **Open questions / proposed spec changes**：本阶段无已知产品阻塞，无 SPEC 修订提案。C08 仅对本批三项按授权解决；Stage 4 单参数项届时按范围处理，C09 原样样例英语数量与其他阶段待决项不变。C14 未泛化批准属性例外。独立 H6、阶段验收和提交/推送授权尚未发生。
+7. **Next step / reproducibility**：新增路径以 `git add -N` 纳入；使用完整 `git diff --binary HEAD`，在原树检查可逆，在从该基底导出的干净临时目录检查/apply、逐路径字节一致、reverse 后基底字节一致；补丁 SHA-256/字节数/Library ID 在交付消息给出，避免补丁自引用。候选原始文件名 `effect-lexicon-stage-3-demos-a-b263169-candidate.patch`。独立复跑：在指定基底 `git apply --check <patch>` / `git apply <patch>`，`npm ci --ignore-scripts --cache /tmp/effect-npm-cache`，四质量门，启动 dev 5173 后逐个运行上述四个 Chromium 脚本。保留本工作树未提交，等待协调方独立 H6 与后续明确指令；不先推送。若 Library 出口失败仅报告阻塞并保留本地候选。
 
 ### 2026-11-19 — Stage 2 — 正常推送回执
 
@@ -221,6 +269,8 @@ Stage 2：独立 H6 与阶段验收已通过，已按协调方授权提交并正
 
 ## Decisions awaiting human
 
+- **Stage 3 最新授权**：协调方确认独立 H6/阶段验收通过并明确授权提交及正常推送；以下旧候选等待条目保留为历史记录。无 PR、合并、部署或 Stage 4 执行授权。
+- **Stage 3 当前候选**：按本轮 handoff 准备七项候选与完整私有 patch；开发自检通过不等于独立验收。只对本批三项 C08 第二参数按明确授权作常规选择，其余阶段待决项保留。未提交/推送；独立 H6 后仍需协调方明确指令。以下 Stage 2 条目为历史授权，不授权本候选直接发布。
 - **Stage 2 提交已获授权**：独立 H6/阶段验收通过，协调方已明确指令正常提交/推送；沿用环境默认 Git 身份。未批准的产品目标/栈变更仍须用户决定。
 - **已批准**：C01、C02、C03、C04/C05、C11/C12，见 Stage 1 日志和 SPEC 修订。C18 本阶段按用户明确要求区分 kind 并测试单位，不伪造范围。
 - **保留待决**：C08 后续单参数项、C09 最终全库英语短语数量、C10 其他 15 项提示词完整性；Stage 1 仅做已说明的最小可访问性补充，未一概批准全部台账。

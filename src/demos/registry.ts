@@ -1,6 +1,13 @@
+import { CardFlip } from './CardFlip';
+import { SpotlightCard } from './SpotlightCard';
+import { MagneticButton } from './MagneticButton';
+import { RippleButton } from './RippleButton';
+import { SlidingFillButton } from './SlidingFillButton';
+import { GradientTextShimmer } from './GradientTextShimmer';
+import { StaggeredTextReveal } from './StaggeredTextReveal';
 import type { ComponentType } from 'react';
 import type { DemoProps } from '../types';
 import { CardTilt3d } from './CardTilt3d';
 import { Typewriter } from './Typewriter';
 import { Glassmorphism } from './Glassmorphism';
-export const demoRegistry: Record<string, ComponentType<DemoProps>> = { CardTilt3d, Typewriter, Glassmorphism };
+export const demoRegistry: Record<string, ComponentType<DemoProps>> = { CardTilt3d, Typewriter, Glassmorphism, CardFlip, SpotlightCard, MagneticButton, RippleButton, SlidingFillButton, GradientTextShimmer, StaggeredTextReveal };

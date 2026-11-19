@@ -1,0 +1,6 @@
+/* Resting 160x52 button + maximum 160px radius on each side; 16px horizontal / 24px vertical exit margins.
+   Compact previews retain their own bounded viewport via the override below. */
+.magnetic-area { width: min(512px,100%); height: 420px; display: grid; place-items: center; touch-action: pan-y; }
+.magnetic-button { width: 160px; height: 52px; border: 0; border-radius: 26px; background: #4338ca; color: white; }
+.mini-preview .magnetic-area { height: 100%; }
+.magnetic-button.magnetic-button { background: #4338ca; color: white; }
