@@ -1,6 +1,6 @@
 # 动效词典 Effect Lexicon
 
-静态中英双语 UI 效果词典：18 个真实演示、8 类内容、中文/英文搜索与筛选、参数驱动的双语提示词，以及 `/guide` 描述指南。开发候选与逐项实测见 [验收报告](docs/ACCEPTANCE.md)。Stage 0–5 已独立验收；Stage 6 产品候选已提交并推送，独立实测快照为 `6cc71919b6abb6212f2d1357278a6d1dd9380878`；S6-IR-001/002/003 已独立 PASS / CLOSED，004 的文档修正待精确提交复验，完整发布仍 BLOCKED。本仓库没有已激活的生产部署流水线。
+静态中英双语 UI 效果词典：18 个真实演示、8 类内容、中文/英文搜索与筛选、参数驱动的双语提示词，以及 `/guide` 描述指南。开发候选与逐项实测见 [验收报告](docs/ACCEPTANCE.md)。Stage 0–5 已独立验收；Stage 6 产品候选已提交并推送，独立实测快照为 `6cc71919b6abb6212f2d1357278a6d1dd9380878`；供应商无关候选四项发现已独立 PASS / CLOSED（见[最终报告](docs/reviews/rereview-stage-6-6cc7191.md)），新增 Pages 预览候选待独立复验，完整发布仍 BLOCKED。本仓库没有已激活的生产部署流水线。
 
 ## 安装、运行和验证
 
@@ -69,9 +69,11 @@ Stage 5 正式内容固定为 18 项。第 19 项仅在仓库外临时副本干�
 
 提示词使用 `{{key}}`、`{{#booleanKey}}…{{/booleanKey}}`、`{{^booleanKey}}…{{/booleanKey}}`；数值单位只出现一次。写明作用对象、触发、可见变化、建议数值/真实运动信息、实现约束，结尾含 reduced-motion、键盘、触屏兜底。静态样式明确无触发/无动画，不编造时长。名称可能不唯一时说清边界，不冒称官方术语或未经验证的性能/兼容性。参数默认值按 number/boolean/select 分别校验，全部模板引用（含条件内）必须为已声明键。
 
-先读 `AGENTS.md`、`docs/SPEC.md`、`docs/ROADMAP.md`、`docs/PROGRESS.md`；`docs/REQUIREMENTS_SOURCE.md` 原文保留。当前获准Stage 6开发、候选验证及本轮文档修正的提交推送；S6-IR-004保持OPEN待文档提交独立复验。后续动作仍按协调方明确指令，生产另由owner放行；Stage 7未授权。
+先读 `AGENTS.md`、`docs/SPEC.md`、`docs/ROADMAP.md`、`docs/PROGRESS.md`；`docs/REQUIREMENTS_SOURCE.md` 原文保留。当前仅获准 Cloudflare Pages 预览产物的本地准备与候选验证；本轮保持未提交，不推送或部署，新增候选待独立复验。后续动作仍按协调方明确指令，生产另由owner放行；Stage 7未授权。
 
 ## Stage 6 release candidate (not deployed)
+
+Cloudflare Pages preview-only preparation is now authorized; account registered, project/preview target pending. `npm run build:pages-preview` emits flat HTML plus `_headers`/`_redirects`, noindex and the approved GitHub Issues feedback link. It does not deploy. Use the [Pages runbook](docs/RELEASE.md) and [uncompleted human review checklist](docs/HUMAN_REVIEW.md). The new provider candidate remains uncommitted and awaits independent review; the prior provider-independent report remains historical evidence.
 
 `npm run build` now prerenders Gallery, Guide and all 18 published details; `npm run preview` serves `dist` locally with CSP/cache headers and true 404. No runtime backend or new product dependency. Default builds deliberately omit a production canonical origin and are noindex. Use only explicit approved site configuration for a public target; never publish a loopback-test build.
 

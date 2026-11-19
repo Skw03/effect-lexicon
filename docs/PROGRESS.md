@@ -2,6 +2,10 @@
 
 ## Current stage
 
+2026-11-19 Pages候选保存：精确16路径补丁 `1652c6b3e9d80cadd313f855724df37cb0ac95f3f00f6590db20244df0762eea` 已由全新独立审查员完成本地技术范围PASS，完整H2仍BLOCKED。协调方现授权仅提交并正常推送新分支 `stage-6-pages-preview`，受审基底 `edf14444c3ebfdf2bda284116897881c1552e60c`。本保存提交包括受审技术文件，以及新增[独立归档](reviews/stage-6-pages-preview.md)和本进度补记；精确SHA/推送结果以Git与交付回执为准，随后独立绑定提交。README、RELEASE、REVIEW_POLICY及下列日志中的“未提交/待独立审查”保留为冻结候选当时状态，由本段取代，不代表保存后的现状。只获准保存，不获准登录、创建项目、上传、部署、PR/tag或集成激活。账号已注册、项目未建；Stage7未授权。
+
+2026-11-19 Cloudflare预览准备：用户已选Cloudflare Pages（仅preview）及GitHub Issues反馈，账号已注册；Pages项目/目标未确认。核实远端 `stage-6-launch` 为 `edf14444c3ebfdf2bda284116897881c1552e60c`、main为 `0dba59fb0a833d40f8e54da430f199c6ebe58dbc` 后，另建隔离本地 `stage-6-pages-preview` 工作分支，保留原工作树及stage-6-launch引用。本轮只准备其未提交后继候选；不提交/推送/PR/tag/上传、启用Actions/集成、创建项目或部署。新增Pages适配与404水合需独立复验；下列供应商无关PASS仍只绑定旧SHA。完整Stage 6 / H2继续BLOCKED，Stage7未授权。
+
 2026-11-19 最终独立复验：产品实测提交 `6cc71919b6abb6212f2d1357278a6d1dd9380878`，文档修复复验提交 `d3d09ccd53def8d4dabb8d05221c31c870bf9b68`。S6-IR-001/002/003/004 均 PASS / CLOSED；当前供应商无关候选独立 **PASS**，完整 Stage 6 / H2 仍 **BLOCKED**。完整独立实测、H2矩阵、历史004复现及材料限制见[最终独立报告](reviews/rereview-stage-6-6cc7191.md)。本轮只归档报告与本状态/链接，精确diff确认无产品或测试变更；产品四门/浏览器证据继承上述已实测SHA，不冒称本轮重跑。宿主/Actions/人工门另待授权和实证，未PR、merge、tag、部署或激活集成，Stage7未授权。最终归档SHA以Git及交付回执为准；以下记录保留各自当时状态。
 
 2026-11-19 当前状态：产品候选已提交并推送至 `stage-6-launch`，独立实测提交为 `6cc71919b6abb6212f2d1357278a6d1dd9380878`。协调方转交的独立结果确认 S6-IR-001/002/003 PASS / CLOSED；仅004文档状态修正仍OPEN，待文档提交的独立复验绑定新SHA。完整Stage 6 / H2继续BLOCKED，Stage 7未授权。本轮仅获准最小文档修正并正常提交推送同分支。下列保存授权、修复回合与旧快照均为当时状态，不代表当前未提交或四项仍OPEN。
@@ -34,6 +38,26 @@ Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 6 — 独立Pages候选PASS与授权保存
+
+1. **Summary**：本地候选独立PASS，无确认新增必需缺陷；完整Stage6/H2 BLOCKED。原始独立报告摘要与版本证据见本次归档，不将实施者自检冒称独立结论。
+2. **Files changed**：受审16路径保持冻结，仅额外新增独立报告及PROGRESS补记。技术代码、测试、发布脚本逐文件与受审补丁相同；不加入生成物或部署workflow。
+3. **Commands / results**：保存前核对补丁身份、远端main/stage-6-launch、新分支不存在、默认Git身份及仓库可见触发配置；四门均exit0（160 Vitest＋69 Node）；diff检查、归档相对链接和逐文件字节检查通过。独立实跑详细计数、Lighthouse及异常见归档。
+4. **Acceptance**：只满足本地准备范围。Discovery首次dev时序失败后原断言完整复跑通过，根因仍未确定并保留证据；未测试及继承项明确列出。精确保存SHA还需独立绑定。
+5. **Deviations**：无技术修改、依赖或授权扩大；旧候选状态文字以本当前补记说明历史属性，不改受审技术文件或旧审查事实。
+6. **Open questions**：Pages项目/目标、实际外部预览/Actions/生产验证、最终域名/素材/条款与人工18项尚未完成。不要求用户传递凭证。
+7. **Next step**：按授权正常保存新分支；独立绑定SHA后，由用户在另行接入授权下建立空Direct Upload项目并回传非秘密项目身份/生产分支/空部署确认，未核实前不上传。实际预览源必须绑定本分支精确已审提交，不误用手册历史分支头。
+
+### 2026-11-19 — Stage 6 — Cloudflare Pages preview-only 本地候选
+
+1. **Summary**：按用户新决定准备Pages静态预览输出，保留便携默认构建。有效配置统一校验，预览拒绝origin/production/assets/未批准反馈目标；SSR与客户端共同使用批准的Issues链接。flat HTML配合39条已知别名308和2块header规则，根404避免SPA兜底。Pages对大小写别名可能真实404，新增HTML标记保留其404水合及Back状态。无后端、效果、依赖或schema变更。
+2. **Files changed**：build与Pages适配器、package脚本及Node/浏览器/完整构建测试；App/main/Metadata的404文档状态；忽略本地Wrangler生成物；README/RELEASE/REVIEW_POLICY/PROGRESS及18项人工清单。原始要求、旧报告、内容及lockfile保持不变。
+3. **Commands / evidence**：`npm ci --ignore-scripts`；typecheck/lint/test/build通过，160 Vitest＋69 Node。额外`build:pages-preview`通过，Wrangler4.45.0仅作为临时官方固定版本工具以`--ignore-scripts`安装，不加入产品。其本地Pages服务解析39 redirect/2 header规则；新专项778项通过，既有release检查440项通过（无origin模式），axe4.10.3全部21状态violations为空。实际测试bare/slash/index.html/.html/query/404、JS-off正文与JS-on水合/刷新、真实headers/cache/CSP、两种语言和运动设置及动态参数；不宣称实际Pages CDN通过。普通loopback origin构建的20 HTML合同、路径1167、release441、prepaint20通过；既有配置完整构建20例、新预览配置完整构建4例通过。旧七套Chromium原断言仅在临时副本改端口：smoke67、clipboard8、discovery68、Stage3 142、magnetic107、Stage4 259、Stage5 518，共1169/1169；搜索23、Modal88、demo边界3通过。未重跑Shimmer密集像素或第19项干跑，相关demo/内容/样式/注册字节不变，继承已审基线证据。功能套件结束后单独跑Lighthouse12.8.2：首页91/100/100/100、Tilt93/100/100/100（performance/accessibility/best-practices/SEO），四门均过。最终Pages构建29文件与已实际测试产物逐字节相同，产物摘要（RELEASE所列算法）`69a1cdd09c8a339ced68bb5ac2aa539cf38eff7776867f0e13f04ca5760fb0f1`；它绑定本次未提交补丁和基底，不冒称已受审commit。
+4. **Acceptance**：本地研发检查通过范围如上；新增候选独立审查PENDING。账户存在性来自用户；Issues页可用性由SUN只读确认有New issue。未访问或配置账户、未创建项目/外部预览；完整H2/F人工门BLOCKED。18项清单全部待填写。
+5. **Deviations / limits**：本地Wrangler不能代替真实Pages部署；其Request.cf元数据获取失败后使用模拟值，不涉及账号凭证。预览故意无canonical、空sitemap、noindex；SEO四类门只在独立的便携审计构建测，不降低预览保护。默认便携路径规范化保持原有能力；Pages原生大小写404由host标记保留。初次探针误用Guide文案及未等待Back更新导致测试断言失败，修正探针后778项通过；首次lint扫到Wrangler生成物，新增仅该生成目录忽略，不弱化源码检查。真实设备/其他浏览器/屏读器限制保留。
+6. **Open questions**：账号已注册，尚无已核实Pages项目/production branch/preview target/access策略。现名仍候选，最终域名/品牌资产/代码许可/内容条款、人工18项、真实Actions/托管验证/生产烟测未完成。无新增规范或依赖批准请求。
+7. **Next step**：先独立审查精确补丁，再由owner按RELEASE在单独授权下建立空Direct Upload预览项目（生产main、预览stage-6-launch，互不相同）；先回传项目名称和空部署列表确认，不上传、不连接Git、不附加生产域名。随后另行批准目标上的Preview操作。无需向ChatGPT发送密码或令牌。后续实际预览必须记录不可变hash URL、Preview环境/deployment ID及产物摘要到精确受审SHA的绑定，另记生产部署存在性；当前这些均未核实。本候选保持未提交，补丁身份由交付回执绑定，避免自引用。
 
 ### 2026-11-19 — Stage 6 — 精确产品提交独立复验及004文档修正待验
 

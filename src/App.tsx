@@ -7,10 +7,10 @@ import { site } from './release/config';
 import { Metadata } from './release/Metadata';
 import { canonicalPath } from './release/path-policy.mjs';
 import { routes } from './release/metadata';
-export function App() {
+export function App({ initialNotFoundPath }: { initialNotFoundPath?: string }) {
   const location = useLocation();
-  const path = canonicalPath(location.pathname, routes);
-  return <><Metadata/>
+  const path = location.pathname === initialNotFoundPath ? '' : canonicalPath(location.pathname, routes);
+  return <><Metadata path={path || '/404'}/>
   <a className="skip-link" href="#main">跳到主要内容</a>
   <header><div className="shell"><Link className="brand" to="/">动效词典 <span lang="en">Effect Lexicon</span></Link><nav aria-label="主导航"><Link to="/guide">描述指南</Link></nav></div></header>
   <main id="main" className="shell">{path ? <Routes location={{ ...location, pathname: path }}><Route path="/" element={<Library/>}/><Route path="/effects/:slug" element={<EffectDetail/>}/><Route path="/guide" element={<Guide/>}/><Route path="*" element={<NotFound/>}/></Routes> : <NotFound/>}</main>

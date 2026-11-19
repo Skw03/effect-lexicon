@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { metadata } from './metadata';
 import { site } from './config';
-export function Metadata() {
-  const { pathname } = useLocation();
+export function Metadata({ path: pathname }: { path: string }) {
   useEffect(() => {
     const data = metadata(pathname);
     document.title = data.title;
