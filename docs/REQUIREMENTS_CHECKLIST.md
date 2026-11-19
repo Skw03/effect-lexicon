@@ -88,3 +88,30 @@
 |skeleton-shimmer|PASS|48头像+100/80/60条、位移扫光/loaded切换|逐项Library/详情视觉与源码检查；scripts/stage4_regression.py；scripts/stage5_regression.py||
 |pulsing-dots-loader|PASS|三点scale/opacity错峰、status标签、尺寸/周期|逐项Library/详情视觉与源码检查；scripts/stage4_regression.py；scripts/stage5_regression.py||
 |modal-scale-fade|FAIL|内舞台dialog缩放淡入/反向关闭/回焦；焦点外逃FAIL|逐项Library/详情视觉与源码检查；scripts/stage4_regression.py；scripts/stage5_regression.py|EL-IR-002|
+
+<a id="rereview-6f596ae"></a>
+
+## 版本补记 — 2026-11-19 — 6f596ae 提交后独立复验
+
+上文完整保留 `59a2429fcf190a6b9d3cf48d487f166c518866a9` 的55条要求、18效果和原 FAIL；这些历史状态不直接描述当前候选。当前产品受审提交 **`6f596ae62462c1de3b38cb926009079cce1f5c6d`**，已整合三源修复：
+
+| 缺陷 / 原实施责任 | 原始修复提交 | 当前独立结论 / 缺陷状态 |
+| --- | --- | --- |
+| EL-IR-001 / Stage 2 discovery | `04d46ee9664b579f086e7a686ee3cba5ce01655e` | PASS / CLOSED |
+| EL-IR-002 / Stage 4 Modal | `56b864575f40009b7c686edff1a85e776e900ed8` | PASS / CLOSED |
+| EL-IR-003 / Stage 3 Shimmer | `3b04323e55b028c7293db628205b71db74dc6b5c` | PASS / CLOSED |
+
+证据来源：协调方本次交接转交的独立审查员对上述精确提交的提交后复验结果，明确三项产品问题 PASS、可关闭。此处是证据摘要与状态同步，不冒充本工作者独立实测；审查员将另行追加最终报告，拟用 `docs/reviews/rereview-stage-5-independent.md`（尚未创建，不设链接）。本轮文档自检和后续独立验收分别记录于[最新进度](PROGRESS.md)。
+
+| 原矩阵 ID / 效果 | 此版本状态 | 补充独立证据 / 可复跑入口 |
+| --- | --- | --- |
+| SEARCH-04；关联 SEARCH-02/03/06/07 | PASS | 原失败查询及7个新措辞通过，123名称/别名首位，14输入/16目标保留；新增浏览器23/23。见[搜索回归](../scripts/el_ir_001_search_regression.py)、[搜索单测](../src/search/el-ir-001.test.ts)及旧 discovery/Stage5 回归；新增探针结果由最终独立报告补充。 |
+| DEMO-05；关联 A11Y-02；modal-scale-fade | PASS | 鼠标、模拟触控、程序聚焦、双向Tab、Esc、参数实时变化、Reset/卸载通过；新增88/88。见[Modal回归](../scripts/el_ir_002_modal_regression.py)。 |
+| A11Y-03；gradient-text-shimmer | PASS（所测范围） | 独立20场景132帧最低5.069:1；密集24场景376帧最低4.912:1，均超过4.5:1；不是以axe分数代替像素证据。见[密集对比度脚本](../scripts/el_ir_003_shimmer_contrast.py)，独立采样由最终报告补充。 |
+| DEMO-01 | PASS（原覆盖及本次修复复验） | 旧18效果覆盖保留，原Modal/流光偏差已在上述受审SHA复验通过；旧Chromium合计1169/1169。 |
+| TEST-01/02；A11Y-06 | PASS | 独立四门、160单测；旧Chromium1169/1169；Library及Tilt两页Lighthouse accessibility各100；axe含打开弹窗21状态零违规。复跑入口见[README](../README.md)、[审计脚本](../scripts/stage5_audit.py)。不得将自动审计外推到未测环境。 |
+| GOV-01（现在适用） / EL-IR-004 | FAIL；P3 / OPEN，文档修正待验 | 基线NOT APPLICABLE仅指原审查任务范围；本次发现当前记录未反映整合与复验。三文档已同步，须独立审查本次文档提交后关闭；尚不判PASS。 |
+| A11Y-07、PERF-02 | BLOCKED（覆盖限制保留） | 仍无真机/中端设备、跨浏览器、原生屏读器验证；不虚构产品缺陷或已测通过。 |
+| FUTURE-01/02/03 | NOT DUE | Stage 6及以后未授权；预渲染/JS-off/hydration和生产发布仍属未来门禁。 |
+
+未受三项修复影响的其他条目沿用上文绑定旧基线的独立证据及本次旧回归结果，不把本补记当作所有硬件、所有参数组合的新全量认证。**总体仍 CHANGES REQUIRED，仅因 EL-IR-004 修正待独立验收；不得提前宣布总体 PASS。** main 尚未合并本候选，本轮不 PR、合并或部署。

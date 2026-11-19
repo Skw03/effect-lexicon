@@ -2,7 +2,7 @@
 
 ## Current stage
 
-当前快照（2026-11-19）：Stage 0–5 独立基线审查 **CHANGES REQUIRED**；产品 main `59a2429fcf190a6b9d3cf48d487f166c518866a9`，审查记录 `608dd5da1082ae546ca6dd7b866e1e4222eba495`。三个 P2 / FAIL / OPEN 见最新日志；Stage 5 相关验收已重开，不能继续称无未解决偏差。当前任务仅在 `stage-5-independent-review` 持久化[独立审查规则](REVIEW_POLICY.md)，获准提交推送，不整合产品修复、不 PR/合并/部署，Stage 6 未授权。以下原阶段交付段落保留为历史，不代表当前缺陷已关闭。
+当前快照（2026-11-19）：`stage-5-independent-review` 已整合三项修复，产品受审提交 `6f596ae62462c1de3b38cb926009079cce1f5c6d`。协调方转交的提交后独立复验确认 EL-IR-001/002/003 均 PASS，可关闭，现记录 CLOSED。总体仍 **CHANGES REQUIRED**：新发现 EL-IR-004（P3，当前文档未同步）本轮修正待独立验收，保持 OPEN。main 仍为 `59a2429fcf190a6b9d3cf48d487f166c518866a9`，候选尚未合并。当前只同步文档并提交推送，不改产品/脚本，不 PR/合并/部署；Stage 6 NOT DUE。证据及版本状态见[矩阵补记](REQUIREMENTS_CHECKLIST.md#rereview-6f596ae)。以下阶段交付段落与旧日志保留为历史快照，不代表当前状态。
 
 Stage 5：独立 H6 与阶段验收已通过，协调方已明确授权提交并正常推送 `stage-5-hardening`。验收基底 `d0f2a1f9b948d2ac1a0132a02a1a44dbdf15ad3d`，受审候选SHA-256 `8170aea9b25f5305e69e7bf02e4821421befe887fc2419de51961956c2d345d7`（79,584 bytes / 19 paths）。本轮仅补充本日志和ACCEPTANCE，代码/测试保持受审字节一致。指定 effect-lexicon-cloud `/workspace/effect-lexicon`；唯一origin `https://github.com/Skw03/effect-lexicon.git`。实际提交/推送结果以交付消息及远端核验为准。不创建PR、不合并、不部署、不进入Stage 6；Library上传仍停止。
 
@@ -24,6 +24,16 @@ Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 5 — 提交后独立复验与 EL-IR-004 文档修正待验
+
+1. **Summary**：三源修复已无冲突 cherry-pick 到 `6f596ae62462c1de3b38cb926009079cce1f5c6d` 并推送，九路径与来源逐字一致。协调方本轮转交独立审查结果：三个产品问题均 PASS，可关闭；本条据此记录 CLOSED，不将合成者自检当独立审查。总体仍 CHANGES REQUIRED，仅余 EL-IR-004 文档同步修正待验。
+2. **Files changed**：仅 `docs/PROGRESS.md`、`docs/REVIEW_POLICY.md`、`docs/REQUIREMENTS_CHECKLIST.md`；同步当前交接与追加版本矩阵。历史基线 FAIL、历史报告、原始要求、产品与测试脚本不改。
+3. **Commands/results**：本轮核实 origin、干净分支、远端候选 `6f596ae62462c1de3b38cb926009079cce1f5c6d` 和 main 精确基线。提交前检查三文档范围、链接、历史矩阵前缀保真及 `git diff --check` 均通过；按 AGENTS 重跑 typecheck/lint/test/build 全部 exit0，160单测通过（5文件），JS gzip99.68kB。默认 Git 身份不变。未重复未变产品的浏览器/审计；下项是协调方转交的独立实跑证据。
+4. **Acceptance / independent evidence**：四门/160单测；旧 Chromium 1169/1169；搜索23/23、Modal88/88；搜索原复现加7个新措辞、123名称/别名首位及14输入/16目标保留；弹窗鼠标/模拟触控/程序聚焦、双向Tab/Esc、参数、Reset/卸载通过；流光独立20场景132帧最低5.069:1，密集24场景376帧最低4.912:1；两页Lighthouse无障碍各100，axe含打开弹窗21状态零违规。来源提交、具体映射和复跑入口见[版本补记](REQUIREMENTS_CHECKLIST.md#rereview-6f596ae)。独立最终报告将由审查员另行追加，不由本工作者代写签发。
+5. **Deviations / limits**：没有产品变化；真机、跨浏览器、原生屏读器仍未验证，不外推为完整WCAG认证。Stage 6仍NOT DUE，既有未来风险不在本轮修复。历史通过和失败均按各自SHA保留。
+6. **Open finding**：EL-IR-004 / P3 / OPEN：受审候选已经整合修复，但PROGRESS/REVIEW_POLICY仍写“仅治理、未整合”，矩阵未追加新状态。本轮已同步，状态为修正待验；关闭条件为独立审查员在本次文档提交上确认当前状态、来源SHA、证据映射和历史保留一致，且没有越权宣告总体PASS。暂无其他已报告产品阻断。
+7. **Next step**：正常提交推送专用分支、核验远端SHA后交独立审查员复验EL-IR-004，并追加最终报告（拟用 `docs/reviews/rereview-stage-5-independent.md`，尚未创建，故不设链接）。当前不宣布总体PASS，不创建PR、不合并、不部署。
 
 ### 2026-11-19 — Stage 5 — 独立审查治理与开放缺陷快照
 

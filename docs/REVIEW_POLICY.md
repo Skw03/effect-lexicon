@@ -60,6 +60,8 @@
 
 ## 当前基线与交接入口
 
-产品基线：`59a2429fcf190a6b9d3cf48d487f166c518866a9`；审查记录提交：`608dd5da1082ae546ca6dd7b866e1e4222eba495`（`review/baseline-0-5`）。查看[完整历史报告](reviews/baseline-0-5-59a2429.md)、[55 条要求与 18 效果矩阵](REQUIREMENTS_CHECKLIST.md)以及[当前进度](PROGRESS.md)。历史 [Stage 5 验收记录](ACCEPTANCE.md)保留为原候选证据，不覆盖新发现。
+历史产品基线：`59a2429fcf190a6b9d3cf48d487f166c518866a9`；历史审查记录提交：`608dd5da1082ae546ca6dd7b866e1e4222eba495`。保留[完整历史报告](reviews/baseline-0-5-59a2429.md)和[原矩阵及版本补记](REQUIREMENTS_CHECKLIST.md#rereview-6f596ae)，不改写基线 FAIL。
 
-此快照总体 **CHANGES REQUIRED**：EL-IR-001（Stage 2 搜索）、EL-IR-002（Stage 4 Modal）、EL-IR-003（Stage 3 Shimmer）均 **P2 / FAIL / OPEN**。原报告已给出详细验收条件；治理持久化不关闭任何一项。各原实施任务在各自专用修复分支处理，独立审查员提交后复验；协调方提供完整核验的修复 SHA 后才安排后续整合。本次只提交治理文档，不整合修复，不创建 PR、不合并、不部署。
+当前维护候选已整合三项修复，产品受审 SHA 为 `6f596ae62462c1de3b38cb926009079cce1f5c6d`，分支 `stage-5-independent-review`；main 尚未合并该候选。三源修复为搜索 `04d46ee9664b579f086e7a686ee3cba5ce01655e`、Modal `56b864575f40009b7c686edff1a85e776e900ed8`、Shimmer `3b04323e55b028c7293db628205b71db74dc6b5c`。协调方转交的提交后独立复验确认 EL-IR-001/002/003 均 PASS，可关闭；当前记录 CLOSED，依据见版本补记与[最新进度](PROGRESS.md)。这不是实施者自审关闭。
+
+总体仍 **CHANGES REQUIRED**，仅余 EL-IR-004（P3，文档不同步）本次修正待验，保持 OPEN。下一步是独立审查员复验本次文档提交并追加最终报告；拟用路径 `docs/reviews/rereview-stage-5-independent.md` 尚未创建，因此不设断链。本次只更新文档，不重改产品，不提前宣布总体 PASS，不创建 PR、不合并、不部署。Stage 6 NOT DUE；原有审批边界不变。
