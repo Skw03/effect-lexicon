@@ -4,3 +4,5 @@
 .tilt-eyebrow { font-size: 13px; letter-spacing: .08em; }
 .tilt-glare { position: absolute; width: 640px; height: 400px; left: calc(50% - 320px); top: calc(50% - 200px); pointer-events: none; background: radial-gradient(ellipse, rgb(255 255 255 / .25), transparent 65%); }
 .tilt-area:focus-visible .tilt-card { border: 2px solid #a5b4fc; }
+
+.tilt-area[data-static-feedback] .tilt-card { box-shadow: 0 8px 24px #27234340, inset 0 0 0 2px #a5b4fc; }

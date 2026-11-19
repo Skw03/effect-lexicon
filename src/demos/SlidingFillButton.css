@@ -1,4 +1,5 @@
 .sliding-button { position: relative; isolation: isolate; overflow: hidden; max-width: 100%; height: 52px; border: 2px solid #4338ca; background: white; border-radius: 10px; touch-action: pan-y; transition: none; }
-.sliding-fill { position: absolute; inset: 0; background: #4338ca; transition: transform 300ms ease-out; pointer-events: none; }
-.sliding-label { position: relative; }
+.sliding-fill { position: absolute; inset: 0; background: #4338ca; transition: transform 300ms ease-out; pointer-events: none; overflow: hidden; }
+.sliding-label { position: relative; color: #4338ca; }
+.sliding-label-copy { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: white; transition: transform 300ms ease-out; }
 .sliding-button.sliding-button { background: white; border-color: #4338ca; box-shadow: none; }

@@ -39,7 +39,7 @@ export function CardTilt3d({ values, virtualPointer, paused = false, reducedMoti
   const x = active ? smooth.x : 0.5;
   const y = active ? smooth.y : 0.5;
   const duration = reducedMotion && !virtualPointer ? 0 : Number(values.returnDuration);
-  return <div ref={host} className="tilt-area" tabIndex={0} role="group" aria-label="倾斜卡片演示，方向键调整，Escape 回正"
+  return <div ref={host} className="tilt-area" data-static-feedback={reducedMotion && !paused && pointer !== undefined && !virtualPointer || undefined} tabIndex={0} role="group" aria-label="倾斜卡片演示，方向键调整，Escape 回正"
     onPointerEnter={move} onPointerMove={move} onPointerDown={move} onPointerLeave={() => setPointer(undefined)}
     onPointerUp={event => { if (event.pointerType !== 'mouse') setPointer(undefined); }} onPointerCancel={() => setPointer(undefined)}
     onFocus={() => setPointer({ x: 0.7, y: 0.35 })} onBlur={() => setPointer(undefined)}

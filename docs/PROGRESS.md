@@ -2,6 +2,24 @@
 
 ## Current stage
 
+2026-11-19 ED-001–003 修复候选（未提交）：基底 `9f7d15d55b31cab733055ed11e1d6d6c6b4e4ec0`，分支 `stage-6-pages-preview`。三项均 **OPEN，待独立复验及后续托管预览验证**；当前不可变预览仍为旧产品 `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5`，未部署本候选。下方旧技术 PASS 是当时范围的历史记录，不关闭本次新发现。
+
+来源：独立 discovery 任务 `6aff3300-d13c-8191-b760-5874d3d480d9`，轮次 `01a1f4ed-e16a-7375-87ff-2c903c04a755`；测试目标为 [d7f5ddba Preview](https://d7f5ddba.effect-lexicon-preview.pages.dev)，此前[技术审查档案](reviews/stage-6-live-preview-d7f5ddba.md)保持原样。
+
+| 缺陷 / 严重性 | 修复与复验条件 | 当前状态 |
+| --- | --- | --- |
+| ED-001 / P2 | 滑动填充在填色到达前立即变白，造成白底白字。改为裁切填色层与白字等量反向平移，底层靛蓝字不动，副本 aria-hidden；验证进出、中断、参数端点、键盘/触屏、减少动态及双语复制。 | OPEN；实施者自检不等于独立关闭 |
+| ED-002 / P3 | 倾斜卡片减少动态时缺少承诺的静态反馈。增加瞬时内描边/阴影，保留焦点、触屏取消、暂停及显式 Auto 路径。 | OPEN；待独立复验 |
+| ED-003 / P3 | Ripple 将 opacity 称为“起始透明度”。改为“起始不透明度”并同步相关解释；数值及双语提示词行为不变。 | OPEN；待独立复验 |
+
+1. Summary：只修上述三项及人工清单的过时预览说明，不增加效果或发布能力。
+2. Files changed：`SlidingFillButton.tsx/.css`、`CardTilt3d.tsx/.css`、两份对应内容文件（sliding-fill-button、ripple-button）、`scripts/editorial_regression.py`、`docs/HUMAN_REVIEW.md` 与本进度。清单18条均链接旧不可变预览，均未勾选；保留审阅者、日期、精确候选等填写要求。
+3. Commands/results：`npm run typecheck`、`npm run lint`、`npm test`（160 Vitest＋69 Node）、`npm run build`、`npm run build:pages-preview` 通过。Chromium：`stage3_regression.py` 142、`browser_smoke.py` 67、`clipboard_regression.py` 8、`stage5_regression.py` 518、本地生产模式 `stage6_regression.py` 440 全通过；`stage5_audit.py` 使用 axe 4.10.3，21状态零违规。新 `editorial_regression.py` 在dev与本地生产模式各92项通过，分别检查54张中间帧。新脚本首次在标签同时含数值的严格文本断言处失败，修正为验证标签前缀后原像素/交互断言完整重跑通过；未改既有测试。未重跑 Lighthouse、真实设备或外部托管；不继承为本候选新成绩。
+4. Acceptance：针对性脚本覆盖实际 enter/exit、可访问名称、动画中断、直接操作与真实复制；像素检查使用暂停的真实 CSS transition 时钟，对比白底/靛蓝填色上的实心字形，排除裁切边缘2px，不把它称为全设备对比度认证。截图仅本地保留。独立 H6 和新 hosted 验证仍未完成。
+5. Deviations：无新依赖、schema 或规范修改；仅动画 transform。依 SPEC §9，减少动态的直接操作无动画，明确按下 Auto 仍运行一次有限演示，不删除手动演示能力。
+6. Open questions：完整 Stage6/H2 继续 BLOCKED；owner 18词条人审、品牌/域名/素材/条款、真实 Actions 与生产验证和批准仍待完成。无新增规范建议。
+7. Next step：交精确未提交补丁给独立审查员；复验及另行授权前不提交、推送、上传、更新预览或进入 Stage7。
+
 2026-11-19 线上Preview独立审查归档：产品源 `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5`，不可变预览 `https://d7f5ddba.effect-lexicon-preview.pages.dev`，独立结论仅本次Preview范围PASS，无新增必修产品缺陷；完整Stage6/H2仍BLOCKED。[线上报告及来源](reviews/stage-6-live-preview-d7f5ddba.md)记录27/27文件一致、全部20路由、58路由变体、135响应头/noindex、434 hosted子集及异常/未测限制。生产主机HTTP404只证明该次响应，不证明dashboard库存。下列“真实Preview未验证”等段落保留为当时历史状态。本轮只获准文档归档并推送本分支，不激活CI、不合并或发布。
 
 2026-11-19 Pages精确提交独立复验与归档：`stage-6-pages-preview` 产品SHA `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5` 的本地preview-only准备 **PASS**；真实Preview、CI及完整Stage6/H2仍 **BLOCKED**。实跑与未重跑范围、初审产物比对、两项非阻断措辞澄清见[独立精确复验报告](reviews/rereview-pages-8df5b37.md)。用户正在准备空Direct Upload项目，尚未核实完成；未登录、建项目或上传Cloudflare。此次仅归档报告和本状态/链接，无技术/资产/发布配置变化，不重跑未变产品。后续实际upload须另获授权，并绑定8df产品的相同技术产物；Cloudflare部署branch label不决定Git源SHA。原“未提交”等措辞保留为冻结时历史，由阶段记录与本报告覆盖。未PR、合并、tag、部署或激活集成；Stage7未授权。归档提交SHA以Git和回执为准。
