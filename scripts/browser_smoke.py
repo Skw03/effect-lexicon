@@ -27,8 +27,8 @@ with sync_playwright() as p:
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.on('request', lambda request: external.append(request.url) if not request.url.startswith(BASE) else None)
     page.goto(BASE)
-    expect(page.locator('main a')).to_have_count(3)
-    check('Library has exactly three text effect links', page.locator('main a').count() == 3)
+    expect(page.locator('main a.effect-title')).to_have_count(3)
+    check('Library has exactly three canonical effect entries', page.locator('main a.effect-title').evaluate_all('(links) => links.map(link => link.getAttribute("href"))') == ['/effects/card-tilt-3d', '/effects/typewriter', '/effects/glassmorphism'])
     for slug in ['card-tilt-3d','typewriter','glassmorphism']:
         page.goto(BASE + '/effects/' + slug)
         expect(page.locator('h1')).to_be_visible()

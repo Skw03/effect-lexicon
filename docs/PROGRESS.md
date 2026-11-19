@@ -2,11 +2,11 @@
 
 ## Current stage
 
-Stage 1：三效果基础闭环已实现；独立 H6 发现的四类异步复制竞态已按本次授权修复并复测，等待再次独立核验，不开始 Stage 2。旧交付自检未覆盖这些竞态，以下新日志修正当时“无当前阻塞”的结论。
-分支：`stage-1-foundation`；基底为已独立 H6 的 `e51155b01599a79e3573e47be45077339c018f13`。
-环境：指定 effect-lexicon-cloud，checkout `/workspace/effect-lexicon`，origin `https://github.com/Skw03/effect-lexicon.git`。
-沿用已有效解析的环境默认作者/提交者；不新增身份、不记录姓名邮箱。仅提交并正常推送 Stage 1 分支，不改 main/Stage 0、不 PR/合并/部署。
-Stage 0 的 H1 总结与日志作为历史保留。
+Stage 2：独立 H6 与阶段验收已通过；协调方明确批准本轮提交并正常推送 `stage-2-discovery`。不开始 Stage 3。
+基底：`a847ed7a3520ec86ac9d8c60c9a835b87b571767`；已验收候选 patch SHA-256：`1be9c0a45fb69824eefe2f14ca83b410d34ac839db84c8a488ee7cd67226390a`。最终分支头见推送回执。
+环境：指定 effect-lexicon-cloud，checkout `/workspace/effect-lexicon`，唯一 origin `https://github.com/Skw03/effect-lexicon.git`。
+提交前远端 main 仍 `dfcff865aa74af520ab52a84b1a5f766156b4570`，Stage 1 仍指定基底，远端无 Stage 2 分支。不假定 main 已合并 Stage 1。
+使用已有默认 Git 身份，不写姓名邮箱。本任务只提交/正常推送 Stage 2；PR、检查及合并由协调方处理，不创建/合并 PR、不部署、不进入 Stage 3。Stage 0 历史不改。
 
 ### H1 summary (11 lines)
 
@@ -23,6 +23,41 @@ Stage 0 的 H1 总结与日志作为历史保留。
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 2 — 独立 H6 通过，提交授权与一致性核验
+
+1. **Summary**：协调方明确报告独立 H6 与 Stage 2 验收通过，并批准在原云端提交/正常推送 stage-2-discovery；本轮仅补充本日志，不修改已验收产品代码。
+2. **Files changed**：相对已验收候选只改 docs/PROGRESS.md；本次提交包括原候选的全部 21 个路径（具体清单见前条候选记录和 Git）。REQUIREMENTS_SOURCE 逐字保留。
+3. **Commands/results**：
+   - 重读 AGENTS、ROADMAP、最近五条日志；确认当前分支 stage-2-discovery、HEAD 为 a847ed7a3520ec86ac9d8c60c9a835b87b571767、唯一 origin 正确。`git ls-remote --heads origin main stage-1-foundation stage-2-discovery` 确认 main 仍 dfcff865aa74af520ab52a84b1a5f766156b4570、Stage 1 仍 a847ed7、Stage 2 不存在，无同名并发工作覆盖。
+   - 修改日志前 `git diff --binary HEAD` 与仓库外原 patch 逐字节相等，SHA-256 为 1be9c0a45fb69824eefe2f14ca83b410d34ac839db84c8a488ee7cd67226390a；原文 hash 仍 634d67c8765b7ec96aea1957d67a91048166ac1f127043a130b87665f20544c8。默认 author/committer 可用，未改配置、未输出身份。
+   - 本轮重新运行 typecheck、lint、test、build 全部通过；Vitest 52 passed / 10 个具名 Stage 3/4 todo，4 文件。JS 223.19 kB / gzip 76.69 kB，CSS 14.55 kB / gzip 4.13 kB。未重复安装或跑未变更的浏览器功能；独立测试报告与原自检见下项。
+   - 提交前 `git diff --check`，并按每文件 patch 核验除本日志外与已验收候选一致，精确暂存原 21 路径；提交/正常推送及最终远端头见后续回执。
+4. **Acceptance**：协调方提供的独立 H6：`npm ci --ignore-scripts`、typecheck/lint/build 通过；Vitest **52 passed、10 具名 todo**；真实 Chromium discovery **68/68**、旧详情 **66/66**、复制 **8/8**、额外独立抽查 **13/13**。9 个实际预览组件夹具验证最多 6 个活动，产品实际词条仍 3。阶段验收通过，不把本工作者自检冒称独立执行。
+5. **Deviations / limits**：无代码偏离已验收候选；触屏为模拟，未做 Stage 5 全量审计，不声称真机或跨浏览器。未来 todo 仍待对应阶段激活。
+6. **Open questions**：本轮提交/推送没有新增产品待决项；后续 PR 检查/合并由协调方依据最新用户授权处理。
+7. **Next step**：提交、正常推送并验证远端/main；本工作者完成 Stage 2 后停止，不开始 Stage 3，不部署。
+
+### 2026-11-19 — Stage 2 — Discovery 待审候选
+
+1. **Summary**：按原文 E Stage 2 与 SPEC §3.1/6/9 替换临时首页：搜索、触发/类别多选 chips、单选类型、结果数与 polite aria-live、可见状态与清除、150ms 防抖、replace URL/刷新恢复。筛选组间 AND、组内 OR，搜索仅在筛选后集合排名。NFKC/标点规范化、英文 token/前缀、中文子串和 19 组同义词、Fuse 既定权重与精确/前缀/描述优先、返回实际字段/文字提示。零命中单独显示相近推荐，looser Fuse 后无候选项用规范化编辑距离排序，绝不标成命中，也不越过筛选。
+2. **Files changed**：AGENTS.md、docs/ROADMAP.md、本日志；新增 src/search/{normalize,synonyms,filters,index,search.test}.ts、src/components/{SearchBox,FilterBar,EffectCard}.tsx、src/hooks/previewBudget.ts、scripts/discovery_regression.py；集成修改 src/pages/Library.tsx、src/styles.css、src/types.ts（仅 DemoProps 新增可选 compact/paused，Effect 公共 schema 不变）、三个 src/demos 组件；scripts/browser_smoke.py 与 clipboard_regression.py 更新首页定位。
+   - 三个 16:10 实时预览复用原组件，独立标题/查看详情导航；Tilt 悬停、键盘、触屏及 Auto；Typewriter 播放/暂停/重播、离屏暂停、减少动态默认完整首句，手动有限单遍；Glass 真正 backdrop-filter，紧凑模式隐藏背景控件。
+   - 共享 FIFO 预算限制连续预览最多 6 个；卸载/离屏释放名额；等待中的初次预览显示静态代表帧。CSS 仍沿用 Stage 1 tokens；只对 demo transform/opacity 做动画。
+   - AGENTS/ROADMAP 明确替代旧的人工逐阶段确认及人工专属合并门：授权只至 Stage 5、一次一阶段，dots 负责开发/独立审查/修复/验收，在权限及检查允许时协调 PR/合并；本工作者先留未提交候选，验收后另行提交指令；Stage 6+ 无自动授权，不部署，不改写 Stage 0 历史，不改变验收/环境/权限限制。
+3. **Commands run and results**：
+   - `git status --short --branch` 初始 work 分支干净，`git remote -v` 指定唯一仓库；`git fetch origin`、`git ls-remote --heads origin main stage-1-foundation stage-2-discovery` 查明 main/Stage 1 与交接一致、无同名远端分支。默认 fetch refspec 只取 main，所以显式 fetch Stage 1 ref 后 `git switch -c stage-2-discovery a847ed7a3520ec86ac9d8c60c9a835b87b571767`。没有覆盖并发改动或假定 main 合并。
+   - 完整读取五份治理/产品原文（长文分段阅读），保留 REQUIREMENTS_SOURCE 原样。`npm ci --ignore-scripts --cache /tmp/effect-npm-cache` 成功、232 包，无新增/升级依赖或 lifecycle。既有 ESLint 支持期提示仍保留现版本，本轮不升级。
+   - `npm run typecheck`、`npm run lint`、`npm run test`、`npm run build` 全部返回 0。Vitest **4 文件，52 passed、10 todo、0 个既有测试跳过**；原 28 个全部通过，新 24 个实际执行，另 10 个明确标注 Stage 3/4 的未实现目标。总登记 62 项不能称 62 passed。12 查询组 / 14 实际字符串 / 16 目标断言：6 个当前目标执行，双目标两查询的 Tilt 当前执行、Spotlight Stage 3 激活，三个毛玻璃输入逐个执行。
+   - 最终生产 JS 223.19 kB / gzip 76.69 kB，CSS 14.55 kB / gzip 4.13 kB。
+   - `npm run dev -- --port 5173`，使用现有 Python Playwright 与 `/usr/bin/chromium`；`python3 scripts/browser_smoke.py` **66/66**、`python3 scripts/clipboard_regression.py` **8/8**。旧 smoke 第一条从“main 恰好三个文本链接”更新为严格三条 canonical 标题链接及路径顺序；复制竞态两处旧中英合并链接定位改为 canonical 标题，卸载后断言更新为新的唯一 gallery status 文本“共 3 个效果”，仍断言无旧复制反馈/legacy 副作用/焦点抢占，没有删测或放宽已有功能断言。
+   - `python3 scripts/discovery_regression.py`：**68/68**；包含六个当前查询、中文首位/描述提示、URL 搜索/多选恢复、replace 历史、防抖、清除、AND/OR/type、近似与筛选隔离、键盘/触屏、实时预览、离屏暂停、减少动态单次播放、320/375/768/1280/1440 布局与 16:10。额外九个既有 Typewriter 测试实例验证通用预算，不增产品内容。
+   - 调试记录：新脚本最初在 React 更新前即时断言类型切换，改为等待对应 aria-pressed；手动 Typewriter 在 1500ms 已完成首句，原“文字不等于静态首句”时点不可靠，改为断言真实 typing 阶段和最终单遍第三句。原 clipboard 脚本暴露旧链接及旧首页无 status 假设，按新首页定位更新后 8/8。快速“清除后立即输入”复测发现真实竞态：旧 replace 完成后 state.q effect 覆盖新输入。修复为本地输入只由用户编辑/清除及 POP 历史恢复更新，自己的 replace 不回写 draft；保留连续清除/输入断言。预算浏览器夹具补全 MemoryRouter 并复用 Vite 实际 React 模块 URL，避免测试夹具重复 React/缺少路由上下文；该夹具与应用代码隔离。未将这些脚本适配描述为产品旧功能缺陷。
+   - `git diff --check` 通过；21 个候选路径，新文件用 `git add -N` 纳入完整补丁，`git diff --cached --name-only` 为空，无暂存内容/提交。Effect schema 逐字比较不变，package.json/package-lock.json、SPEC、原始需求、content、PromptPanel/clipboard 无差异；原文 SHA-256 仍 `634d67c8765b7ec96aea1957d67a91048166ac1f127043a130b87665f20544c8`。补丁名 `effect-lexicon-stage-2-discovery-a847ed7-candidate.patch`，最终 SHA-256 与 Library ID 记在交付消息（避免补丁自引用）。不纳入缓存/node_modules/dist/截图。
+4. **Acceptance checklist（自检，非独立 H6）**：PASS 当前六查询目标与中文描述首位；PASS 筛选逻辑/URL/清除/状态/aria-live；PASS 无结果与明确近似推荐/当前筛选；PASS 三实时预览及交互/导航分离、离屏暂停、有限手动 reduced-motion；PASS 响应式/键盘/触屏模拟；PASS 三旧详情及复制竞态；PASS 四质量门。独立 H6 与阶段最终验收仍待执行，提交/推送待协调方指令。
+5. **Deviations / boundaries**：无新增效果、指南、依赖、外部运行资源、后端、分析、公共 Effect schema 变更或产品 SPEC 修订。两种 demo 展示 props 为组件集成，不是内容 schema 变更。预览预算单测与浏览器夹具用现有组件复制实例，实际产品仍三个效果。浏览器只实测 Chromium；触屏为模拟，不冒称真机/跨浏览器或 Stage 5 axe/Lighthouse/全库验收。Stage 3/4 各 5 个 todo 只代表未来目标，必须在对应阶段激活。
+6. **Open questions**：当前候选无已知未解决功能阻塞；需协调方独立 H6。后续 C08 单参数冲突、C09/C10 其他内容规则、C14 后续属性例外等按实际后续阶段处理，未用本轮授权批准所有旧建议。Stage 6 人类输入与发布事项仍未授权。
+7. **Next step**：仅整理含所有新文件的 `git diff --binary HEAD` 单个私有 Library patch，交接基底、SHA-256、范围和复跑命令。保留本工作树未提交；独立 H6 后由协调方续修或明确指令提交，不进入 Stage 3。
 
 ### 2026-11-19 — Stage 1 — H6 异步复制竞态修复
 
@@ -176,9 +211,9 @@ Stage 0 的 H1 总结与日志作为历史保留。
 
 ## Decisions awaiting human
 
-- **提交门禁已解除**：用户明确确认使用环境默认 Git 姓名/邮箱；已核验 author 与 committer 有效。阶段审批和产品决策仍待人工确认。
+- **Stage 2 提交已获授权**：独立 H6/阶段验收通过，协调方已明确指令正常提交/推送；沿用环境默认 Git 身份。未批准的产品目标/栈变更仍须用户决定。
 - **已批准**：C01、C02、C03、C04/C05、C11/C12，见 Stage 1 日志和 SPEC 修订。C18 本阶段按用户明确要求区分 kind 并测试单位，不伪造范围。
 - **保留待决**：C08 后续单参数项、C09 最终全库英语短语数量、C10 其他 15 项提示词完整性；Stage 1 仅做已说明的最小可访问性补充，未一概批准全部台账。
-- **Stage 2–5 实现前确认**：C06–C07 测试延期/计数、C14 属性例外、C15 组件 props、C17 token 与路由约定。可以一次审核全部建议；未经确认不把它们变成产品规范。
+- **Stage 2 当前授权**：C06–C07 按原 Stage 2 要求具名延期/12组14字符串；C15 仅新增组件 compact/paused，不改 Effect schema；筛选使用既有 token，不新增 none 筛选。C14 后续效果例外及其他未采纳建议仍按后续阶段范围处理。
 - **Stage 6 及成长前确认**：C13 部署承诺、C16 发布/增长门禁，以及 F3 人类输入、许可证、主机与域名、人工内容审阅；无提前生产发布。
-- **阶段门**：Stage 0 H6 与 Stage 1 启动授权已收到；本轮 Stage 1 自检不冒称独立 H6。等待新会话独立复核与下一阶段批准。
+- **当前阶段门**：协调方确认 Stage 1 a847ed7 已独立 H6 通过且用户确认。Stage 2 独立 H6 与验收已通过，获准提交/推送；本工作者不处理 PR/合并。Stage 2–5 按新授权顺序协调，不再逐阶段请求用户重复确认；Stage 5 后停止。

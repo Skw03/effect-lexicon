@@ -4,12 +4,12 @@ import type { DemoProps, PointerPosition } from '../types';
 import { useRaf } from '../hooks/useRaf';
 import './CardTilt3d.css';
 const center: PointerPosition = { x: 0.5, y: 0.5 };
-export function CardTilt3d({ values, virtualPointer, reducedMotion }: DemoProps) {
+export function CardTilt3d({ values, virtualPointer, paused = false, reducedMotion }: DemoProps) {
   const host = useRef<HTMLDivElement>(null);
   const rect = useRef<DOMRect>();
   const [pointer, setPointer] = useState<PointerPosition>();
   const [smooth, setSmooth] = useState(center);
-  const target = virtualPointer ?? (!reducedMotion ? pointer : undefined);
+  const target = paused ? undefined : virtualPointer ?? (!reducedMotion ? pointer : undefined);
   const active = target !== undefined;
   useEffect(() => {
     const node = host.current;

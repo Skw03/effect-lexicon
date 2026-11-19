@@ -9,7 +9,7 @@
 ## Scope discipline
 - Do one stage or one task at a time, and only what it lists. No bonus features, no unrequested refactors, renames, formatting sweeps or dependency upgrades.
 - If you notice an unrelated problem, record it under Observations in PROGRESS.md. Do not fix it.
-- Stages run in the order in ROADMAP.md. Do not start the next stage until the human confirms the current one.
+- Stages run in ROADMAP order, one at a time. For the user-authorized Stages 2–5, development, independent H6 review, fixes and stage acceptance are coordinated by dots. After acceptance and required checks pass, commit/push and update PROGRESS before starting the next stage; no repeated manual stage confirmation is required. Stage 5 ends with a complete acceptance report and Stage 6 preparation items, then stop. Stage 6+ requires new authorization.
 
 ## Stack and dependencies
 - Allowed: Vite, React 18, TypeScript (strict), React Router, Tailwind CSS, Fuse.js, Vitest, Testing Library, ESLint, Prettier, and axe tooling as a dev dependency.
@@ -66,6 +66,13 @@
 ## dots coordination and cloud execution
 - dots coordinates requirements, user decisions and handoff. Execute actual commands, edits and checks in the designated Codex Cloud environment effect-lexicon-cloud, in the checkout whose origin is https://github.com/Skw03/effect-lexicon.git.
 - Before writing, verify origin, remote main, branch existence and worktree status; inspect existing files and preserve unrelated changes.
-- This task writes only stage-0-governance based on remote main. No PR, merge, production deploy, repository visibility change, force push, or Stage 1 work is authorized.
+- Historical Stage 0 authorization applied only to stage-0-governance and remains recorded in PROGRESS; it is not the current task scope. Current execution follows the explicit stage handoff. Stage 2 uses stage-2-discovery based on accepted Stage 1 a847ed7a3520ec86ac9d8c60c9a835b87b571767; do not assume main includes Stage 1.
 - Report evidence, conflicts, completed work and blockers to dots. Do not silently resolve product decisions or start the next stage.
-- Commit and push only with the user's confirmed public Git author name and email. Never infer identity from a default bot or account display name; never expose credentials.
+- The user authorized the existing default Git author/committer identity; do not change it or record names/emails in documents. Never expose credentials.
+
+## Current Stage 2–5 delegation (supersedes old manual confirmation/merge gates)
+- User has confirmed the Stage 1 interface and interaction and authorized Stage 2 discovery, Stage 3 total 10 effects, Stage 4 total 18 effects, Stage 5 guide/hardening/full acceptance, strictly in order.
+- Dots coordinates independent review and acceptance. After independent H6 and required checks pass, dots may coordinate PR and merge of completed stage branches when repository permissions allow. Do not change main directly, permissions, protections, force-push, delete branches or bypass checks. No deploy is authorized.
+- This worker prepares only the Stage 2 candidate, with uncommitted code and complete private review patch. Commit/push only after the coordinator explicitly instructs it following independent review. Do not start Stage 3 in this task.
+- Routine in-scope choices and fixes are authorized. Escalate product goals, major visual direction, stack changes and unresolved permissions together. All acceptance criteria, designated-cloud requirements and scope limits remain intact; historical Stage 0 records and REQUIREMENTS_SOURCE are unchanged.
+- Stage 2 tests enforce all currently implemented targets. Original future targets use named Stage 3/4 test.todo entries (12 groups / 14 query strings, including three glass inputs and both dual-target queries); activate them as effects arrive. Never skip or weaken an existing test.

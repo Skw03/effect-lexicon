@@ -87,7 +87,7 @@ def active_legacy_snapshot(page):
 def route_pending(page):
     copy(page)
     page.get_by_role('link',name='全部效果',exact=True).click()
-    page.get_by_role('link',name='打字机效果 Typewriter Text').click()
+    page.locator('a.effect-title[href="/effects/typewriter"]').click()
     expect(page.locator('#prompt')).to_be_attached()
     copy(page)
     assert page.evaluate('window.copyRequests.length')==1, 'new route started concurrent write'
@@ -100,9 +100,9 @@ def route_pending(page):
 def unmount_success(page):
     copy(page)
     page.get_by_role('link',name='全部效果',exact=True).click()
-    target=page.get_by_role('link',name='打字机效果 Typewriter Text'); target.focus()
+    target=page.locator('a.effect-title[href="/effects/typewriter"]'); target.focus()
     settle(page)
-    assert page.locator('p[role=status]').count()==0 and page.evaluate('window.legacyWrites')==[]
+    assert page.locator('p[role=status]').count()==1 and page.locator('p[role=status]').inner_text()=='共 3 个效果' and page.evaluate('window.legacyWrites')==[]
     assert target.evaluate('el=>el===document.activeElement')
 
 def change_back(page):

@@ -37,6 +37,8 @@ export type Values = Record<string, number | boolean | string>;
 export type Language = 'en' | 'zh';
 export interface PointerPosition { x: number; y: number }
 export interface DemoProps {
+  compact?: boolean;
+  paused?: boolean;
   values: Values;
   running: boolean;
   replayKey: number;
