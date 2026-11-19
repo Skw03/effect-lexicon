@@ -2,6 +2,7 @@ import Fuse from 'fuse.js';
 import type { Effect } from '../types';
 import { normalize } from './normalize';
 import { queryTerms } from './synonyms';
+import { chineseCoverage, chineseGrams } from './chinese';
 export interface SearchHit { effect: Effect; score: number; matchedField: string; matchedText: string }
 const weights = { 'name.en': 5, 'name.zh': 5, aliases: 4, searchPhrases: 3.5, tags: 2, summary: 1, whatYouSee: 1, useCases: 1 };
 function fields(effect: Effect) {
@@ -23,6 +24,8 @@ export function searchEffects(effects: Effect[], query: string, threshold = 0.35
   const q = normalize(query);
   if (!q) return effects.map(effect => ({ effect, score: 0, matchedField: '', matchedText: '' }));
   const terms = queryTerms(q);
+  const grams = chineseGrams(q);
+  const coverage = chineseCoverage(q, effects.map(effect => fields(effect).map(entry => entry.text)));
   const fuse = new Fuse(effects.map(document), { keys: Object.entries(weights).map(([name, weight]) => ({ name, weight })), ignoreLocation: true, threshold, minMatchCharLength: 1, includeMatches: true, includeScore: true });
   const fuzzy = new Map<string, { score: number; field: string; text: string }>();
   for (const term of new Set([q, ...terms.flat()])) {
@@ -37,7 +40,7 @@ export function searchEffects(effects: Effect[], query: string, threshold = 0.35
     const exact = entries.find(entry => isName(entry.field) && normalize(entry.text) === q);
     const prefix = entries.find(entry => isName(entry.field) && normalize(entry.text).startsWith(q));
     const phrase = entries.find(entry => entry.field === 'searchPhrases' && normalize(entry.text).includes(q));
-    const matches = entries.map(entry => ({ ...entry, coverage: terms.filter(group => group.some(term => containsTerm(normalize(entry.text), term))).length / terms.length }));
+    const matches = entries.map(entry => ({ ...entry, coverage: (grams.length ? 0.35 : 1) * terms.filter(group => group.some(term => containsTerm(normalize(entry.text), term))).length / terms.length + 0.65 * coverage(entry.text) }));
     matches.sort((a, b) => b.coverage - a.coverage || (weights[b.field as keyof typeof weights] - weights[a.field as keyof typeof weights]));
     const best = matches[0];
     const loose = fuzzy.get(effect.id);
