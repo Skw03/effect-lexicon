@@ -1,0 +1,4 @@
+.text-shimmer { display: block; width: min(600px,100%); overflow: hidden; }
+.text-shimmer text { font-family: system-ui, sans-serif; font-size: 76px; font-weight: 800; }
+.shimmer-band { animation: text-shimmer-sweep 2.5s linear infinite; }
+@keyframes text-shimmer-sweep { from { transform: translateX(0); } to { transform: translateX(840px); } }

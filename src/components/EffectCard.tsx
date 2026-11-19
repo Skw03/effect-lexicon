@@ -28,7 +28,7 @@ export function EffectCard({ hit, approximate = false }: { hit: SearchHit; appro
   }, [visible, continuous, playing]);
   useEffect(() => { if (!visible) setAuto(false); }, [visible]);
   const virtualPointer = useVirtualPointer(auto && visible, stop);
-  const running = visible && !scroll && (continuous ? granted && playing : true);
+  const running = visible && !scroll && (continuous ? granted && playing : effect.demo.replayable ? playing : true);
   const Demo = demoRegistry[effect.demo.component];
   const matchLabel = hit.matchedField === 'aliases' ? '别名' : hit.matchedField === 'searchPhrases' ? '描述' : '名称或说明';
   return <article className="effect-card" data-effect={effect.slug}>
@@ -36,7 +36,7 @@ export function EffectCard({ hit, approximate = false }: { hit: SearchHit; appro
       <Demo key={replayKey} compact paused={!running} values={defaults(effect)} running={running} replayKey={replayKey} reducedMotion={reduced} virtualPointer={virtualPointer} onComplete={complete}/>
     </div>
     <div className="card-body">
-      <p className="preview-hint">{scroll ? '在详情页体验滚动' : effect.demo.staticStyle ? '视觉样式 · 无动画' : effect.demo.autoDemo ? '悬停试试 · 方向键或手指拖动' : reduced ? '已减少动态 · 手动播放一次' : '可暂停或重播'}</p>
+      <p className="preview-hint">{scroll ? '在详情页体验滚动' : effect.demo.staticStyle ? '视觉样式 · 无动画' : effect.demo.autoDemo ? <><span className="fine-hint">{effect.demo.component === 'CardTilt3d' ? '悬停试试 · 方向键或手指拖动' : effect.demo.hint}</span><span className="touch-hint">{effect.demo.hintTouch}</span></> : reduced ? '已减少动态 · 手动播放一次' : effect.demo.hint}</p>
       {(effect.demo.autoDemo || effect.demo.replayable) && <div className="preview-controls">
         {effect.demo.autoDemo && <button onClick={() => setAuto(value => !value)}>{auto ? '停止 Stop' : '自动演示 Auto demo'}</button>}
         {effect.demo.replayable && <><button onClick={() => { if (finished) { setReplayKey(key => key + 1); setFinished(false); } setPlaying(value => !value); }}>{playing ? '暂停 Pause' : '播放 Play'}</button><button onClick={() => { setReplayKey(key => key + 1); setFinished(false); setPlaying(true); }}>重播 Replay</button></>}

@@ -1,0 +1,7 @@
+.ripple-button { position: relative; overflow: hidden; isolation: isolate; width: 180px; height: 56px; background: #4338ca; color: white; border: 0; border-radius: 12px; touch-action: pan-y; }
+.ripple-wave { position: absolute; border-radius: 50%; background: white; pointer-events: none; animation: ripple-grow 600ms ease-out forwards; }
+@keyframes ripple-grow { from { transform: scale(0); opacity: var(--ripple-opacity); } to { transform: scale(1); opacity: 0; } }
+/* Direct activation remains one finite opacity response in reduced motion. */
+.ripple-reduced { animation-name: ripple-fade; }
+@keyframes ripple-fade { from { transform: scale(1); opacity: var(--ripple-opacity); } to { transform: scale(1); opacity: 0; } }
+.ripple-button.ripple-button { background: #4338ca; color: white; }

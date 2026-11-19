@@ -1,0 +1,9 @@
+.flip-card { display: block; width: min(280px, 100%); height: 180px; padding: 0; border: 0; background: transparent; perspective: 1000px; touch-action: pan-y; }
+.flip-inner { display: block; position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 600ms cubic-bezier(.4,.2,.2,1); }
+.flip-face { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 22px; border-radius: 14px; backface-visibility: hidden; -webkit-backface-visibility: hidden; color: white; background: #373078; }
+.flip-back { background: #174d48; }
+.flip-face strong { font-size: 22px; }
+.flip-card.flip-card { background: transparent; box-shadow: none; }
+.mini-preview .flip-card { height: 100%; }
+.mini-preview .flip-face { padding: 12px; gap: 8px; font-size: 13px; }
+.mini-preview .flip-face strong { font-size: 18px; }

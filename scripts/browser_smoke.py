@@ -27,13 +27,13 @@ with sync_playwright() as p:
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.on('request', lambda request: external.append(request.url) if not request.url.startswith(BASE) else None)
     page.goto(BASE)
-    expect(page.locator('main a.effect-title')).to_have_count(3)
-    check('Library has exactly three canonical effect entries', page.locator('main a.effect-title').evaluate_all('(links) => links.map(link => link.getAttribute("href"))') == ['/effects/card-tilt-3d', '/effects/typewriter', '/effects/glassmorphism'])
+    expect(page.locator('main a.effect-title')).to_have_count(10)
+    check('Library has exactly ten canonical effect entries', page.locator('main a.effect-title').evaluate_all('(links) => links.map(link => link.getAttribute("href"))') == ['/effects/card-tilt-3d', '/effects/typewriter', '/effects/glassmorphism', '/effects/card-flip', '/effects/spotlight-card', '/effects/magnetic-button', '/effects/ripple-button', '/effects/sliding-fill-button', '/effects/gradient-text-shimmer', '/effects/staggered-text-reveal'])
     for slug in ['card-tilt-3d','typewriter','glassmorphism']:
         page.goto(BASE + '/effects/' + slug)
         expect(page.locator('h1')).to_be_visible()
         check(slug + ' real detail and controls', page.locator('.demo-stage').count() == 1 and page.locator('input[type=range]').count() >= 3)
-        check(slug + ' no unpublished related dead links', page.locator('a[href^="/effects/"]').count() == 0)
+        check(slug + ' no unpublished related dead links', page.locator('a[href^="/effects/"]').evaluate_all('(links) => links.map(a => a.getAttribute("href"))') == {'card-tilt-3d':['/effects/card-flip','/effects/spotlight-card'], 'typewriter':['/effects/gradient-text-shimmer','/effects/staggered-text-reveal'], 'glassmorphism':[]}[slug])
         for lang, label in [('en','English'),('zh','中文')]:
             page.get_by_role('button', name=label, exact=True).click()
             key, value = {'card-tilt-3d':('maxTilt',20),'typewriter':('typingSpeed',100),'glassmorphism':('blur',30)}[slug]
