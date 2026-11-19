@@ -2,7 +2,7 @@
 
 ## Current stage
 
-Stage 1：已获用户“确认并实施”授权，三效果基础闭环已实现；最终检查与交付回执见最新日志，交付后停留等待独立 H6，不开始 Stage 2。
+Stage 1：三效果基础闭环已实现；独立 H6 发现的四类异步复制竞态已按本次授权修复并复测，等待再次独立核验，不开始 Stage 2。旧交付自检未覆盖这些竞态，以下新日志修正当时“无当前阻塞”的结论。
 分支：`stage-1-foundation`；基底为已独立 H6 的 `e51155b01599a79e3573e47be45077339c018f13`。
 环境：指定 effect-lexicon-cloud，checkout `/workspace/effect-lexicon`，origin `https://github.com/Skw03/effect-lexicon.git`。
 沿用已有效解析的环境默认作者/提交者；不新增身份、不记录姓名邮箱。仅提交并正常推送 Stage 1 分支，不改 main/Stage 0、不 PR/合并/部署。
@@ -23,6 +23,25 @@ Stage 0 的 H1 总结与日志作为历史保留。
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 1 — H6 异步复制竞态修复
+
+1. **Summary / 原始 H6 发现**：协调方独立 Chromium H6 报告四类问题：英文复制待完成时切中文，旧成功错误恢复当前“已复制”；blur=16 复制待完成时改 32，旧拒绝后的 legacy 选到当前 32；切语言后旧 API/legacy 皆失败，旧错误与 textarea 焦点抢占；两次未串行复制可能由旧请求最后覆盖新写入。本轮先在原 `a78f90419cae0b2d020ae602879d922904ace918` 实现上用挂起 writeText Promise 重现，再修复，不把旧 smoke 通过当成上述竞态已覆盖。
+2. **Files changed**：仅 `src/components/PromptPanel.tsx`、`src/lib/clipboard.ts`、`scripts/browser_smoke.py`、新增 `scripts/clipboard_regression.py` 与本日志。无依赖/锁文件/lifecycle 变化，无 SPEC、原始需求、数据 schema 或其他交互重构。
+   - PromptPanel 在点击时捕获不可变文本快照和请求版本；语言、参数、effect 变化或卸载时作废版本并清理反馈 timer。只有当前有效请求可以显示成功/失败、启动反馈 timer 或手动选中当前提示词；切回原语言也不会使旧请求重新有效。
+   - clipboard 模块提供应用级 pending 互斥锁及订阅，跨路由卸载保留锁直到原写入结束。pending 时显示“复制中…”和 aria-disabled/aria-busy，仍保留按钮焦点；鼠标及 Enter/Space 重复激活均不启动后续写入，完成后可再次复制。
+   - 原生 API 拒绝后先验证请求是否仍有效，过期请求不做 legacy 写入/选择/焦点副作用。有效 legacy 用独立临时 textarea 承载点击快照，finally 移除并恢复先前焦点/文本选区；全部失败且请求仍有效时，才选中界面当前提示词供手动复制。
+3. **Commands run / evidence**：
+   - 初始 `git status --short --branch` 干净；origin 是指定仓库；本地/远端 Stage 1 均为 a78f904 完整 SHA。完整重读 AGENTS/ROADMAP 与最近五条日志，并核对 SPEC §8、原始需求 E Stage 1/H6；本轮授权继续原 Stage 1 分支、默认 Git 身份。
+   - `python3 scripts/clipboard_regression.py` 修复前 **1/8 通过、7/8 失败**，四个指定竞态全部复现；额外发现 legacy 成功抢焦点、跨路由并发写入、切回原语言后旧反馈复活。修复前结果留于 `/tmp/effect-clipboard-before.json`。
+   - 同一脚本修复后 **8/8 通过**；覆盖指定四例、有效请求 legacy 快照与焦点恢复/临时节点清理、跨详情路由 pending 互斥/迟到 reject、卸载后迟到成功、语言切回版本失效。随后补充同一 serialize 场景的 Enter/Space 激活断言再运行，仍 8/8 通过。结果 `/tmp/effect-clipboard-regression.json`。这些是实际 Chromium 内的受控异步 Promise 测试，不冒称每个受控写入都访问了系统剪贴板。
+   - `python3 scripts/browser_smoke.py` **66/66 通过**。原 66 个检查和断言原样保留，只在首次 nav 后增加 `expect(page.locator('main a')).to_have_count(3)` 等待 React 首次渲染，然后仍严格检查恰好三链接；未放宽数量。正常真实 Clipboard 双语逐字复制、立即拒绝后的 legacy、全部失败选中原文等原行为继续通过。
+   - `npm run typecheck`、`npm run lint`、`npm run test`、`npm run build` 全部返回 0。Vitest 仍 **3 文件、28 测试通过，0 skip/todo**；构建 JS 193.20 kB / gzip 65.63 kB，CSS 11.97 kB / gzip 3.61 kB。使用已有环境 Python Playwright 与 Chromium，没有安装依赖或运行 package lifecycle。
+   - `git diff --check` 通过；package.json/package-lock.json、AGENTS、SPEC、ROADMAP、REQUIREMENTS_SOURCE 对 HEAD 无差异。推送前 ls-remote 再次确认 Stage 1 仍 a78f904、main 仍 dfcff865aa74af520ab52a84b1a5f766156b4570、Stage 0 仍 e51155b01599a79e3573e47be45077339c018f13。
+4. **Acceptance checklist**：PASS 四种 H6 竞态修复、点击快照、过期反馈/回退/焦点抑制、pending 互斥与完成后重试、跨语言/参数/路由/卸载；PASS 原 66 smoke 与四项质量门；PASS 不增加依赖、不改变原功能验收。待另一独立会话复核，不把本轮自检称独立 H6 通过。
+5. **Deviations / limitations**：无范围偏差。已调用的浏览器 Clipboard Promise 不可取消，改变内容后它仍可能完成原点击快照写入，但不会假称当前内容已复制；若浏览器一直不结算该 Promise，复制保持“复制中…”并阻止新写入，直到结算或整页重载，避免通过超时放锁重新引入旧写覆盖新写。期间可选中提示词手动复制。测试浏览器为 Chromium，其他浏览器/物理设备和既有后续阶段边界未新增验证。
+6. **Open questions**：本轮未遇到未解决的验收修复阻塞；其余阶段待决项不变。
+7. **Next step**：默认身份小提交、正常推送原 stage-1-foundation，核验最终远端头和干净工作树；main/Stage 0 保持原 SHA。不 PR、不合并、不部署、不开始 Stage 2，等待独立再次核验。最终提交 SHA 以交付消息及远端为准。
 
 ### 2026-11-19 — Stage 1 — 正常推送回执
 
