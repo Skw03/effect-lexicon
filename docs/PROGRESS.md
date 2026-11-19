@@ -24,6 +24,16 @@ Stage 0 的 H1 总结与日志作为历史保留。
 
 ## Log (newest first)
 
+### 2026-11-19 — Stage 1 — 正常推送回执
+
+1. **Summary**：实现提交 `34ddfa628f2e2401f2d468a1c765d4fff2f49a24` 已正常推送到 origin/stage-1-foundation；先行规则提交 `879d8fd` 包含在历史中。本回执单独小提交，最终分支头以远端和交付消息为准。
+2. **Files changed**：本回执只改 docs/PROGRESS.md，补正 CSS 构建大小；实现文件清单见前条与 Git。
+3. **Commands/results**：`git push -u origin HEAD:refs/heads/stage-1-foundation` 返回 0，新建远端分支；`git ls-remote` 已确认远端任务头等于实现 SHA，main 仍 `dfcff865aa74af520ab52a84b1a5f766156b4570`，Stage 0 仍 `e51155b01599a79e3573e47be45077339c018f13`。推送后 `git status --short --branch` 无改动。默认鉴权成功，无绕过。远端显示的 PR 建议链接未打开、未创建 PR。
+4. **Acceptance**：typecheck/lint/test/build 全部通过，28 个 Vitest、66 个真实 Chromium 检查通过；原文 SHA 不变。回执仅文档更新，不把重复运行应用测试当作必要步骤。
+5. **Deviations**：无新增偏差。触屏为浏览器模拟，物理手机、Lighthouse/axe 未执行，不冒称完成。
+6. **Open questions**：无当前交付阻塞；其余阶段待决项、独立 H6 和后续批准保留。
+7. **Next**：推送本回执并再次核验最终远端头与干净工作树；Stage 1 到此停止，不 PR、合并、部署或开始 Stage 2。
+
 ### 2026-11-19 — Stage 1 — 三效果实现与最终验证
 
 1. **Summary**：完成 strict TypeScript + React 18/Vite 基础、主题与 shell、三条文本 Library、未知路由/slug Not Found、三份双语内容、registry、renderPrompt、详情控件/描述/提示词/复制。Tilt 使用缓存矩形和 rAF 平滑、键盘方向键/Escape、触屏 pan-y、单路径 Auto/Stop；Typewriter 支持逐字/删除/停顿、暂停/重播、非循环遍历三句并保留第三句、离屏暂停；Glass 使用真实 backdrop-filter、四参数与三个静态背景。Stage 1 适用验收通过，尚不是独立 H6 结论。
@@ -34,7 +44,7 @@ Stage 0 的 H1 总结与日志作为历史保留。
    - 最终 `npm run typecheck`、`npm run lint`（max-warnings 0）、`npm run test`、`npm run build` 均返回 0；Vitest **3 文件、28 测试通过，0 skip/todo**：15 提示词、10 内容、3 状态机/路径测试。数值逐 kind 检查边界，boolean/select 不伪造 min/max，覆盖显式/隐式/无单位、正向/反向条件。
    - 首次 Vitest 27/28：浮点路径出现 0.09999999999999998，已在实现钳制 0.1–0.9，原边界测试保留后通过；没有删除或放宽断言。此前 commentary 中预计 29 项不准确，以真实 28 项为准。
    - `npm run dev -- --port 5173` 后云端共享 Chromium 实际打开 Library/Tilt；浏览器 tab API 报 “could not read requirements”，用已提供的共享 Chromium 原生窗口成功查看。随后用环境已有 Python Playwright + `/usr/bin/chromium` 运行 `python3 scripts/browser_smoke.py`：最终 **66 项真实浏览器检查全部通过**，输出 `/tmp/effect-stage1-browser.json`。最初脚本 status 定位匹配到了 output 隐式 status，改为明确复制反馈 p[role=status] 后通过，未改产品验收。
-   - 构建输出 JS 约 192.11 kB、gzip 65.16 kB；CSS 约 11.98 kB，最终精确值见命令输出。`git diff --check` 通过；源档 SHA-256 仍 `634d67c8765b7ec96aea1957d67a91048166ac1f127043a130b87665f20544c8`；AGENTS/ROADMAP/源档对基底无差异。
+   - 构建输出 JS 约 192.11 kB、gzip 65.16 kB；CSS 11.97 kB（gzip 3.61 kB），最终精确值见命令输出。`git diff --check` 通过；源档 SHA-256 仍 `634d67c8765b7ec96aea1957d67a91048166ac1f127043a130b87665f20544c8`；AGENTS/ROADMAP/源档对基底无差异。
 4. **Acceptance checklist / evidence**：
    - PASS：三详情真实渲染；当前参数进入中英文提示词，真实剪贴板内容逐字相等，语言偏好 reload 保留；legacy execCommand 回退与全部复制失败选中原文均实测。
    - PASS：Tilt 鼠标/键盘焦点与 Escape、Auto/Stop/Reset；关闭 glare 同时移除高光与提示词分支；浏览器真实 touchStart/touchMove 模拟拖动倾斜，纵向 swipe 实际改变页面 scrollY，触屏提示与 44px 目标通过。
