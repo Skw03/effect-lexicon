@@ -2,7 +2,7 @@
 
 ## Current stage
 
-Stage 2：独立 H6 与阶段验收已通过；协调方明确批准本轮提交并正常推送 `stage-2-discovery`。不开始 Stage 3。
+Stage 2：独立 H6 与阶段验收已通过，已按协调方授权提交并正常推送 `stage-2-discovery`。实现提交为 `3226efee357f5f338682e9fa6d81df1cbe0cc11d`；本日志回执单独提交，最终分支头见远端及交付消息。不开始 Stage 3。
 基底：`a847ed7a3520ec86ac9d8c60c9a835b87b571767`；已验收候选 patch SHA-256：`1be9c0a45fb69824eefe2f14ca83b410d34ac839db84c8a488ee7cd67226390a`。最终分支头见推送回执。
 环境：指定 effect-lexicon-cloud，checkout `/workspace/effect-lexicon`，唯一 origin `https://github.com/Skw03/effect-lexicon.git`。
 提交前远端 main 仍 `dfcff865aa74af520ab52a84b1a5f766156b4570`，Stage 1 仍指定基底，远端无 Stage 2 分支。不假定 main 已合并 Stage 1。
@@ -23,6 +23,16 @@ Stage 2：独立 H6 与阶段验收已通过；协调方明确批准本轮提交
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 2 — 正常推送回执
+
+1. **Summary**：已验收实现提交 `3226efee357f5f338682e9fa6d81df1cbe0cc11d` 已正常推送 origin/stage-2-discovery。本回执单独小提交，不改产品代码。
+2. **Files changed**：相对上条提交仅 docs/PROGRESS.md；Stage 2 相对 a847ed7 的实际改动仍是原 21 路径。REQUIREMENTS_SOURCE、SPEC、依赖与锁文件保持不变。
+3. **Commands/results**：`git diff --check`、暂存后 diff 检查及非日志 patch 等价核验通过；`git commit -m "feat: complete accepted Stage 2 discovery"` 成功；`git push -u origin HEAD:refs/heads/stage-2-discovery` 返回 0、新建远端分支，无强推。`git ls-remote` 核实 Stage 2 为上述实现 SHA、main 仍 dfcff865aa74af520ab52a84b1a5f766156b4570、Stage 1 仍 a847ed7a3520ec86ac9d8c60c9a835b87b571767；推送后工作树干净。默认身份沿用，未输出姓名邮箱。
+4. **Acceptance**：本轮四项质量门通过；独立 H6 结果见前条，Stage 2 验收通过。仅新增日志回执无需重复功能测试。最终回执推送后再核验分支/main/工作树。
+5. **Deviations**：无；未创建 PR、未合并、未部署、未开始 Stage 3。Git 返回的 PR 建议链接未执行。
+6. **Open questions**：无本轮提交/推送阻塞；PR 检查及合并留给协调方。
+7. **Next step / preview**：本工作者停止。协调方处理后续流程。本地预览：`npm ci --ignore-scripts` 后 `npm run dev -- --port 5173`，访问 http://localhost:5173；构建预览可用 `npm run build` 后 `npm run preview -- --port 4173`，访问 http://localhost:4173。若默认 npm cache 不可写，使用 `--cache /tmp/effect-npm-cache`。
 
 ### 2026-11-19 — Stage 2 — 独立 H6 通过，提交授权与一致性核验
 
