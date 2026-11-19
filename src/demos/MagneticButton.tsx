@@ -11,6 +11,6 @@ export function MagneticButton({ values, virtualPointer, paused = false, reduced
   const length = Math.hypot(dx,dy);
   const scale = target && within ? Math.min(Number(values.strength),14 / (length || 1)) : 0;
   return <div ref={ref} className="magnetic-area" {...handlers}>
-    <button className="magnetic-button" aria-label="磁吸按钮，方向键调整，Escape 复位" style={{ transform: `translate(${dx*scale}px, ${dy*scale}px)`, transition: `transform ${reducedMotion && !virtualPointer ? 0 : target && within ? 100 : 500}ms ${target && within ? 'ease-out' : 'cubic-bezier(.34,1.56,.64,1)'}` }}>靠近一点</button>
+    <button className="magnetic-button" aria-description="磁吸按钮，方向键调整，Escape 复位" style={{ transform: `translate(${dx*scale}px, ${dy*scale}px)`, transition: `transform ${reducedMotion && !virtualPointer ? 0 : target && within ? 100 : 500}ms ${target && within ? 'ease-out' : 'cubic-bezier(.34,1.56,.64,1)'}` }}>靠近一点</button>
   </div>;
 }

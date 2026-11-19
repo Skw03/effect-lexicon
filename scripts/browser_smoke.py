@@ -118,10 +118,13 @@ with sync_playwright() as p:
         for slug in ['card-tilt-3d','typewriter','glassmorphism']:
             page.goto(BASE+'/effects/'+slug)
             check(f'{slug} no page overflow at {width}',page.evaluate('document.documentElement.scrollWidth<=window.innerWidth'))
-    for path in ['/unknown','/effects/no-such-effect','/guide']:
+    for path in ['/unknown','/effects/no-such-effect','/guide/no-such-page']:
         page.goto(BASE+path)
         expect(page.get_by_role('heading',name='找不到这个页面')).to_be_visible()
         check('Not Found '+path)
+    page.goto(BASE+'/guide')
+    expect(page.get_by_role('heading',name='如何向 AI 描述一个动效')).to_be_visible()
+    check('Guide is implemented at its canonical route')
     check('no browser runtime exceptions',not errors)
     check('no external runtime requests',not external)
     reduced=browser.new_context(reduced_motion='reduce',viewport={'width':1280,'height':900})
