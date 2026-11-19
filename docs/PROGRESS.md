@@ -2,7 +2,7 @@
 
 ## Current stage
 
-当前快照（2026-11-19）：`stage-5-independent-review` 已整合三项修复，产品受审提交 `6f596ae62462c1de3b38cb926009079cce1f5c6d`。协调方转交的提交后独立复验确认 EL-IR-001/002/003 均 PASS，可关闭，现记录 CLOSED。总体仍 **CHANGES REQUIRED**：新发现 EL-IR-004（P3，当前文档未同步）本轮修正待独立验收，保持 OPEN。main 仍为 `59a2429fcf190a6b9d3cf48d487f166c518866a9`，候选尚未合并。当前只同步文档并提交推送，不改产品/脚本，不 PR/合并/部署；Stage 6 NOT DUE。证据及版本状态见[矩阵补记](REQUIREMENTS_CHECKLIST.md#rereview-6f596ae)。以下阶段交付段落与旧日志保留为历史快照，不代表当前状态。
+当前快照（2026-11-19）：`stage-5-independent-review` 已完成独立复验，**PASS**；EL-IR-001/002/003/004 均 PASS / CLOSED。产品实测提交 `6f596ae62462c1de3b38cb926009079cce1f5c6d`，文档复验提交 `b0277596dc26a3598a669bb665ddbb055a074ae3`；最终归档仅为评审回执、状态和链接。完整依据见[最终独立报告](reviews/rereview-stage-5-independent.md)及[矩阵补记](REQUIREMENTS_CHECKLIST.md#rereview-6f596ae)。main 仍为 `59a2429fcf190a6b9d3cf48d487f166c518866a9`，候选尚未合并；未创建PR、合并或部署，Stage 6 NOT DUE。真实设备等覆盖限制保留。以下阶段交付段落与旧日志保留为历史快照，不代表当前状态。
 
 Stage 5：独立 H6 与阶段验收已通过，协调方已明确授权提交并正常推送 `stage-5-hardening`。验收基底 `d0f2a1f9b948d2ac1a0132a02a1a44dbdf15ad3d`，受审候选SHA-256 `8170aea9b25f5305e69e7bf02e4821421befe887fc2419de51961956c2d345d7`（79,584 bytes / 19 paths）。本轮仅补充本日志和ACCEPTANCE，代码/测试保持受审字节一致。指定 effect-lexicon-cloud `/workspace/effect-lexicon`；唯一origin `https://github.com/Skw03/effect-lexicon.git`。实际提交/推送结果以交付消息及远端核验为准。不创建PR、不合并、不部署、不进入Stage 6；Library上传仍停止。
 
@@ -24,6 +24,14 @@ Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 5 — EL-IR-004 最终独立复验通过与归档
+
+- **Summary / verdict**：独立审查员在 `b0277596dc26a3598a669bb665ddbb055a074ae3` 验证EL-IR-004最小条件，PASS / CLOSED；连同产品SHA `6f596ae62462c1de3b38cb926009079cce1f5c6d`上已独立通过的001/002/003，当前整体PASS。
+- **Evidence**：与6f596ae仅差三份指定文档；三个源修复SHA对应九路径与整合版本逐字一致；当前进展、查询/筛选证据及结果计数与独立记录吻合；原始要求、基线55条/18效果矩阵和失败报告保留。完整方法、结果及源SHA见[正式报告](reviews/rereview-stage-5-independent.md)。
+- **Files/checks**：本次只归档报告，更新本日志及CHECKLIST收尾状态/链接；精确diff、历史保真、相对链接、公开内容及 `git diff --check`通过。按明确授权不重跑未变产品，继承精确6f596ae的四门/160单测、1169旧Chromium及专项独立证据；不冒称本次重新运行。
+- **Limits/next**：无未关闭当前强制发现；真机、跨浏览器、屏读器等未测限制保留，Stage6仍NOT DUE。正常提交推送评审回执后由协调方处理后续授权流程，本任务不PR、合并或部署。最终归档SHA以Git和交付回执为准。
+
 
 ### 2026-11-19 — Stage 5 — 提交后独立复验与 EL-IR-004 文档修正待验
 
