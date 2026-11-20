@@ -2,6 +2,14 @@
 
 The 2026-11-19 instruction opens Stage 6 development and independent candidate verification only. Stage 7 is not authorized. This runbook is not approval to connect a host, publish a preview, activate workflows, merge into a deploying branch, or deploy. No account, domain, asset license or human read-through is assumed. The Stage 0–5 historical merge authorization remains scoped to those stages.
 
+## Current fixed-host audit — 2026-11-20
+
+**PASS for the tested fixed preview only; full Stage 6/H2 remains BLOCKED.** Product `babdf63d203fd75a0decfd91f2f5848c00e54874` was independently verified at https://afcd625d.effect-lexicon-preview.pages.dev. All 27 publicly served files matched its clean 29-file Pages build before and after browser testing; manifest digest `0c86814501c185c97101fc361024dc864e4596891404b3d3ab75f923101e6897`. The branch alias was not used to close this gate. [Full audit](reviews/stage-6-live-preview-afcd625d.md): 58 redirects, 162 header assertions per artifact pass, 302 UI, 92 editorial and 24 supplemental checks passed; ED-001–003 passed on this host. Typecheck/lint, 160 Vitest + 69 Node tests and both builds passed during that audit.
+
+The owner-supplied ZIP checksum is recorded separately from independently verified served bytes. Full Cloudflare deployment ID and dashboard **Preview** metadata / production inventory remain unverified. [Owner reading](HUMAN_REVIEW.md) is **0/18**, with all sign-off fields untouched. Real Actions, final branding/domain/assets/terms, production smoke and explicit production release approval remain pending; production, merge and tag are **not approved**. No new deployment, settings change or Stage 7 work is authorized. Chromium used a disclosed proxy certificate exception; curl verified certificates normally. No new hosted Lighthouse/axe, real-device TLS, other browser-engine or screen-reader coverage is claimed.
+
+The following dated source-only and older-host records are historical; the current fixed-host result above supersedes their pending-hosted statements without changing their original evidence.
+
 ## Editorial source re-review — 2026-11-19
 
 Product `babdf63d203fd75a0decfd91f2f5848c00e54874` passed independent local post-commit review; ED-001–003 are CLOSED for source only. See [exact review record](reviews/rereview-stage-6-editorial-babdf63.md) for actual reruns, inherited checks and limits. The refreshed artifact is prepared locally from that exact clean source, with a separate ZIP receipt; it has not been transferred or deployed. The existing d7f5ddba Preview below remains the older 8df5b37 product. Updated hosted verification and owner sign-off are pending; full Stage 6/H2 remains BLOCKED. Documentation receipt commits do not change the product source used for this artifact.

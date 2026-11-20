@@ -2,6 +2,16 @@
 
 ## Current stage
 
+2026-11-20 固定主机独立审查归档：产品 `babdf63d203fd75a0decfd91f2f5848c00e54874` 在 [afcd625d Preview](https://afcd625d.effect-lexicon-preview.pages.dev) 的实测技术范围 **PASS**，ED-001–003 托管复验通过。完整Stage 6/H2仍 **BLOCKED**；Cloudflare完整deployment ID及dashboard Preview元数据未核验，owner阅读 **0/18**，生产、合并及tag仍未批准。以下旧快照保留历史状态，以本条及[新报告](reviews/stage-6-live-preview-afcd625d.md)为当前托管证据。
+
+1. Summary：归档已完成的独立固定主机审查；可变别名不作为本次门禁依据。
+2. Files changed：仅新审查报告、RELEASE、PROGRESS、HUMAN_REVIEW；18个清单链接改为固定afcd625d，全部签字栏保持未填写。原始要求及历史审查不改。
+3. Commands/results：原审查四门及两种构建通过，160 Vitest＋69 Node；29产物中27公开文件在浏览器测试前后逐字节一致，摘要 `0c86814501c185c97101fc361024dc864e4596891404b3d3ab75f923101e6897`；58 redirects、每轮162 headers、302 UI、92 editorial、24补充断言通过。原安装cache错误与成功重跑、Chromium证书例外分别保留。本次归档另验diff whitespace、18 slug/link对应、未签字字段、仅四份文档及产品字节不变；不将归档检查冒称新增hosted重跑。
+4. Acceptance：ED-001中间帧采样最低7.688:1（1822实心字形像素）；ED-002减少动态静态反馈与有限Auto；ED-003起始不透明度和六次真实双语复制通过。源码/固定host与ZIP用户回执区分，未重新取得ZIP哈希。
+5. Deviations / limits：未发布原始截图/日志或私有环境路径；无新Lighthouse/axe、真机、其他浏览器或屏读器结论；裁切抗锯齿边界和代理证书限制见报告。无产品改动。
+6. Open questions：完整deployment ID、Preview dashboard元数据及生产库存待核验；owner 18条阅读、品牌/域名/素材/条款、真实Actions和最终生产门仍待完成。
+7. Next step：按本轮授权仅提交并正常推送stage-6-pages-preview文档归档，核验远端完整SHA；不部署、不改设置、不合并或tag，不进入Stage 7。提交/推送回执单独返回，避免自引用。
+
 2026-11-19 编辑修复精确提交复验归档：产品 `babdf63d203fd75a0decfd91f2f5848c00e54874` 已独立本地 **PASS**，ED-001/002/003 **CLOSED，仅源码范围**。[复验记录与来源](reviews/rereview-stage-6-editorial-babdf63.md)区分提交后实跑（四门、两种构建、92回归、74独立观察）与相同补丁的提交前旧套件，不将继承证据冒称重跑。下列“未提交/OPEN”保留为当时状态。d7f5ddba仍是旧8df5b37产品；新托管验证及owner18项签字未完成，完整Stage6/H2仍BLOCKED。
 
 本轮摘要：仅新增复验档案并同步PROGRESS、RELEASE及人工清单状态；不改产品文件或勾选人工项。按授权仅docs-only提交/正常推送本分支；从babdf63干净检出运行`npm ci --ignore-scripts`与`npm run build:pages-preview`，本地准备29静态文件ZIP和收据，检查noindex、文件白名单、摘要及解压逐字节一致性，精确结果由交付回执绑定。文档检查包含diff --check、链接和产品文件未变；不重跑未变源码的全部审查。无规范偏差/新建议；无Library或其他上传、部署、PR/merge/tag/CI激活。下一步由SUN协调独立托管验证和获准的预览交接；Stage7未授权。
