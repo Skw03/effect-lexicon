@@ -115,3 +115,20 @@
 | FUTURE-01/02/03 | NOT DUE | Stage 6及以后未授权；预渲染/JS-off/hydration和生产发布仍属未来门禁。 |
 
 未受三项修复影响的其他条目沿用上文绑定旧基线的独立证据及本次旧回归结果，不把本补记当作所有硬件、所有参数组合的新全量认证。**最终总体 PASS；EL-IR-001/002/003/004 均 PASS / CLOSED。** 产品依据6f596ae独立实测，文档依据b027759独立复核；[正式报告](reviews/rereview-stage-5-independent.md)说明范围和限制。 main 尚未合并本候选，本轮不 PR、合并或部署。
+
+## Stage 6 开发候选范围补记（2026-11-19）
+
+历史55条矩阵及独立报告保留，不由实施者改签PASS。新明确授权使 FUTURE-01 与 FUTURE-02 进入 Stage 6 适用范围；完整验收目前 **BLOCKED**：provider/owner输入、真实预览/Actions、独立H6和生产/人类内容门尚缺。已实现的本地候选和实跑证据见 [PROGRESS](PROGRESS.md) 与 [RELEASE](RELEASE.md)，不是独立通过结论。FUTURE-03（Stage 7+）仍 NOT DUE。已有Stage 0–5范围内的审查与合并授权不撤回、不扩大。
+
+### Stage 6 四项修复候选 — 待复验
+
+独立审查针对旧完整patch `a8d5fe13efcbdc1e61a06e84013cfab544285d7b7d70479f3a6890aa0a352fa1` 签发 CHANGES REQUIRED；以下均保持 OPEN，实施者修复/自检不是关闭依据。
+
+| ID | 严重性 | 本次修复范围 | 状态与独立验收条件 |
+| --- | --- | --- | --- |
+| S6-IR-001 | P2 | Vite有效配置统一解析、校验、冻结并提供给两bundle/资产检查 | OPEN；独立验证所有env文件、mode/进程优先级、非法值拒绝及实际HTML/client一致 |
+| S6-IR-002 | P2 | production要求HTTPS命名域；拒绝IP、本地/保留/示例及已知provider preview域 | OPEN；独立验证地址类别、合法配置、普通loopback审计不回退；所有owner批准仍单独必需 |
+| S6-IR-003 | P2 | 共享路径规范化，已知别名308到canonical并保留query，未知404 | OPEN；独立验证20路由/别名/未知、JS开关、刷新、metadata与hydration一致及history |
+| S6-IR-004 | P3 | README当前工作流、已实现能力与待发布门同步 | OPEN；独立检查不再把历史Stage5状态作为当前状态，原始档案/既有授权/owner阻塞保留 |
+
+完整Stage6托管、Actions、owner输入/终审、生产发布与烟测继续BLOCKED；Stage7仍NOT DUE。

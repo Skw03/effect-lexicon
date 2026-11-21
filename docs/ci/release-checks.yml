@@ -1,0 +1,4 @@
+# Historical inert-template location. The 2026-11-21 closeout authorization
+# permits the PR-only check candidate in .github/workflows/release-checks.yml.
+# No push/deploy trigger, secrets or write permissions. Actual PR execution
+# and its exact tested SHA/tree must be observed before owner merge.

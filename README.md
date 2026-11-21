@@ -1,6 +1,6 @@
-# 动效词典 Effect Lexicon
+# 动效小抄 / Motion Cuebook
 
-静态中英双语 UI 效果词典：18 个真实演示、8 类内容、中文/英文搜索与筛选、参数驱动的双语提示词，以及 `/guide` 描述指南。开发候选与逐项实测见 [验收报告](docs/ACCEPTANCE.md)。Stage 5 等待独立 H6；本仓库当前没有生产部署流水线。
+18 个真实演示、双语检索和参数化提示词。Stage 6 收尾候选待新独立 H6 与真实 PR CI；尚未生产发布。owner 已报告完成旧产品 babdf63 的18词条审阅，原效果内容保持字节不变。生产站名与 0BSD / 独立内容条款已获批准，本轮明确不包含 favicon 或分享图。见 [许可范围](LICENSE_SCOPE.md)、[发布顺序与剩余门](docs/RELEASE.md) 和 [当前进度](docs/PROGRESS.md)。本仓库不配置部署触发。
 
 ## 安装、运行和验证
 
@@ -14,7 +14,7 @@ npm run typecheck
 npm run lint
 npm run test
 npm run build
-npm run preview -- --port 4173
+PORT=4173 npm run preview
 ```
 
 开发访问 `http://127.0.0.1:5173`，生产构建本地预览访问 `http://127.0.0.1:4173`。Vite 使用 esbuild 的可选平台二进制；若缺失，先诊断安装环境，不能擅自开启 lifecycle 脚本。没有运行时外网请求、第三方字体、动画库或后端。`dist/` 不提交。
@@ -36,12 +36,12 @@ python3 scripts/stage5_add_effect_dryrun.py
 
 脚本不下载工具。实际 Chromium 覆盖鼠标、真实 Tab/键盘、CDP 触摸模拟、组合输入、复制、参数、减少动态、离屏、预算与布局；不能替代物理手机、Safari/Firefox 或屏幕阅读器。结果写入 `/tmp`。旧脚本使用开发模块构造隔离夹具，所以保留 5173 开发服务；Stage 5 可通过 `STAGE5_BASE` 改为构建预览地址。
 
-真实审计工具独立于产品依赖，固定安装在仓库外，安装期间禁用脚本：
+以下保留Stage 5 accessibility审计复跑命令；Stage 6完整四类别门须使用文末链接的发布手册和Lighthouse runner。真实审计工具独立于产品依赖，固定安装在仓库外，安装期间禁用脚本：
 
 ```sh
 mkdir -p /tmp/effect-stage5-audit
 npm install --prefix /tmp/effect-stage5-audit --ignore-scripts --save-exact --cache /tmp/effect-npm-cache lighthouse@12.8.2 axe-core@4.10.3
-# 先 npm run build，再启动 npm run preview -- --port 4173
+# 先 npm run build，再启动 PORT=4173 npm run preview
 python3 scripts/stage5_audit.py
 CHROME_PATH=/usr/bin/chromium node /tmp/effect-stage5-audit/node_modules/lighthouse/cli/index.js http://127.0.0.1:4173/ --only-categories=accessibility --disable-full-page-screenshot --chrome-flags='--headless --no-sandbox' --output=json --output-path=/tmp/effect-stage5-audit/reports/lighthouse-library.json
 CHROME_PATH=/usr/bin/chromium node /tmp/effect-stage5-audit/node_modules/lighthouse/cli/index.js http://127.0.0.1:4173/effects/card-tilt-3d --only-categories=accessibility --disable-full-page-screenshot --chrome-flags='--headless --no-sandbox' --output=json --output-path=/tmp/effect-stage5-audit/reports/lighthouse-tilt.json
@@ -53,9 +53,9 @@ CHROME_PATH=/usr/bin/chromium node /tmp/effect-stage5-audit/node_modules/lightho
 
 构建生成 `dist/`，可由静态 HTTP 服务提供，无后端或运行时外部服务；“离线”指构建后在本地 HTTP 服务使用，不承诺首次断网打开或 `file://` 可用。没有 Service Worker。
 
-未来获准发布时：选择宿主及基础路径，运行完整检查并构建；将 `dist/` 作为静态文件根目录，设置资源 MIME/缓存策略；为 `/effects/:slug`、`/guide` 配置相应预渲染文件或 SPA 回退；在独立预览地址验证直接打开、刷新、未知路由、资源路径与回滚，再经人类单独明确生产放行后发布。当前 Vite preview 的回退不能证明任意生产宿主都配置正确。SPA 回退的未知 URL 可能返回 HTTP 200；Stage 6 要处理真正的 404。
+当前 `npm run preview` 使用本地静态服务器提供20个预渲染路由、CSP/缓存头和真实404；已知路径别名308跳转到canonical路径，未知路径不使用Gallery回退。未来宿主必须实现并验证同一合同；本地模拟不证明实际托管配置、HTTPS或回滚已完成。
 
-当前仍为客户端 SPA，关闭 JavaScript 时详情没有真实正文。Stage 6 的预渲染、metadata、sitemap/robots、主机重写、CI/部署/DNS/回滚均未实现。尤其要处理 render 期间读 `window.matchMedia`、外部 store 的 server snapshot 与语言/减少动态 hydration 一致性；详见验收报告的待执行清单。不能把合并直接绑定为无意的生产发布。
+当前构建含JS关闭时可读的正文，客户端hydrate恢复交互；metadata、sitemap/robots、偏好初始化和demo边界已实现。无origin时刻意noindex/无canonical；明确配置后生成对应URL。CI模板未激活，provider配置、外部预览、Actions、DNS/HTTPS/回滚实证及owner输入仍BLOCKED。历史Stage5清单保留在验收报告，不能当作当前实现状态或生产放行。
 
 ## 经授权增加效果的五步维护流程
 
@@ -69,4 +69,14 @@ Stage 5 正式内容固定为 18 项。第 19 项仅在仓库外临时副本干�
 
 提示词使用 `{{key}}`、`{{#booleanKey}}…{{/booleanKey}}`、`{{^booleanKey}}…{{/booleanKey}}`；数值单位只出现一次。写明作用对象、触发、可见变化、建议数值/真实运动信息、实现约束，结尾含 reduced-motion、键盘、触屏兜底。静态样式明确无触发/无动画，不编造时长。名称可能不唯一时说清边界，不冒称官方术语或未经验证的性能/兼容性。参数默认值按 number/boolean/select 分别校验，全部模板引用（含条件内）必须为已声明键。
 
-先读 `AGENTS.md`、`docs/SPEC.md`、`docs/ROADMAP.md`、`docs/PROGRESS.md`；`docs/REQUIREMENTS_SOURCE.md` 原文保留。当前工作停在 Stage 5 未提交待审候选，提交推送需协调方独立 H6 后明确指令；Stage 6 需新的授权及单独生产放行。
+先读 `AGENTS.md`、`docs/SPEC.md`、`docs/ROADMAP.md`、`docs/PROGRESS.md`；`docs/REQUIREMENTS_SOURCE.md` 原文保留。当前仅获准 Cloudflare Pages 预览产物的本地准备与候选验证；本轮保持未提交，不推送或部署，新增候选待独立复验。后续动作仍按协调方明确指令，生产另由owner放行；Stage 7未授权。
+
+## Stage 6 release candidate (not deployed)
+
+Cloudflare Pages preview-only preparation is now authorized; account registered, project/preview target pending. `npm run build:pages-preview` emits flat HTML plus `_headers`/`_redirects`, noindex and the approved GitHub Issues feedback link. It does not deploy. Use the [Pages runbook](docs/RELEASE.md) and [uncompleted human review checklist](docs/HUMAN_REVIEW.md). The new provider candidate remains uncommitted and awaits independent review; the prior provider-independent report remains historical evidence.
+
+`npm run build` now prerenders Gallery, Guide and all 18 published details; `npm run preview` serves `dist` locally with CSP/cache headers and true 404. No runtime backend or new product dependency. Default builds deliberately omit a production canonical origin and are noindex. Use only explicit approved site configuration for a public target; never publish a loopback-test build.
+
+See [release runbook](docs/RELEASE.md) for build variables, owner inputs, local verification, inert CI template, security rationale and release/rollback gates. [Stage 6 browser checks](scripts/stage6_regression.py) test the built site; [Lighthouse runner](scripts/lighthouse.mjs) enforces all four H2 thresholds on two pages using a pinned external test-tool installation. Historical dev-only discovery fixtures still require `npm run dev`.
+
+Stage 6 development is authorized, but external preview/host integration, Actions activation, production and tags remain held. No Stage 7 work is included.

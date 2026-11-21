@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useLocation, useNavigationType, useSearchParams } from 'react-router-dom';
 import { publishedEffects } from '../content';
 import { discover } from '../search';
@@ -9,7 +9,8 @@ import { FilterBar } from '../components/FilterBar';
 import { EffectCard } from '../components/EffectCard';
 export function Library() {
   const [params, setParams] = useSearchParams();
-  const state = readState(params);
+  const query = useSyncExternalStore(() => () => {}, () => params.toString(), () => '');
+  const state = readState(new URLSearchParams(query));
   const location = useLocation();
   const navigationType = useNavigationType();
   const [input, setInput] = useState(state.q);

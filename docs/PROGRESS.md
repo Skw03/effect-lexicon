@@ -2,6 +2,68 @@
 
 ## Current stage
 
+2026-11-21 Stage6 closeout未提交候选：基底 `f05a860114f317c6ba960d4ad48b4bf2510dec6d`，隔离本地 `stage-6-closeout`，原分支工作树保留。owner已选动效小抄 / Motion Cuebook、Cloudflare Pages生产与候选origin https://motioncuebook.com（权属/DNS未核验），明确省略favicon/分享图；批准原创代码0BSD与独立双语内容授权（品牌/第三方除外）。不修改原始要求；本轮批准的例外与发布顺序见[RELEASE](RELEASE.md)。
+
+owner于11月21回复“已审查”，整体18/18阅读报告绑定babdf63及afcd625d，而非文档SHA；[人工记录](HUMAN_REVIEW.md)保留无逐行证据这一边界。[固定主机审查](reviews/stage-6-live-preview-afcd625d.md)仍仅覆盖旧产品，未重写。新增构建指纹门禁止静默改变词条、演示和提示词渲染源。名称/页脚/元数据/许可与生产配置变化由本轮H6另验。
+
+1. Summary：仅站名/批准条款、无图发布配置、PR-only CI和交接文档；无新效果、依赖或部署。
+2. Files：运行时品牌配置与页脚、构建/校验/本地服务、内容指纹与回归、PR workflow、LICENSE/范围、README/CHANGELOG/RELEASE/人工记录/本进度；精确路径由候选diff列明。
+3. Commands/results：typecheck/lint通过；160 Vitest＋73 Node全过（含3条production CLI缺失/禁用输入负例另实跑、内容改动拒绝与无图门测试）；普通、Pages Preview、Pages production构建通过。生产模式本地closeout脚本514、Stage6脚本441通过；dev布局518和browser smoke67通过；axe4.10.3共21状态零违规。Lighthouse12.8.2真实mobile：Gallery 91/100/100/100，Tilt92/100/100/100（performance/accessibility/best-practices/SEO），全部达门槛。最初lint缺少node:URL导入已修复；布局首次发现新0BSD链接不足44px，最小footer宽度修正后原518断言通过。Preview服务首次切换端口占用，使用独立4277端口验证；不当作产品失败或hosted结果。Preview本地closeout脚本另514项通过（noindex/空sitemap/JS开关）；生产与预览各30文件指纹见最终交付回执。所有浏览器结果均为本地Chromium，不是Cloudflare或Actions运行。
+4. Acceptance：未提交候选，fresh H6和真实PR CI待完成；只本地验证，不冒称已托管或生产通过。
+5. Deviations：按owner明确省略H2 favicon/share image，保留无图manifest和文本元信息；owner部署顺序替代自动main发布。原始档案与历史验收不改。
+6. Open questions：域名/账户/生产目标、TLS、Actions实跑、merge后main同输入产物比对、owner部署、独立生产烟测、最终tag与Search Console仍待完成。
+7. Next step：SUN协调新独立H6，修复后再授权提交/PR；本轮不提交/推送/上传/改设置/部署/tag，Stage7未开放。
+
+2026-11-20 固定主机独立审查归档：产品 `babdf63d203fd75a0decfd91f2f5848c00e54874` 在 [afcd625d Preview](https://afcd625d.effect-lexicon-preview.pages.dev) 的实测技术范围 **PASS**，ED-001–003 托管复验通过。完整Stage 6/H2仍 **BLOCKED**；Cloudflare完整deployment ID及dashboard Preview元数据未核验，owner阅读 **0/18**，生产、合并及tag仍未批准。以下旧快照保留历史状态，以本条及[新报告](reviews/stage-6-live-preview-afcd625d.md)为当前托管证据。
+
+1. Summary：归档已完成的独立固定主机审查；可变别名不作为本次门禁依据。
+2. Files changed：仅新审查报告、RELEASE、PROGRESS、HUMAN_REVIEW；18个清单链接改为固定afcd625d，全部签字栏保持未填写。原始要求及历史审查不改。
+3. Commands/results：原审查四门及两种构建通过，160 Vitest＋69 Node；29产物中27公开文件在浏览器测试前后逐字节一致，摘要 `0c86814501c185c97101fc361024dc864e4596891404b3d3ab75f923101e6897`；58 redirects、每轮162 headers、302 UI、92 editorial、24补充断言通过。原安装cache错误与成功重跑、Chromium证书例外分别保留。本次归档另验diff whitespace、18 slug/link对应、未签字字段、仅四份文档及产品字节不变；不将归档检查冒称新增hosted重跑。
+4. Acceptance：ED-001中间帧采样最低7.688:1（1822实心字形像素）；ED-002减少动态静态反馈与有限Auto；ED-003起始不透明度和六次真实双语复制通过。源码/固定host与ZIP用户回执区分，未重新取得ZIP哈希。
+5. Deviations / limits：未发布原始截图/日志或私有环境路径；无新Lighthouse/axe、真机、其他浏览器或屏读器结论；裁切抗锯齿边界和代理证书限制见报告。无产品改动。
+6. Open questions：完整deployment ID、Preview dashboard元数据及生产库存待核验；owner 18条阅读、品牌/域名/素材/条款、真实Actions和最终生产门仍待完成。
+7. Next step：按本轮授权仅提交并正常推送stage-6-pages-preview文档归档，核验远端完整SHA；不部署、不改设置、不合并或tag，不进入Stage 7。提交/推送回执单独返回，避免自引用。
+
+2026-11-19 编辑修复精确提交复验归档：产品 `babdf63d203fd75a0decfd91f2f5848c00e54874` 已独立本地 **PASS**，ED-001/002/003 **CLOSED，仅源码范围**。[复验记录与来源](reviews/rereview-stage-6-editorial-babdf63.md)区分提交后实跑（四门、两种构建、92回归、74独立观察）与相同补丁的提交前旧套件，不将继承证据冒称重跑。下列“未提交/OPEN”保留为当时状态。d7f5ddba仍是旧8df5b37产品；新托管验证及owner18项签字未完成，完整Stage6/H2仍BLOCKED。
+
+本轮摘要：仅新增复验档案并同步PROGRESS、RELEASE及人工清单状态；不改产品文件或勾选人工项。按授权仅docs-only提交/正常推送本分支；从babdf63干净检出运行`npm ci --ignore-scripts`与`npm run build:pages-preview`，本地准备29静态文件ZIP和收据，检查noindex、文件白名单、摘要及解压逐字节一致性，精确结果由交付回执绑定。文档检查包含diff --check、链接和产品文件未变；不重跑未变源码的全部审查。无规范偏差/新建议；无Library或其他上传、部署、PR/merge/tag/CI激活。下一步由SUN协调独立托管验证和获准的预览交接；Stage7未授权。
+
+2026-11-19 ED-001–003 修复候选（未提交）：基底 `9f7d15d55b31cab733055ed11e1d6d6c6b4e4ec0`，分支 `stage-6-pages-preview`。三项均 **OPEN，待独立复验及后续托管预览验证**；当前不可变预览仍为旧产品 `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5`，未部署本候选。下方旧技术 PASS 是当时范围的历史记录，不关闭本次新发现。
+
+来源：独立 discovery 任务 `6aff3300-d13c-8191-b760-5874d3d480d9`，轮次 `01a1f4ed-e16a-7375-87ff-2c903c04a755`；测试目标为 [d7f5ddba Preview](https://d7f5ddba.effect-lexicon-preview.pages.dev)，此前[技术审查档案](reviews/stage-6-live-preview-d7f5ddba.md)保持原样。
+
+| 缺陷 / 严重性 | 修复与复验条件 | 当前状态 |
+| --- | --- | --- |
+| ED-001 / P2 | 滑动填充在填色到达前立即变白，造成白底白字。改为裁切填色层与白字等量反向平移，底层靛蓝字不动，副本 aria-hidden；验证进出、中断、参数端点、键盘/触屏、减少动态及双语复制。 | OPEN；实施者自检不等于独立关闭 |
+| ED-002 / P3 | 倾斜卡片减少动态时缺少承诺的静态反馈。增加瞬时内描边/阴影，保留焦点、触屏取消、暂停及显式 Auto 路径。 | OPEN；待独立复验 |
+| ED-003 / P3 | Ripple 将 opacity 称为“起始透明度”。改为“起始不透明度”并同步相关解释；数值及双语提示词行为不变。 | OPEN；待独立复验 |
+
+1. Summary：只修上述三项及人工清单的过时预览说明，不增加效果或发布能力。
+2. Files changed：`SlidingFillButton.tsx/.css`、`CardTilt3d.tsx/.css`、两份对应内容文件（sliding-fill-button、ripple-button）、`scripts/editorial_regression.py`、`docs/HUMAN_REVIEW.md` 与本进度。清单18条均链接旧不可变预览，均未勾选；保留审阅者、日期、精确候选等填写要求。
+3. Commands/results：`npm run typecheck`、`npm run lint`、`npm test`（160 Vitest＋69 Node）、`npm run build`、`npm run build:pages-preview` 通过。Chromium：`stage3_regression.py` 142、`browser_smoke.py` 67、`clipboard_regression.py` 8、`stage5_regression.py` 518、本地生产模式 `stage6_regression.py` 440 全通过；`stage5_audit.py` 使用 axe 4.10.3，21状态零违规。新 `editorial_regression.py` 在dev与本地生产模式各92项通过，分别检查54张中间帧。新脚本首次在标签同时含数值的严格文本断言处失败，修正为验证标签前缀后原像素/交互断言完整重跑通过；未改既有测试。未重跑 Lighthouse、真实设备或外部托管；不继承为本候选新成绩。
+4. Acceptance：针对性脚本覆盖实际 enter/exit、可访问名称、动画中断、直接操作与真实复制；像素检查使用暂停的真实 CSS transition 时钟，对比白底/靛蓝填色上的实心字形，排除裁切边缘2px，不把它称为全设备对比度认证。截图仅本地保留。独立 H6 和新 hosted 验证仍未完成。
+5. Deviations：无新依赖、schema 或规范修改；仅动画 transform。依 SPEC §9，减少动态的直接操作无动画，明确按下 Auto 仍运行一次有限演示，不删除手动演示能力。
+6. Open questions：完整 Stage6/H2 继续 BLOCKED；owner 18词条人审、品牌/域名/素材/条款、真实 Actions 与生产验证和批准仍待完成。无新增规范建议。
+7. Next step：交精确未提交补丁给独立审查员；复验及另行授权前不提交、推送、上传、更新预览或进入 Stage7。
+
+2026-11-19 线上Preview独立审查归档：产品源 `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5`，不可变预览 `https://d7f5ddba.effect-lexicon-preview.pages.dev`，独立结论仅本次Preview范围PASS，无新增必修产品缺陷；完整Stage6/H2仍BLOCKED。[线上报告及来源](reviews/stage-6-live-preview-d7f5ddba.md)记录27/27文件一致、全部20路由、58路由变体、135响应头/noindex、434 hosted子集及异常/未测限制。生产主机HTTP404只证明该次响应，不证明dashboard库存。下列“真实Preview未验证”等段落保留为当时历史状态。本轮只获准文档归档并推送本分支，不激活CI、不合并或发布。
+
+2026-11-19 Pages精确提交独立复验与归档：`stage-6-pages-preview` 产品SHA `8df5b37ebfd562c47444f6eba22e10f65bf4aaf5` 的本地preview-only准备 **PASS**；真实Preview、CI及完整Stage6/H2仍 **BLOCKED**。实跑与未重跑范围、初审产物比对、两项非阻断措辞澄清见[独立精确复验报告](reviews/rereview-pages-8df5b37.md)。用户正在准备空Direct Upload项目，尚未核实完成；未登录、建项目或上传Cloudflare。此次仅归档报告和本状态/链接，无技术/资产/发布配置变化，不重跑未变产品。后续实际upload须另获授权，并绑定8df产品的相同技术产物；Cloudflare部署branch label不决定Git源SHA。原“未提交”等措辞保留为冻结时历史，由阶段记录与本报告覆盖。未PR、合并、tag、部署或激活集成；Stage7未授权。归档提交SHA以Git和回执为准。
+
+2026-11-19 Pages候选保存：精确16路径补丁 `1652c6b3e9d80cadd313f855724df37cb0ac95f3f00f6590db20244df0762eea` 已由全新独立审查员完成本地技术范围PASS，完整H2仍BLOCKED。协调方现授权仅提交并正常推送新分支 `stage-6-pages-preview`，受审基底 `edf14444c3ebfdf2bda284116897881c1552e60c`。本保存提交包括受审技术文件，以及新增[独立归档](reviews/stage-6-pages-preview.md)和本进度补记；精确SHA/推送结果以Git与交付回执为准，随后独立绑定提交。README、RELEASE、REVIEW_POLICY及下列日志中的“未提交/待独立审查”保留为冻结候选当时状态，由本段取代，不代表保存后的现状。只获准保存，不获准登录、创建项目、上传、部署、PR/tag或集成激活。账号已注册、项目未建；Stage7未授权。
+
+2026-11-19 Cloudflare预览准备：用户已选Cloudflare Pages（仅preview）及GitHub Issues反馈，账号已注册；Pages项目/目标未确认。核实远端 `stage-6-launch` 为 `edf14444c3ebfdf2bda284116897881c1552e60c`、main为 `0dba59fb0a833d40f8e54da430f199c6ebe58dbc` 后，另建隔离本地 `stage-6-pages-preview` 工作分支，保留原工作树及stage-6-launch引用。本轮只准备其未提交后继候选；不提交/推送/PR/tag/上传、启用Actions/集成、创建项目或部署。新增Pages适配与404水合需独立复验；下列供应商无关PASS仍只绑定旧SHA。完整Stage 6 / H2继续BLOCKED，Stage7未授权。
+
+2026-11-19 最终独立复验：产品实测提交 `6cc71919b6abb6212f2d1357278a6d1dd9380878`，文档修复复验提交 `d3d09ccd53def8d4dabb8d05221c31c870bf9b68`。S6-IR-001/002/003/004 均 PASS / CLOSED；当前供应商无关候选独立 **PASS**，完整 Stage 6 / H2 仍 **BLOCKED**。完整独立实测、H2矩阵、历史004复现及材料限制见[最终独立报告](reviews/rereview-stage-6-6cc7191.md)。本轮只归档报告与本状态/链接，精确diff确认无产品或测试变更；产品四门/浏览器证据继承上述已实测SHA，不冒称本轮重跑。宿主/Actions/人工门另待授权和实证，未PR、merge、tag、部署或激活集成，Stage7未授权。最终归档SHA以Git及交付回执为准；以下记录保留各自当时状态。
+
+2026-11-19 当前状态：产品候选已提交并推送至 `stage-6-launch`，独立实测提交为 `6cc71919b6abb6212f2d1357278a6d1dd9380878`。协调方转交的独立结果确认 S6-IR-001/002/003 PASS / CLOSED；仅004文档状态修正仍OPEN，待文档提交的独立复验绑定新SHA。完整Stage 6 / H2继续BLOCKED，Stage 7未授权。本轮仅获准最小文档修正并正常提交推送同分支。下列保存授权、修复回合与旧快照均为当时状态，不代表当前未提交或四项仍OPEN。
+
+2026-11-19 保存授权：修正版43路径候选已获原独立审查员本地技术范围PASS，完整H2继续BLOCKED；S6-IR-001～004仍OPEN，待精确提交独立复验。协调方现明确授权仅提交并正常推送stage-6-launch，不PR/tag/部署或激活集成。安全归档见[Stage 6本地候选独立审查摘要](reviews/stage-6-local-candidate.md)。除该摘要及本进度链接/状态外，代码、测试与配置保持受审字节；后续历史记录按其当时状态保留。
+
+2026-11-19 修复回合：精确候选 `a8d5fe13efcbdc1e61a06e84013cfab544285d7b7d70479f3a6890aa0a352fa1` 已由不继承实现会话的独立原生审查员判定 **CHANGES REQUIRED**（供应商无关候选）；完整发布 **BLOCKED**。S6-IR-001/002/003（P2）及004（P3）全部 **OPEN**。本轮明确授权修复后保持未提交并交回独立复验；不预写CLOSED、不提交/推送/tag/部署。以下原候选自检是历史证据，不覆盖这次独立发现。
+
+当前 Stage 6 快照（2026-11-19）：用户明确“启动Stage 6 然后完成Stage 6再执行一遍刚刚那样的审查”，协调方限定为开发、构建测试与独立候选审查。`origin/main` 实测 `0dba59fb0a833d40f8e54da430f199c6ebe58dbc`（PR #5，Stage 0–5 PASS）；在干净隔离 `/workspace/effect-lexicon-stage-6` 的 `stage-6-launch` 工作。原 `/workspace/effect-lexicon` 的 `work` 保留。当前未提交、未推送、未tag、未PR/合并/上传/部署；未启用Actions或生产集成。**Stage 6 未完成，独立H6及宿主/owner门待满足；Stage 7未授权。** 下列旧快照保留为历史，不代表当前远端或范围。
+
 当前快照（2026-11-19）：`stage-5-independent-review` 已完成独立复验，**PASS**；EL-IR-001/002/003/004 均 PASS / CLOSED。产品实测提交 `6f596ae62462c1de3b38cb926009079cce1f5c6d`，文档复验提交 `b0277596dc26a3598a669bb665ddbb055a074ae3`；最终归档仅为评审回执、状态和链接。完整依据见[最终独立报告](reviews/rereview-stage-5-independent.md)及[矩阵补记](REQUIREMENTS_CHECKLIST.md#rereview-6f596ae)。main 仍为 `59a2429fcf190a6b9d3cf48d487f166c518866a9`，候选尚未合并；未创建PR、合并或部署，Stage 6 NOT DUE。真实设备等覆盖限制保留。以下阶段交付段落与旧日志保留为历史快照，不代表当前状态。
 
 Stage 5：独立 H6 与阶段验收已通过，协调方已明确授权提交并正常推送 `stage-5-hardening`。验收基底 `d0f2a1f9b948d2ac1a0132a02a1a44dbdf15ad3d`，受审候选SHA-256 `8170aea9b25f5305e69e7bf02e4821421befe887fc2419de51961956c2d345d7`（79,584 bytes / 19 paths）。本轮仅补充本日志和ACCEPTANCE，代码/测试保持受审字节一致。指定 effect-lexicon-cloud `/workspace/effect-lexicon`；唯一origin `https://github.com/Skw03/effect-lexicon.git`。实际提交/推送结果以交付消息及远端核验为准。不创建PR、不合并、不部署、不进入Stage 6；Library上传仍停止。
@@ -24,6 +86,90 @@ Stage 4：独立 H6 与阶段验收已通过；已按协调方授权提交并正
 11. 本轮交付后等待 Stage 0 审阅及下一阶段明确授权，不自动进入 Stage 1。
 
 ## Log (newest first)
+
+### 2026-11-19 — Stage 6 — live Preview独立结果归档
+
+1. **Summary**：依据协调方交接的独立任务终结事实归档Preview PASS；产品源8df5b37，文档基底03f7db4。无可用终端报告接口，明确引用任务/turn，不冒称归档者重新实测线上。
+2. **Files changed**：新增live-preview报告、PROGRESS、RELEASE事实状态；历史报告和原始要求不变，无运行时/测试/CI修改。
+3. **Commands / verification**：核对origin/远端/干净工作树并fast-forward到指定基底；本轮typecheck/lint/test/build均exit0（160 Vitest＋69 Node），三文档范围/相对链接和diff检查通过。独立线上计数及局限见报告，不与本轮本地门混计。
+4. **Acceptance**：Preview适用范围PASS；真实Actions、人工18项、正式品牌/域名/素材/条款和生产门仍BLOCKED。live Lighthouse/axe、dashboard及真实设备未测。
+5. **Deviations / limits**：保留Discovery首轮超时后原断言复跑、Modal探针异步焦点核查、代理证书例外、urllib403与Cloudflare NEL/Report-To观察；不宣称报告关闭或生产库存已核验。
+6. **Open questions**：继续owner内容终审及其余H2/F门，生产仍须单独明确批准；Stage7未授权。
+7. **Next step**：仅正常提交推送本分支的文档归档并核对远端SHA；无PR/merge/tag/部署或CI激活。
+
+### 2026-11-19 — Stage 6 — 独立Pages候选PASS与授权保存
+
+1. **Summary**：本地候选独立PASS，无确认新增必需缺陷；完整Stage6/H2 BLOCKED。原始独立报告摘要与版本证据见本次归档，不将实施者自检冒称独立结论。
+2. **Files changed**：受审16路径保持冻结，仅额外新增独立报告及PROGRESS补记。技术代码、测试、发布脚本逐文件与受审补丁相同；不加入生成物或部署workflow。
+3. **Commands / results**：保存前核对补丁身份、远端main/stage-6-launch、新分支不存在、默认Git身份及仓库可见触发配置；四门均exit0（160 Vitest＋69 Node）；diff检查、归档相对链接和逐文件字节检查通过。独立实跑详细计数、Lighthouse及异常见归档。
+4. **Acceptance**：只满足本地准备范围。Discovery首次dev时序失败后原断言完整复跑通过，根因仍未确定并保留证据；未测试及继承项明确列出。精确保存SHA还需独立绑定。
+5. **Deviations**：无技术修改、依赖或授权扩大；旧候选状态文字以本当前补记说明历史属性，不改受审技术文件或旧审查事实。
+6. **Open questions**：Pages项目/目标、实际外部预览/Actions/生产验证、最终域名/素材/条款与人工18项尚未完成。不要求用户传递凭证。
+7. **Next step**：按授权正常保存新分支；独立绑定SHA后，由用户在另行接入授权下建立空Direct Upload项目并回传非秘密项目身份/生产分支/空部署确认，未核实前不上传。实际预览源必须绑定本分支精确已审提交，不误用手册历史分支头。
+
+### 2026-11-19 — Stage 6 — Cloudflare Pages preview-only 本地候选
+
+1. **Summary**：按用户新决定准备Pages静态预览输出，保留便携默认构建。有效配置统一校验，预览拒绝origin/production/assets/未批准反馈目标；SSR与客户端共同使用批准的Issues链接。flat HTML配合39条已知别名308和2块header规则，根404避免SPA兜底。Pages对大小写别名可能真实404，新增HTML标记保留其404水合及Back状态。无后端、效果、依赖或schema变更。
+2. **Files changed**：build与Pages适配器、package脚本及Node/浏览器/完整构建测试；App/main/Metadata的404文档状态；忽略本地Wrangler生成物；README/RELEASE/REVIEW_POLICY/PROGRESS及18项人工清单。原始要求、旧报告、内容及lockfile保持不变。
+3. **Commands / evidence**：`npm ci --ignore-scripts`；typecheck/lint/test/build通过，160 Vitest＋69 Node。额外`build:pages-preview`通过，Wrangler4.45.0仅作为临时官方固定版本工具以`--ignore-scripts`安装，不加入产品。其本地Pages服务解析39 redirect/2 header规则；新专项778项通过，既有release检查440项通过（无origin模式），axe4.10.3全部21状态violations为空。实际测试bare/slash/index.html/.html/query/404、JS-off正文与JS-on水合/刷新、真实headers/cache/CSP、两种语言和运动设置及动态参数；不宣称实际Pages CDN通过。普通loopback origin构建的20 HTML合同、路径1167、release441、prepaint20通过；既有配置完整构建20例、新预览配置完整构建4例通过。旧七套Chromium原断言仅在临时副本改端口：smoke67、clipboard8、discovery68、Stage3 142、magnetic107、Stage4 259、Stage5 518，共1169/1169；搜索23、Modal88、demo边界3通过。未重跑Shimmer密集像素或第19项干跑，相关demo/内容/样式/注册字节不变，继承已审基线证据。功能套件结束后单独跑Lighthouse12.8.2：首页91/100/100/100、Tilt93/100/100/100（performance/accessibility/best-practices/SEO），四门均过。最终Pages构建29文件与已实际测试产物逐字节相同，产物摘要（RELEASE所列算法）`69a1cdd09c8a339ced68bb5ac2aa539cf38eff7776867f0e13f04ca5760fb0f1`；它绑定本次未提交补丁和基底，不冒称已受审commit。
+4. **Acceptance**：本地研发检查通过范围如上；新增候选独立审查PENDING。账户存在性来自用户；Issues页可用性由SUN只读确认有New issue。未访问或配置账户、未创建项目/外部预览；完整H2/F人工门BLOCKED。18项清单全部待填写。
+5. **Deviations / limits**：本地Wrangler不能代替真实Pages部署；其Request.cf元数据获取失败后使用模拟值，不涉及账号凭证。预览故意无canonical、空sitemap、noindex；SEO四类门只在独立的便携审计构建测，不降低预览保护。默认便携路径规范化保持原有能力；Pages原生大小写404由host标记保留。初次探针误用Guide文案及未等待Back更新导致测试断言失败，修正探针后778项通过；首次lint扫到Wrangler生成物，新增仅该生成目录忽略，不弱化源码检查。真实设备/其他浏览器/屏读器限制保留。
+6. **Open questions**：账号已注册，尚无已核实Pages项目/production branch/preview target/access策略。现名仍候选，最终域名/品牌资产/代码许可/内容条款、人工18项、真实Actions/托管验证/生产烟测未完成。无新增规范或依赖批准请求。
+7. **Next step**：先独立审查精确补丁，再由owner按RELEASE在单独授权下建立空Direct Upload预览项目（生产main、预览stage-6-launch，互不相同）；先回传项目名称和空部署列表确认，不上传、不连接Git、不附加生产域名。随后另行批准目标上的Preview操作。无需向ChatGPT发送密码或令牌。后续实际预览必须记录不可变hash URL、Preview环境/deployment ID及产物摘要到精确受审SHA的绑定，另记生产部署存在性；当前这些均未核实。本候选保持未提交，补丁身份由交付回执绑定，避免自引用。
+
+### 2026-11-19 — Stage 6 — 精确产品提交独立复验及004文档修正待验
+
+1. **Summary**：协调方转交独立审查专家对 `6cc71919b6abb6212f2d1357278a6d1dd9380878` 的结果：001/002/003 PASS，可关闭，本记录据此记CLOSED；004仍OPEN，仅当前状态措辞待修正复验。不是实施者自审关闭。
+2. **Files changed**：仅README、REVIEW_POLICY、PROGRESS及本地候选审查摘要；同步已提交状态，追加证据并标明原记录为当时状态。产品代码、测试、发布设置与原始要求不变。
+3. **Commands / evidence**：本轮核对origin、干净工作树、远端分支与main精确SHA；本轮typecheck、lint、test、build全部exit0（160 Vitest＋62 Node）；文档范围、链接、非文档逐文件等价及`git diff --check`检查通过。独立专家实跑160 Vitest＋62 Node、既有Chromium1169、路径1167、release441；axe21状态无违规。真实mobile Lighthouse首页91/100/100/100、Tilt93/100/100/100（performance/accessibility/best-practices/SEO）。这些是6cc7191的独立证据，不冒称本轮重跑浏览器或外部Actions。
+4. **Acceptance**：001–003 PASS / CLOSED；004文档修正待精确提交独立复验，不预写CLOSED。完整Stage 6 / H2 BLOCKED。
+5. **Deviations**：无行为、测试或发布设置变更；未新增依赖，未削弱检查，旧报告及验收保持历史原貌。
+6. **Open questions**：托管/域名、素材/条款、人工亲读18词条、真实外部预览/Actions和生产验证仍未完成，生产仍由owner单独放行。
+7. **Next step**：按明确授权正常提交推送同分支；新文档SHA由交付回执及后续独立复验绑定，避免自引用。不创建PR、tag、部署、激活CI或进入Stage 7。
+
+### 2026-11-19 — Stage 6 — S6-IR-001/002/003/004 修复候选，OPEN 待独立复验
+
+1. **Summary**：核实origin、实际远端main/HEAD均为 `0dba59fb0a833d40f8e54da430f199c6ebe58dbc`，原候选完整diff仍为 `a8d5fe13efcbdc1e61a06e84013cfab544285d7b7d70479f3a6890aa0a352fa1` 后修复。独立原始结论 CHANGES REQUIRED；完整发布BLOCKED。四项修复已实现，但全部保持OPEN，不由实施者关闭。
+2. **Files changed（相对上一候选）**：build/release-config及类型声明、vite.config；共享path-policy及声明、App/metadata/serve；package测试命令；防御性Node配置/路径测试与完整构建、HTTP浏览器路径脚本；README、RELEASE、PROGRESS、CHECKLIST。未增加依赖或正式效果，未改原始要求、AGENTS/ROADMAP/SPEC、schema、lockfile和历史验收。原补丁/独立报告保留，不覆盖。
+   - 001：使用Vite loadEnv统一取得effective config（含文件、mode、插值、进程优先级），校验后冻结；两bundle通过明确define接收同一snapshot，关闭自动env加载与custom build内config-file重复求值；资产校验也使用同一值。dev/direct Vite入口使用相同resolver。测试仅无害URL/文本负例，不创建执行载荷或利用工具。
+   - 002：实际release模式要求HTTPS默认端口和明确DNS名称；保守拒绝全部IP字面量（包括公网IP）、本地/私有/保留/示例/占位名称、惯用preview/staging标签和已知provider预览后缀。普通loopback审计模式保留。域名语法/类别校验不证明DNS、所有权或owner批准，仍需人工release gate。
+   - 003：server/SSR/client/metadata共用规范化规则，已知尾斜线、大小写、重复斜线、编码、index.html别名308到canonical并保留query；未知路径404，错误编码400。宿主只公开明确静态资源，不把任意物理HTML当竞争路由；不禁用hydrate、不压警告。
+   - 004：README当前状态、preview命令与能力同步到Stage6修复候选；旧Stage5审计命令标明历史范围。RELEASE说明配置优先级、路径政策与验证限制；保留Stage0–5既有授权、owner与托管BLOCKED。
+3. **Commands / 研发自检结果**：
+   - typecheck/lint/test/build最终全部exit0；原 **160 Vitest / 5 files** 加 **62 Node防御测试**，无skip/todo；没有依赖增改。新增测试接入 `npm test`，惰性CI模板原四门自动包含它们，未激活workflow。
+   - `stage6_config_build_check.py` **20个完整构建用例**：隔离副本中各env文件/mode无害负例拒绝、进程覆盖/文件优先级、实际client/HTML一致、direct Vite client/SSR也拒绝错误配置、release本地/示例地址拒绝、缺资产拒绝；最终默认无canonical/noindex且无测试origin泄漏。无真实生产域名/法律/资产伪造或部署。
+   - `stage6_paths_check.py` **1167项通过**，全部20路由的已知别名，含原审查详情slug编码路径；真实308/query、JS-off/on内容/title/canonical、refresh、未知404及无hydration pageerror。原 `stage6_regression.py` **441项**、prepaint **20项**、边界 **3项**均通过；原审查员实际registry故障脚本仅替换dev地址后研发复跑 **6项**通过，不称为本轮独立结论。
+   - 旧七套在dev5173原断言完整复跑：smoke67、clipboard8、discovery68、Stage3 142、magnetic107、Stage4 259、Stage5 518，合计 **1169/1169**。建成host4373：search **23/23**、Modal **88/88**；Shimmer **24场景/376帧**，最低 **4.911546657:1**；axe4.10.3 **21状态全部violations=[]**。
+   - Lighthouse12.8.2在功能套件结束后单独实跑：Library **92/100/100/100**，Tilt **93/100/100/100**（mobile performance/accessibility/best-practices/SEO），85/95/95/95门均满足。仅production-mode静态loopback审计，不是hosted/Actions/生产。最终配置防御加固后的显式build与全部浏览器/Lighthouse已测 **27个输出文件逐字节一致**；默认build重复确定性及无测试origin检查通过。
+   - 第19项隔离干跑四门及实际集成通过，正式源码hash不变且仍18项。原始档案SHA保持 `634d67c8765b7ec96aea1957d67a91048166ac1f127043a130b87665f20544c8`；保护文件逐字节保留；git diff whitespace与精确patch应用校验作为交付检查。
+4. **Acceptance**：以上仅研发自检。001/002/003/004修复候选待独立复验，全部OPEN；原独立CHANGES REQUIRED不由本日志撤销。H2 provider/preview/Actions、正式素材/法律输入和F1/F3 owner/生产门仍BLOCKED。Stage7 NOT DUE。
+5. **Deviations / limits**：production仅支持命名DNS origin而非公网IP，以避免不完整的私有/保留地址枚举；不据此假称验证域名归属、DNS可达或owner审批。未解除CSP、削弱门槛或修改既有测试断言。真实设备/其他浏览器/原生屏读器等原覆盖限制保留。未运行生产、外部preview或账户/DNS操作。
+6. **Open questions**：仍待owner宿主/账号/access及SUN确认preview目标，最终站名/域名/DNS/HTTPS，OG/favicon和权利批准，代码许可/内容条款/反馈，必要host/GitHub设置，Search Console、中文/术语审阅和亲读18项，独立exact候选/commit复验以及单独owner生产放行。无新增产品/依赖/schema决定。
+7. **Next step**：返回新的完整patch身份与证据，让独立Review Expert在隔离副本复验原四项、边界和受影响回归；保持未提交，不预写CLOSED。只有后续明确指令才commit/push到不连接生产的分支，且提交后仍须exact SHA复验。本轮不提交/推送/PR/合并/tag/上传/部署。
+
+本地研发证据 `/tmp/s6fix-results/`；原独立报告 `/tmp/s6-ir-evidence/report.md` 与原a8d5补丁保留。测试输出不上传。最终完整patch的SHA/字节/路径数由交付消息给出，避免自引用。
+
+
+### 2026-11-19 — Stage 6 — 本地发布候选，待独立审查与owner输入
+
+1. **Summary**：按新明确授权实现 provider-independent 发布候选，不启动 Stage 7。核实唯一origin、远端main精确 `0dba59fb0a833d40f8e54da430f199c6ebe58dbc`、无远端stage-6-launch；从该SHA创建隔离worktree，原work分支保持干净。20内容路由+404确定性prerender/hydrate，公开内容、schema和依赖不变；配置式metadata/canonical/sitemap/robots，局部错误边界，隐私/名称声明，待批准法律/反馈输入接口，本地静态宿主及惰性CI模板。
+2. **Files changed**：App/客户端与服务端入口、release metadata/config、SSR安全motion/prompt/query状态、DemoBoundary及两处包装、偏好bootstrap/CSS；build/serve/Lighthouse/Stage6验证脚本、axe注入方式；package脚本与临时输出忽略；RELEASE、CHANGELOG、README、PROGRESS/ACCEPTANCE/REVIEW_POLICY/CHECKLIST范围补记、docs/ci模板。未改AGENTS、ROADMAP、SPEC、原始档案、Effect schema、18内容、lockfile；无正式站点素材/域名/许可证伪造。
+3. **Commands and results**：
+   - `npm ci --ignore-scripts --cache /tmp/effect-npm-cache`，232包；四门 typecheck/lint/test/build 全部exit0，**160 tests / 5 files / 0 skip-todo**。无产品依赖增改。测试工具Lighthouse12.8.2/axe4.10.3仅在 `/tmp/effect-stage6-audit` 通过固定版本官方npm、`--ignore-scripts`安装；Python Playwright/Chromium为环境已有。
+   - Vite production-mode构建，测试专用显式loopback origin；两个连续构建逐文件SHA相同。最终恢复普通无origin构建，再连续构建逐字节相同；20 HTML metadata/资源、sitemap/robots、404 noindex及SSR临时目录清理合同通过，构建没有测试origin泄漏。3组不完整/非法配置（缺生产owner输入、带path的origin、javascript反馈URL）均被拒绝。
+   - 旧dev七套完整最终结果：smoke67、clipboard8、discovery68、Stage3 142、magnetic107、Stage4 259、Stage5 518，**1169/1169**。脚本原断言保留；discovery包含依赖dev模块的九实例预算夹具，不能冒称其在静态host上运行。Stage5曾因开发HMR中断，冻结代码后完整重跑518通过。
+   - 真实静态host（4174）**441 named checks**：JS-off全部20页/18详情名字别名描述prompt；20页×EN/ZH×normal/reduce的hydrate及刷新、正确偏好和零runtime/console/CSP错误；20页reduced/EN完整body text parity；Gallery+Tilt/Spotlight/Glass动态内联style；SPA title/canonical/OG/Twitter更新；两未知路由真实404；实际安全头与immutable资源。附带Playwright expect断言不重复累计。
+   - 阻断应用bundle的**20项prepaint检查**（四偏好组合）：无自动动画、正确motion文案、stored ZH不闪错English；JS彻底关闭时SSR English提示词真实可读。开发服务的故意throw夹具**3项**：中文fallback、周边prompt保留、语言仍可操作。不是生产故障发生记录。
+   - 新修复回归在构建host实跑：search **23/23**，Modal **88/88**；Shimmer **24 scenarios / 376 rendered frames**，最低**4.911546657:1**。axe4.10.3 **21 states / violations=[]**；旧inline注入被真实CSP拒绝后改用DevTools evaluation，只改变测试注入，不放宽CSP、不排除规则。
+   - 最终真实 Lighthouse12.8.2 mobile：Library **92/100/100/100**、Tilt **92/100/100/100**（performance/accessibility/best-practices/SEO）；均满足85/95/95/95。loopback Vite production-mode静态输出，不是托管/ACTIONS/生产实测。惰性CI YAML解析、PR触发/read-only权限通过；尚无Actions run。
+   - 第19项仅 `/tmp` 隔离副本干跑：四门、搜索/详情/有限动作/参数/双语复制/关联通过，正式源码hash前后一致且仍18项。git diff whitespace、原档案SHA `634d67c8765b7ec96aea1957d67a91048166ac1f127043a130b87665f20544c8`、保护文件逐字节保留及远端main未变核验通过。
+4. **Acceptance checklist**：本地prerender/JS-off/hydrate/静态host/四门/Lighthouse开发自检通过；独立H6 **PENDING**。H2/F门未全部满足：真实托管preview、Actions通过、provider路由/headers/DNS/HTTPS/回滚实证、最终branding/legal/feedback、owner逐条18项read-through与生产烟测 **BLOCKED**。不以自检签发独立PASS，不宣称Stage6完成。预览若provider强制X-Robots-Tag noindex须保留；CI本地SEO门不降低，生产indexability在owner发布烟测验证。
+5. **Deviations / limits**：无provider选择所以不编造其配置/账号/secret，CI仅保留在docs/ci未激活；无v1.0.0-rc.1或正式tag，服从本轮明确不tag指令。无origin的普通build刻意noindex/无canonical/空sitemap；实际正式origin配置后生成20项，不将测试origin称生产。stored ZH在bundle完成前短暂隐藏prompt面板以避免错误语言闪现，SSR正文和JS-off真实文本保留。真机、其他浏览器、原生屏读器/中端手机限制保留。
+6. **Open questions / Human tasks remaining**：宿主provider、账号/project/access与SUN确认的非生产preview目标；最终名称/域名与商标、购买/DNS/HTTPS；1200×630 OG和自包含favicon及权利批准；反馈URL；代码许可名称/正文/链接及内容条款；宿主/GitHub设置或secrets（provider确定后列精确项）；Search Console；原生中文/术语review及owner个人读完18项；独立H6和单独owner生产发布/tag。当前只确认已有仓库、暂用动效词典名称与18项实现，不冒充这些owner决策已完成。无建议修改SPEC。
+7. **Next step**：协调方在同一环境交给独立Review Expert精确候选patch（SHA/字节见交付消息），从基底干净checkout独立跑适用门并回传缺陷。修复及独立复验后，由协调方明确授权提交到非部署分支；记录commit SHA并独立提交后验证与patch等价，再另行获准正常push/PR。确认没有生产连接或main自动触发后才推进。当前未commit/push/tag/PR/merge/upload/publish，生产始终由owner单独放行和操作。
+
+本地原始证据：`/tmp/stage6-regression/`、`/tmp/effect-stage6-audit/reports/`、`/tmp/stage6-lighthouse-final2.log`；无外发。初始脚本误期望“毛玻璃”/“未找到”而实际名称为“玻璃拟态”/“找不到这个页面”，已改为实际route/文案断言；localStorage测试bootstrap异常加try/catch，未改变产品容错。早期同时build/测试导致静态文件短暂缺失，仅最终冻结输出后的完整run计入通过结果。
+
 
 ### 2026-11-19 — Stage 5 — EL-IR-004 最终独立复验通过与归档
 

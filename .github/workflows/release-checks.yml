@@ -1,0 +1,56 @@
+name: Release candidate checks
+on:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: release-checks-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Record exact tested merge tree and PR head
+        run: |
+          git rev-parse HEAD HEAD^{tree}
+          printf '%s\n' "$PR_HEAD"
+        env:
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build:pages-preview
+      - name: Build production candidate locally only
+        run: npm run build:pages-production
+        env:
+          RELEASE_MODE: production
+          VITE_SITE_ORIGIN: https://motioncuebook.com
+          VITE_RELEASE_ASSETS: 'false'
+      - name: Build local Lighthouse target (never a deployment artifact)
+        run: npm run build
+        env:
+          VITE_SITE_ORIGIN: http://127.0.0.1:4173
+      - run: npm install --prefix /tmp/effect-stage6-audit --ignore-scripts --save-exact lighthouse@12.8.2
+      - name: Mobile Lighthouse on Library and detail
+        run: |
+          npm run preview > /tmp/static-host.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then ready=true; break; fi
+            sleep 1
+          done
+          "$ready"
+          node scripts/lighthouse.mjs
+        env:
+          CHROME_PATH: /usr/bin/google-chrome

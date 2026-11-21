@@ -44,14 +44,14 @@ export const rippleButton: Effect = {
   "whatYouSee": "按下按钮，圆形高光从接触点向外扩散。圆圈覆盖按钮后消失，不改变按钮的位置。",
   "behavior": [
     "点击或轻触时记录起点，键盘 Enter 或空格从中心开始。",
-    "圆圈从 scale 0 扩散至覆盖按钮，同时透明度降到零。",
+    "圆圈从 scale 0 扩散至覆盖按钮，同时不透明度降到零。",
     "动画完成移除圆圈，重复点击可产生独立的波纹。"
   ],
   "useCases": [
     "按钮操作确认",
     "局部点击反馈"
   ],
-  "terminologyNote": "Ripple effect 常译作水波纹或涟漪反馈。这里是按钮内的圆形扩散，不是水面模拟。起始透明度来自规范的 35%，只是强度调试参数。",
+  "terminologyNote": "Ripple effect 常译作水波纹或涟漪反馈。这里是按钮内的圆形扩散，不是水面模拟。起始不透明度来自规范的 35%，只是强度调试参数。",
   "related": [
     "magnetic-button",
     "sliding-fill-button"
@@ -76,7 +76,7 @@ export const rippleButton: Effect = {
     },
     {
       "key": "opacity",
-      "label": "起始透明度",
+      "label": "起始不透明度",
       "kind": "number",
       "default": 0.35,
       "min": 0.1,
