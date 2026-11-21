@@ -1,31 +1,4 @@
-# Inert template. Move to .github/workflows only after coordinator approval.
-# Checks only: no deployment job, tokens, uploads or production integration.
-name: Release candidate checks
-on:
-  pull_request:
-permissions:
-  contents: read
-jobs:
-  quality:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: npm
-      - run: npm ci --ignore-scripts
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm test
-      - run: npm run build
-        env:
-          VITE_SITE_ORIGIN: http://127.0.0.1:4173
-      - run: npm install --prefix /tmp/effect-stage6-audit --ignore-scripts --save-exact lighthouse@12.8.2
-      - name: Mobile Lighthouse on Library and detail
-        run: |
-          npm run preview > /tmp/static-host.log 2>&1 &
-          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ > /dev/null && break; sleep 1; done
-          node scripts/lighthouse.mjs
-        env:
-          CHROME_PATH: /usr/bin/google-chrome
+# Historical inert-template location. The 2026-11-21 closeout authorization
+# permits the PR-only check candidate in .github/workflows/release-checks.yml.
+# No push/deploy trigger, secrets or write permissions. Actual PR execution
+# and its exact tested SHA/tree must be observed before owner merge.

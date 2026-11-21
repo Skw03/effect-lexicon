@@ -2,6 +2,18 @@
 
 ## Current stage
 
+2026-11-21 Stage6 closeout未提交候选：基底 `f05a860114f317c6ba960d4ad48b4bf2510dec6d`，隔离本地 `stage-6-closeout`，原分支工作树保留。owner已选动效小抄 / Motion Cuebook、Cloudflare Pages生产与候选origin https://motioncuebook.com（权属/DNS未核验），明确省略favicon/分享图；批准原创代码0BSD与独立双语内容授权（品牌/第三方除外）。不修改原始要求；本轮批准的例外与发布顺序见[RELEASE](RELEASE.md)。
+
+owner于11月21回复“已审查”，整体18/18阅读报告绑定babdf63及afcd625d，而非文档SHA；[人工记录](HUMAN_REVIEW.md)保留无逐行证据这一边界。[固定主机审查](reviews/stage-6-live-preview-afcd625d.md)仍仅覆盖旧产品，未重写。新增构建指纹门禁止静默改变词条、演示和提示词渲染源。名称/页脚/元数据/许可与生产配置变化由本轮H6另验。
+
+1. Summary：仅站名/批准条款、无图发布配置、PR-only CI和交接文档；无新效果、依赖或部署。
+2. Files：运行时品牌配置与页脚、构建/校验/本地服务、内容指纹与回归、PR workflow、LICENSE/范围、README/CHANGELOG/RELEASE/人工记录/本进度；精确路径由候选diff列明。
+3. Commands/results：typecheck/lint通过；160 Vitest＋73 Node全过（含3条production CLI缺失/禁用输入负例另实跑、内容改动拒绝与无图门测试）；普通、Pages Preview、Pages production构建通过。生产模式本地closeout脚本514、Stage6脚本441通过；dev布局518和browser smoke67通过；axe4.10.3共21状态零违规。Lighthouse12.8.2真实mobile：Gallery 91/100/100/100，Tilt92/100/100/100（performance/accessibility/best-practices/SEO），全部达门槛。最初lint缺少node:URL导入已修复；布局首次发现新0BSD链接不足44px，最小footer宽度修正后原518断言通过。Preview服务首次切换端口占用，使用独立4277端口验证；不当作产品失败或hosted结果。Preview本地closeout脚本另514项通过（noindex/空sitemap/JS开关）；生产与预览各30文件指纹见最终交付回执。所有浏览器结果均为本地Chromium，不是Cloudflare或Actions运行。
+4. Acceptance：未提交候选，fresh H6和真实PR CI待完成；只本地验证，不冒称已托管或生产通过。
+5. Deviations：按owner明确省略H2 favicon/share image，保留无图manifest和文本元信息；owner部署顺序替代自动main发布。原始档案与历史验收不改。
+6. Open questions：域名/账户/生产目标、TLS、Actions实跑、merge后main同输入产物比对、owner部署、独立生产烟测、最终tag与Search Console仍待完成。
+7. Next step：SUN协调新独立H6，修复后再授权提交/PR；本轮不提交/推送/上传/改设置/部署/tag，Stage7未开放。
+
 2026-11-20 固定主机独立审查归档：产品 `babdf63d203fd75a0decfd91f2f5848c00e54874` 在 [afcd625d Preview](https://afcd625d.effect-lexicon-preview.pages.dev) 的实测技术范围 **PASS**，ED-001–003 托管复验通过。完整Stage 6/H2仍 **BLOCKED**；Cloudflare完整deployment ID及dashboard Preview元数据未核验，owner阅读 **0/18**，生产、合并及tag仍未批准。以下旧快照保留历史状态，以本条及[新报告](reviews/stage-6-live-preview-afcd625d.md)为当前托管证据。
 
 1. Summary：归档已完成的独立固定主机审查；可变别名不作为本次门禁依据。

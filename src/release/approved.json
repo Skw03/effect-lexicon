@@ -1,0 +1,7 @@
+{
+  "VITE_SITE_NAME": "动效小抄 / Motion Cuebook",
+  "VITE_FEEDBACK_URL": "https://github.com/Skw03/effect-lexicon/issues",
+  "VITE_CODE_LICENSE": "0BSD",
+  "VITE_CODE_LICENSE_URL": "https://opensource.org/license/0bsd",
+  "VITE_CONTENT_TERMS": "原创动效词条与中英文提示词（包括嵌入 .ts 文件的文字）可复制、使用和再分发，无需署名；其他权利未放弃。品牌图形与品牌标识、第三方材料不在本授权范围，仍适用各自权利和条款。 Original effect entries and bilingual prompts, including text embedded in .ts files, may be copied, used and redistributed without attribution. Other rights are not waived. Brand artwork and identity and third-party material are excluded and retain their applicable rights and terms."
+}

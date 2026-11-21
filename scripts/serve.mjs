@@ -2,11 +2,14 @@ import { canonicalPath } from '../src/release/path-policy.mjs';
 // Local production-like static host; never provisions or deploys anything.
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { resolve, extname } from 'node:path';
 import process from 'node:process';
 export const policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'";
 const root = resolve('dist');
+const flat = existsSync(resolve(root, '_headers'));
 const routes = JSON.parse(await readFile(resolve(root, 'routes.json'), 'utf8'));
+const indexable = (await readFile(resolve(root, 'index.html'), 'utf8')).includes('content="index,follow"');
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml', '.png': 'image/png' };
 createServer(async (req, res) => {
   res.setHeader('Content-Security-Policy', policy);
@@ -26,12 +29,13 @@ createServer(async (req, res) => {
     }
     if (path === '/favicon.ico') { res.statusCode = 204; res.end(); return; }
     const publicFile = ['/preferences.js', '/sitemap.xml', '/robots.txt', '/routes.json', '/manifest.webmanifest', '/favicon.svg', '/og-image.png'].includes(path) || /^\/assets\/[a-zA-Z0-9_.-]+\.(?:js|css)$/.test(path);
-    const filePath = route ? `.${route}/index.html` : publicFile ? `.${path}` : './404.html';
+    const filePath = route ? flat && route !== '/' ? `.${route}.html` : `.${route}/index.html` : publicFile ? `.${path}` : './404.html';
     let file = resolve(root, filePath);
     if (!route && !publicFile) res.statusCode = 404;
     let body;
     try { body = await readFile(file); } catch { file = resolve(root, '404.html'); body = await readFile(file); res.statusCode = 404; }
     if (/\/assets\/[^/]+-[\w-]+\.(js|css)$/.test(file) && res.statusCode !== 404) res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    res.setHeader('X-Robots-Tag', route && res.statusCode !== 404 && indexable ? 'index, follow' : 'noindex, nofollow');
     res.setHeader('Content-Type', types[extname(file)] || 'application/octet-stream');
     res.end(req.method === 'HEAD' ? undefined : body);
   } catch { res.statusCode = 400; res.end('Bad request'); }

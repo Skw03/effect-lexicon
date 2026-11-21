@@ -10,7 +10,8 @@
     "test": "vitest run && node --test scripts/release-config.check.mjs scripts/pages-preview.check.mjs",
     "build": "tsc --noEmit && node scripts/build.mjs",
     "build:pages-preview": "tsc --noEmit && node scripts/build.mjs --pages-preview",
-    "preview": "node scripts/serve.mjs"
+    "preview": "node scripts/serve.mjs",
+    "build:pages-production": "tsc --noEmit && node scripts/build.mjs --pages-production"
   },
   "dependencies": {
     "fuse.js": "7.1.0",

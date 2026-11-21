@@ -19,3 +19,9 @@ test('rules normalize only known aliases, never rewrite unknown paths to SPA', (
   assert.ok(headers.includes('X-Robots-Tag: noindex, nofollow'));
   assert.ok(headers.includes("script-src 'self';"));
 });
+
+test('production rules remain indexable with explicit 404 exclusion', () => {
+  const { headers } = pagesRules(['/', '/guide'], true);
+  assert.ok(headers.includes('X-Robots-Tag: index, follow'));
+  assert.ok(headers.includes('/404.html\n  ! X-Robots-Tag\n  X-Robots-Tag: noindex, nofollow'));
+});

@@ -63,3 +63,6 @@ footer p { flex-basis: 100%; font-size: 13px; }
 /* Preference-specific copy is correct before the JavaScript bundle executes. */
 .normal-motion-hint { display: none; }
 @media (prefers-reduced-motion: no-preference) { .normal-motion-hint { display: inline; } .reduced-motion-hint { display: none; } }
+
+/* Keep the short license link a full touch target. */
+footer a { min-width: 44px; }

@@ -10,15 +10,19 @@ export function previewConfig(config) {
 export function resolvePagesPreviewConfig(mode) {
   return previewConfig(resolveReleaseConfig(mode));
 }
-export function pagesRules(routes) {
+export function pagesRules(routes, production = false) {
   // Avoid overlapping Cache-Control declarations: Pages joins duplicate headers.
   const headers = `/*
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
-  X-Robots-Tag: noindex, nofollow
+  X-Robots-Tag: ${production ? 'index, follow' : 'noindex, nofollow'}
   Cache-Control: no-cache
+
+/404.html
+  ! X-Robots-Tag
+  X-Robots-Tag: noindex, nofollow
 
 /assets/*
   ! Cache-Control
@@ -30,8 +34,8 @@ export function pagesRules(routes) {
   }
   return { headers, redirects: redirects.join('\n') + '\n' };
 }
-export async function writePagesRules(routes) {
-  const { headers, redirects } = pagesRules(routes);
+export async function writePagesRules(routes, production = false) {
+  const { headers, redirects } = pagesRules(routes, production);
   await writeFile('dist/_headers', headers);
   await writeFile('dist/_redirects', redirects);
 }

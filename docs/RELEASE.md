@@ -2,6 +2,50 @@
 
 The 2026-11-19 instruction opens Stage 6 development and independent candidate verification only. Stage 7 is not authorized. This runbook is not approval to connect a host, publish a preview, activate workflows, merge into a deploying branch, or deploy. No account, domain, asset license or human read-through is assumed. The Stage 0–5 historical merge authorization remains scoped to those stages.
 
+## Current closeout contract — 2026-11-21
+
+This section supersedes earlier pending-name/license/assets/owner-reading and automatic-main-deploy instructions below; historical audit records remain unchanged. Name: **动效小抄 / Motion Cuebook**. Production host selected: Cloudflare Pages. Candidate canonical origin: **https://motioncuebook.com**; domain registration, ownership, DNS and TLS are **not verified**. Nothing in the build proves ownership or authorizes deployment.
+
+Owner explicitly omitted custom favicon and social share image for Stage 6 production. This is an approved exception to original H2 asset requirements: no drafts, no favicon/image references or image-specific Twitter tags. Text metadata, canonical, sitemap, robots and an icon-free manifest remain. Production requires `VITE_RELEASE_ASSETS=false`; `true` or missing explicit choice fails. The original requirements archive is preserved.
+
+Owner approved standard [0BSD](https://opensource.org/license/0bsd) for original code and a separate no-attribution copy/use/redistribution grant for original entries/prompts. See [LICENSE](../LICENSE), [scope and bilingual terms](../LICENSE_SCOPE.md). Brand identity/artwork and third-party material are excluded; dependencies retain their licenses. No invented rightsholder identity, extra code restrictions or CC0 waiver. These approved public values live in `src/release/approved.json`; production rejects overrides that change them.
+
+Owner replied “已审查” on November21 to the numbered 18-entry sign-off instruction: aggregate owner-reported completion for **babdf63d203fd75a0decfd91f2f5848c00e54874** at the fixed afcd625d preview, not row-level observations or production evidence. [Human record](HUMAN_REVIEW.md) and [hosted technical audit](reviews/stage-6-live-preview-afcd625d.md) remain separate. Build verifies the audited content/demo/prompt-renderer inventory against `scripts/reviewed-content.json`; any material change blocks build until explicitly re-reviewed, never silently refresh that baseline.
+
+### Local candidate commands (do not upload these test runs)
+
+```sh
+npm ci --ignore-scripts
+npm run typecheck
+npm run lint
+npm test
+npm run build
+npm run build:pages-preview
+RELEASE_MODE=production VITE_SITE_ORIGIN=https://motioncuebook.com VITE_RELEASE_ASSETS=false npm run build:pages-production
+PORT=4173 npm run preview
+```
+
+The last command serves flat Pages output locally as a simulation. Production output uses slashless routes, real 404 HTML, own-origin CSP, cache headers and indexable content; Preview has no canonical, an empty sitemap, disallow robots and noindex. Neither mode is a deployment. The manifest now exists without icons (30 files in natural Pages output); the older 29-file audit digest belongs only to babdf63.
+
+### Required release order and exact artifact comparison
+
+1. Prepare candidate; fresh independent H6; repair and re-review findings. No commit/push/PR in this implementation turn.
+2. Once separately instructed, save candidate and open a normal PR. `.github/workflows/release-checks.yml` is now an authorized **PR-only check candidate**: read-only contents permission, checkout credentials not persisted, no secrets/deploy jobs/push triggers/settings changes. Do not use `pull_request_target`. Observe a green exact PR run **before owner merge**; record PR head SHA, tested merge SHA/tree, run URL, Node/npm/tool versions and input values. [GitHub PR event documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request) explains the tested merge ref. This local preparation is not an observed Actions run.
+3. **Owner merges.** Dot then rebuilds clean main using the same lockfile, Node/npm, approved release inputs and command as the independently audited production candidate. Compare sorted relative-path/NUL/file-SHA256/LF output manifests (algorithm below), complete file inventories, and source content guard. Record actual main SHA/tree and both digests. Any mismatch stops release for review; do not normalize away differing bytes. No automatic deployment on main is configured or enabled; this owner-directed order supersedes that earlier H2 automation proposal.
+4. **Owner deploys** only after matching artifacts and domain/account/target authorization. Verify exact production project, branch, custom domain, TLS and last-good rollback ID first; never substitute the historical preview project or a moving alias. Current project/account/DNS details are not supplied here. No deploy command is executed by this task.
+5. Independent read-only **production** smoke: exact source/artifact binding; 20 content routes/direct/refresh/JS-off/hydration, genuine unknown404, metadata/canonical/sitemap/robots, own-origin CSP and real headers/cache, no favicon/share-image dead references, icon-free manifest, bilingual approved terms and feedback, interaction/keyboard/reduced motion, real TLS and indexability. Verify production host reporting behavior separately (Cloudflare may add NEL/Report-To). Preview noindex must not be weakened for SEO scores.
+6. **Owner tags v1.0.0** after successful smoke and handles Search Console/sitemap. Candidate tags need separate explicit instruction too. Stage7 only after launch and new authorization; never infer it from local PASS.
+
+PR CI runs the four gates, both Pages builds, and real mobile Lighthouse on locally served production-mode static output using a loopback canonical for the audit only. Thresholds remain performance85, accessibility95, best-practices95, SEO95 on Gallery and Tilt. Loopback build must never be deployed. If GitHub requires approval to run the PR workflow, obtain the normal owner approval; do not change permissions or bypass it. Actual hosted checks remain separate.
+
+### Human tasks remaining
+
+Domain registration/ownership, DNS/custom-domain and TLS verification; production account/project/branch and rollback target; fresh H6 and green exact PR CI; owner merge followed by identical-input main rebuild comparison; owner deployment; independent read-only production smoke; owner final release/tag and Search Console/sitemap. Existing full Preview deployment ID/dashboard classification remains unverified. Aggregate18-entry reading and selected name/license/asset omission are recorded decisions, not outstanding requests. Individual row observations were not supplied. No production completion is claimed.
+
+## Historical release preparation and audit records
+
+The following sections retain their earlier context; where they differ, the current closeout contract above controls.
+
 ## Current fixed-host audit — 2026-11-20
 
 **PASS for the tested fixed preview only; full Stage 6/H2 remains BLOCKED.** Product `babdf63d203fd75a0decfd91f2f5848c00e54874` was independently verified at https://afcd625d.effect-lexicon-preview.pages.dev. All 27 publicly served files matched its clean 29-file Pages build before and after browser testing; manifest digest `0c86814501c185c97101fc361024dc864e4596891404b3d3ab75f923101e6897`. The branch alias was not used to close this gate. [Full audit](reviews/stage-6-live-preview-afcd625d.md): 58 redirects, 162 header assertions per artifact pass, 302 UI, 92 editorial and 24 supplemental checks passed; ED-001–003 passed on this host. Typecheck/lint, 160 Vitest + 69 Node tests and both builds passed during that audit.
@@ -158,7 +202,7 @@ Once the project/target is confirmed and the applicable action is separately aut
 
 Before production, record the host's exact immutable last-good deployment identifier and dashboard rollback procedure here. Without verified production target, deployment inventory and rollback controls, executable production steps remain **blocked**; this generic contract alone does not satisfy the complete H2 runbook gate. Roll back by owner-promoting the recorded last-good artifact; do not force-push or rewrite Git history. If integration would redeploy a bad main, owner pauses it first. If a source fix is needed, use a reviewed revert/fix PR and rerun all gates. Verify headers, canonical URLs and assets after rollback; preserve the failed deployment and logs for diagnosis.
 
-Smoke checklist: Gallery shows 18 effects; all 18 direct detail URLs and Guide refresh; unknown path returns 404; JS disabled still shows names/aliases/descriptions/prompts; representative pointer, scroll, modal and clipboard work; EN/ZH preference survives refresh; reduced motion has no autoplay and manual runs finish; no CSP/console errors; sitemap contains exactly the 20 published routes on approved origin; robots references it; approved OG image/favicon/manifest resolve; hashed assets immutable and HTML no-cache; feedback and exact legal text present; real HTTPS and certificate valid; both mobile Lighthouse gates pass. Record date, SHA, deployment URL/ID, tester and rollback ID.
+Smoke checklist: Gallery shows 18 effects; all 18 direct detail URLs and Guide refresh; unknown path returns 404; JS disabled still shows names/aliases/descriptions/prompts; representative pointer, scroll, modal and clipboard work; EN/ZH preference survives refresh; reduced motion has no autoplay and manual runs finish; no CSP/console errors; sitemap contains exactly the 20 published routes on approved origin; robots references it; icon-free manifest resolves; no custom favicon/share-image references (approved omission); hashed assets immutable and HTML no-cache; feedback and exact legal text present; real HTTPS and certificate valid; both mobile Lighthouse gates pass. Record date, SHA, deployment URL/ID, tester and rollback ID.
 
 ## Human tasks remaining
 

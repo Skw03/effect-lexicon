@@ -1,6 +1,6 @@
-# 动效词典 Effect Lexicon
+# 动效小抄 / Motion Cuebook
 
-静态中英双语 UI 效果词典：18 个真实演示、8 类内容、中文/英文搜索与筛选、参数驱动的双语提示词，以及 `/guide` 描述指南。开发候选与逐项实测见 [验收报告](docs/ACCEPTANCE.md)。Stage 0–5 已独立验收；Stage 6 产品候选已提交并推送，独立实测快照为 `6cc71919b6abb6212f2d1357278a6d1dd9380878`；供应商无关候选四项发现已独立 PASS / CLOSED（见[最终报告](docs/reviews/rereview-stage-6-6cc7191.md)），新增 Pages 预览候选待独立复验，完整发布仍 BLOCKED。本仓库没有已激活的生产部署流水线。
+18 个真实演示、双语检索和参数化提示词。Stage 6 收尾候选待新独立 H6 与真实 PR CI；尚未生产发布。owner 已报告完成旧产品 babdf63 的18词条审阅，原效果内容保持字节不变。生产站名与 0BSD / 独立内容条款已获批准，本轮明确不包含 favicon 或分享图。见 [许可范围](LICENSE_SCOPE.md)、[发布顺序与剩余门](docs/RELEASE.md) 和 [当前进度](docs/PROGRESS.md)。本仓库不配置部署触发。
 
 ## 安装、运行和验证
 

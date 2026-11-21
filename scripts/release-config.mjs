@@ -1,14 +1,15 @@
 import { loadEnv } from 'vite';
 import { isIP } from 'node:net';
 import { URL } from 'node:url';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import process from 'node:process';
+const approved = JSON.parse(readFileSync(new URL('../src/release/approved.json', import.meta.url), 'utf8'));
 export const releaseKeys = ['VITE_SITE_ORIGIN', 'VITE_SITE_NAME', 'VITE_FEEDBACK_URL', 'VITE_CODE_LICENSE', 'VITE_CODE_LICENSE_URL', 'VITE_CONTENT_TERMS', 'VITE_RELEASE_ASSETS', 'RELEASE_MODE'];
 const reserved = ['localhost', 'localdomain', 'corp', 'private', 'local', 'internal', 'intranet', 'lan', 'home', 'test', 'invalid', 'example', 'onion', 'alt', 'arpa', 'example.com', 'example.net', 'example.org'];
 const previews = ['pages.dev', 'vercel.app', 'netlify.app', 'github.io', 'gitlab.io', 'workers.dev', 'surge.sh', 'web.app', 'firebaseapp.com', 'onrender.com', 'ngrok.io', 'ngrok-free.app', 'trycloudflare.com'];
 export function validateReleaseConfig(values) {
-  const config = Object.fromEntries(releaseKeys.map(key => [key, values[key] || '']));
+  const config = Object.fromEntries(releaseKeys.map(key => [key, values[key] || approved[key] || '']));
   for (const [key, value] of Object.entries(config)) if (value.trim() !== value || [...value].some(char => char.charCodeAt(0) < 32 || char.charCodeAt(0) === 127)) throw Error(`${key}: whitespace/control characters are not supported`);
   if (!['', 'true', 'false'].includes(config.VITE_RELEASE_ASSETS)) throw Error('VITE_RELEASE_ASSETS must be true or false');
   if (!['', 'production'].includes(config.RELEASE_MODE)) throw Error('RELEASE_MODE must be unset or production');
@@ -32,7 +33,8 @@ export function validateReleaseConfig(values) {
     const labels = host.split('.');
     if (isIP(host.replace(/^\[|\]$/g, '')) || labels.length < 2 || !/^[a-z]{2,63}$/.test(labels.at(-1)) || labels.some(label => ['example', 'placeholder', 'yourdomain', 'your-domain', 'preview', 'staging'].includes(label)) || labels.some(label => !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label)) || [...reserved, ...previews].some(domain => host === domain || host.endsWith('.' + domain))) throw Error('Production origin must be a public DNS name, not a local/reserved/example or provider preview address');
     for (const key of ['VITE_SITE_NAME', 'VITE_FEEDBACK_URL', 'VITE_CODE_LICENSE', 'VITE_CODE_LICENSE_URL', 'VITE_CONTENT_TERMS']) if (!config[key]) throw Error(`Owner input required: ${key}`);
-    if (config.VITE_RELEASE_ASSETS !== 'true') throw Error('Production requires approved release assets');
+    if (config.VITE_RELEASE_ASSETS !== 'false') throw Error('Stage 6 production explicitly omits favicon and share image: set VITE_RELEASE_ASSETS=false');
+    for (const [key, value] of Object.entries(approved)) if (config[key] !== value) throw Error(`Production must retain owner-approved ${key}`);
   }
   return Object.freeze(config);
 }
@@ -45,6 +47,7 @@ export function releaseDefines(config) {
   return Object.fromEntries(releaseKeys.filter(key => key.startsWith('VITE_')).map(key => [`import.meta.env.${key}`, JSON.stringify(config[key])]));
 }
 export function validateReleaseAssets(config, directory = process.cwd()) {
+  if (config.RELEASE_MODE === 'production' && ['public/og-image.png', 'public/favicon.svg', 'public/favicon.ico'].some(path => existsSync(resolve(directory, path)))) throw Error('Remove favicon/share-image drafts from production input; Stage 6 omits them');
   if (config.VITE_RELEASE_ASSETS !== 'true') return;
   const png = readFileSync(resolve(directory, 'public/og-image.png'));
   readFileSync(resolve(directory, 'public/favicon.svg'));
